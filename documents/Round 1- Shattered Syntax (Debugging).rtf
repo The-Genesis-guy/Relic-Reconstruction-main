@@ -1,7 +1,7 @@
 {\rtf1\ansi\deff0{\fonttbl{\f0 Calibri;}{\f1 Consolas;}}\paperw12240\paperh15840\margl1440\margr1440\margt1440\margb1440
 \fs52\b Round 1: Shattered Syntax (Debugging)\b0\fs24\par
 \fs28\b Question Set\b0\fs24\par
-Generated: 2026-02-14 07:55\par
+Generated: 2026-02-14 08:14\par
 Questions: 10    Total Marks: 200\par
 \par
 \fs32\b Contents\b0\fs24\par
@@ -17,342 +17,1310 @@ Questions: 10    Total Marks: 200\par
 10. Merge K Sorted Arrays (30 marks, Hard)\par
 \page
 \fs36\b Q1. Palindrome Checker\b0\fs24\par
+\b Contest:\b0 Round 1: Shattered Syntax (Debugging)\par
+\b Folder Name:\b0 E1_Palindrome_Checker\par
 \b Difficulty:\b0 Easy\par
-\b Total Marks:\b0 10\par
 \b Problem Type:\b0 Debugging\par
 \b Problem Mode:\b0 Standard Input/Output\par
-\b Folder Name:\b0 E1_Palindrome_Checker\par
-\b Test Cases:\b0 13 total (3 sample, 10 hidden)\par
+\b Total Marks:\b0 10\par
 \par
 \b Constraints:\b0 1 <= T <= 50; 1 <= |s| <= 1e5 (sum lengths <= 2e5)\par
 \b Description:\b0 Given T strings, print Yes if the string is a palindrome else No. Case-sensitive; use the full string as-is.\par
 \b Input Format:\b0 T\line s1\line s2\line ...\par
 \b Output Format:\b0 For each string: Yes or No\par
 \par
-\fs28\b Sample Test Cases\b0\fs24\par
-\b Sample 1\b0\par
+\fs28\b Test Cases\b0\fs24\par
+\b Test Case 1 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 3\line madam\line hello\line 1221}\par
 Output:\par
 {\f1\fs20 Yes\line No\line Yes}\par
 \par
-\b Sample 2\b0\par
+\b Test Case 2 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 1\line a}\par
 Output:\par
 {\f1\fs20 Yes}\par
 \par
-\b Sample 3\b0\par
+\b Test Case 3 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 2\line ab\line aba}\par
 Output:\par
 {\f1\fs20 No\line Yes}\par
 \par
+\b Test Case 4 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 4\line racecar\line level\line noon\line abc}\par
+Output:\par
+{\f1\fs20 Yes\line Yes\line Yes\line No}\par
+\par
+\b Test Case 5 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 2\line abba\line abca}\par
+Output:\par
+{\f1\fs20 Yes\line No}\par
+\par
+\b Test Case 6 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 1\line aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa}\par
+Output:\par
+{\f1\fs20 Yes}\par
+\par
+\b Test Case 7 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 1\line abababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab}\par
+Output:\par
+{\f1\fs20 No}\par
+\par
+\b Test Case 8 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3\line 1\line 11\line 121}\par
+Output:\par
+{\f1\fs20 Yes\line Yes\line Yes}\par
+\par
+\b Test Case 9 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 1\line xyzzyx}\par
+Output:\par
+{\f1\fs20 Yes}\par
+\par
+\b Test Case 10 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 1\line xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx}\par
+Output:\par
+{\f1\fs20 Yes}\par
+\par
+\b Test Case 11 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 2\line Aa\line Aba}\par
+Output:\par
+{\f1\fs20 No\line No}\par
+\par
+\b Test Case 12 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 1\line 012210}\par
+Output:\par
+{\f1\fs20 Yes}\par
+\par
+\b Test Case 13 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 1\line abccbaabccba}\par
+Output:\par
+{\f1\fs20 Yes}\par
+\par
+\par
+\fs28\b Starter Code\b0\fs24\par
+\b Python\b0\par
+{\f1\fs20 import sys\line def is_pal(s):\line     \line     s = s.strip()\line     n = len(s)\line     for i in range(n//2 + 1):\line         if s[i] == s[n-i-1]:  \line             return "No"\line     return "Yes"\line def main():\line     data = sys.stdin.read().split()\line     t = int(data[1])  \line     out=[]\line     for i in range(t):\line         out.append(is_pal(data[i]))  \line     sys.stdout.write("\\n".join(out))\line main()\line }\par
+\par
+\b C++\b0\par
+{\f1\fs20 #include <bits/stdc++.h>\line using namespace std;\line int main()\{\line     ios::sync_with_stdio(false);\line     cin.tie(nullptr);\line     int T; cin>>T;\line     for(int tc=0; tc<T; ++tc)\{\line         string s; getline(cin,s);          \line         int n=s.size();\line         bool ok=true;\line         for(int i=0;i<n/2;i++)\{\line             if(s[i]=s[n-i-1]) ok=false;    \line         \}\line         cout<<(ok?"Yes":"No")<<"\\n";\line     \}\line \}\line }\par
+\par
+\b Java\b0\par
+{\f1\fs20 import java.io.*;\line import java.util.*;\line public class Solution\{\line   static String solve(String s)\{\line     s = s.trim();\line     int n = s.length();\line     for(int i=0;i<=n/2;i++)\{\line       if(s.charAt(i)==s.charAt(n-i-1)) return "No"; \line     \}\line     return "Yes";\line   \}\line   public static void main(String[] args)throws Exception\{\line     BufferedReader br=new BufferedReader(new InputStreamReader(System.in));\line     int T=Integer.parseInt(br.readLine().trim());\line     for(int tc=0; tc<=T; tc++)\{ \line       String s=br.readLine();\line       System.out.println(solve(s));\line     \}\line   \}\line \}\line }\par
+\par
+\b C\b0\par
+{\f1\fs20 #include <stdio.h>\line #include <string.h>\line int main()\{\line     int T; char s[200005];\line     scanf("%d",&T);\line     for(int tc=0; tc<=T; tc++)\{            \line         scanf("%s", s);\line         int n=strlen(s);\line         int ok=1;\line         for(int i=0;i<=n/2;i++)\{           \line             if(s[i]==s[n-i-1]) ok=0;       \line         \}\line         printf(ok?"Yes\\n":"No\\n");\line     \}\line     return 0;\line \}\line }\par
+\par
+\par
+\fs28\b Solutions\b0\fs24\par
+\b Python\b0\par
+{\f1\fs20 import sys\line \line T = int(sys.stdin.readline())\line \line for _ in range(T):\line     s = sys.stdin.readline().strip()\line     n = len(s)\line     ok = True\line \line     for i in range(n // 2):\line         if s[i] != s[n - i - 1]:\line             ok = False\line             break\line \line     if ok:\line         print("Yes")\line     else:\line         print("No")\line }\par
+\par
+\b C++\b0\par
+{\f1\fs20 #include <iostream>\line #include <string>\line using namespace std;\line \line int main() \{\line     int T;\line     cin >> T;\line \line     while (T--) \{\line         string s;\line         cin >> s;\line \line         int n = s.length();\line         bool ok = true;\line \line         for (int i = 0; i < n / 2; i++) \{\line             if (s[i] != s[n - i - 1]) \{\line                 ok = false;\line                 break;\line             \}\line         \}\line \line         if (ok)\line             cout << "Yes\\n";\line         else\line             cout << "No\\n";\line     \}\line \line     return 0;\line \}\line }\par
+\par
+\b Java\b0\par
+{\f1\fs20 import java.util.*;\line \line public class Main \{\line     public static void main(String[] args) \{\line         Scanner sc = new Scanner(System.in);\line         int T = sc.nextInt();\line \line         while (T-- > 0) \{\line             String s = sc.next();\line             int n = s.length();\line             boolean ok = true;\line \line             for (int i = 0; i < n / 2; i++) \{\line                 if (s.charAt(i) != s.charAt(n - i - 1)) \{\line                     ok = false;\line                     break;\line                 \}\line             \}\line \line             if (ok)\line                 System.out.println("Yes");\line             else\line                 System.out.println("No");\line         \}\line \line         sc.close();\line     \}\line \}\line }\par
+\par
+\b C\b0\par
+{\f1\fs20 #include <stdio.h>\line #include <string.h>\line \line int main() \{\line     int T; \line     char s[200005];\line \line     scanf("%d", &T);\line \line     for (int tc = 0; tc < T; tc++) \{   // Fixed: tc < T\line         scanf("%s", s);\line \line         int n = strlen(s);\line         int ok = 1;\line \line         for (int i = 0; i < n / 2; i++) \{   // Fixed: i < n/2\line             if (s[i] != s[n - i - 1]) \{     // Fixed: !=\line                 ok = 0;\line                 break;                      // Stop early if mismatch\line             \}\line         \}\line \line         if (ok)\line             printf("Yes\\n");\line         else\line             printf("No\\n");\line     \}\line \line     return 0;\line \}\line \line }\par
+\par
 \par
 \page
 \fs36\b Q2. Array Rotation\b0\fs24\par
+\b Contest:\b0 Round 1: Shattered Syntax (Debugging)\par
+\b Folder Name:\b0 E2_Array_Rotation\par
 \b Difficulty:\b0 Easy\par
-\b Total Marks:\b0 10\par
 \b Problem Type:\b0 Debugging\par
 \b Problem Mode:\b0 Standard Input/Output\par
-\b Folder Name:\b0 E2_Array_Rotation\par
-\b Test Cases:\b0 13 total (3 sample, 10 hidden)\par
+\b Total Marks:\b0 10\par
 \par
 \b Constraints:\b0 1 <= N <= 2e5; 0 <= K <= 1e9; |ai| <= 1e9\par
 \b Description:\b0 Rotate an array of N integers to the right by K positions and print the rotated array.\par
 \b Input Format:\b0 N K\line a1 a2 ... aN\par
 \b Output Format:\b0 Rotated array elements space-separated\par
 \par
-\fs28\b Sample Test Cases\b0\fs24\par
-\b Sample 1\b0\par
+\fs28\b Test Cases\b0\fs24\par
+\b Test Case 1 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 5 2\line 1 2 3 4 5}\par
 Output:\par
 {\f1\fs20 4 5 1 2 3}\par
 \par
-\b Sample 2\b0\par
+\b Test Case 2 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 1 100\line 9}\par
 Output:\par
 {\f1\fs20 9}\par
 \par
-\b Sample 3\b0\par
+\b Test Case 3 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 6 3\line -1 -2 -3 -4 -5 -6}\par
 Output:\par
 {\f1\fs20 -4 -5 -6 -1 -2 -3}\par
 \par
+\b Test Case 4 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 10 0\line 1 2 3 4 5 6 7 8 9 10}\par
+Output:\par
+{\f1\fs20 1 2 3 4 5 6 7 8 9 10}\par
+\par
+\b Test Case 5 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 10 1\line 1 2 3 4 5 6 7 8 9 10}\par
+Output:\par
+{\f1\fs20 10 1 2 3 4 5 6 7 8 9}\par
+\par
+\b Test Case 6 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 10 12\line 1 2 3 4 5 6 7 8 9 10}\par
+Output:\par
+{\f1\fs20 9 10 1 2 3 4 5 6 7 8}\par
+\par
+\b Test Case 7 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 7 3\line 5 5 5 5 5 5 5}\par
+Output:\par
+{\f1\fs20 5 5 5 5 5 5 5}\par
+\par
+\b Test Case 8 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 8 7\line 8 7 6 5 4 3 2 1}\par
+Output:\par
+{\f1\fs20 7 6 5 4 3 2 1 8}\par
+\par
+\b Test Case 9 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 5 4\line 0 1 0 1 0}\par
+Output:\par
+{\f1\fs20 1 0 1 0 0}\par
+\par
+\b Test Case 10 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 6 2\line 1000000000 -1000000000 3 4 5 6}\par
+Output:\par
+{\f1\fs20 5 6 1000000000 -1000000000 3 4}\par
+\par
+\b Test Case 11 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 9 3\line 1 1 2 2 3 3 4 4 5}\par
+Output:\par
+{\f1\fs20 4 4 5 1 1 2 2 3 3}\par
+\par
+\b Test Case 12 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 4 2\line -10 -20 -30 -40}\par
+Output:\par
+{\f1\fs20 -30 -40 -10 -20}\par
+\par
+\b Test Case 13 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 12 5\line 3 1 4 1 5 9 2 6 5 3 5 8}\par
+Output:\par
+{\f1\fs20 6 5 3 5 8 3 1 4 1 5 9 2}\par
+\par
+\par
+\fs28\b Starter Code\b0\fs24\par
+\b Python\b0\par
+{\f1\fs20 import sys\line def main():\line     n,k = map(int, sys.stdin.readline().split())\line     arr = list(map(int, sys.stdin.readline().split()))\line     k = k % (n-1)          \line     res = arr[k:]+arr[:k]  \line     print(" ".join(res))   \line     \line main()\line }\par
+\par
+\b C++\b0\par
+{\f1\fs20 #include <bits/stdc++.h>\line using namespace std;\line int main()\{\line   int n; long long k; cin>>n>>k;\line   vector<long long>a(n);\line   for(int i=0;i<n;i++) cin>>a[i];\line   k = k % n;\line   rotate(a.begin(), a.begin()+k, a.end()); \line   for(int i=0;i<=n;i++)\{                   \line     cout<<a[i]<<(i==n-1?'\\n':' ');\line   \}\line \}\line }\par
+\par
+\b Java\b0\par
+{\f1\fs20 import java.io.*;import java.util.*;\line public class Solution\{\line   public static void main(String[] args)throws Exception\{\line     Scanner sc=new Scanner(System.in);\line     int n=sc.nextInt(); long k=sc.nextLong();\line     int[] a=new int[n];\line     for(int i=0;i<=n;i++) a[i]=sc.nextInt(); \line     int r=(int)(k%(n-1));                    \line     int[] b=new int[n];\line     for(int i=0;i<n;i++)\{\line       b[(i+r)%n]=a[i];                       \line     \}\line     for(int i=0;i<n;i++) System.out.print(b[i]+" ");\line   \}\line \}\line }\par
+\par
+\b C\b0\par
+{\f1\fs20 #include <stdio.h>\line int main()\{\line   int n; long long k;\line   scanf("%d %lld",&n,&k);\line   int a[200000];\line   for(int i=0;i<=n;i++) scanf("%d",&a[i]);\line   k = k % n;\line   for(int i=0;i<n;i++)\{\line     int idx = (i+k)%n;                    \line     printf("%d%c", a[idx], i==n?'\\n':' ');\line   \}\line   return 0;\line \}\line }\par
+\par
+\par
+\fs28\b Solutions\b0\fs24\par
+\b Python\b0\par
+{\f1\fs20 import sys\line \line n, k = map(int, sys.stdin.readline().split())\line a = list(map(int, sys.stdin.readline().split()))\line \line k %= n\line \line for i in range(n):\line     idx = (i - k + n) % n\line     if i == n - 1:\line         print(a[idx])\line     else:\line         print(a[idx], end=" ")\line }\par
+\par
+\b C++\b0\par
+{\f1\fs20 #include <iostream>\line #include <vector>\line using namespace std;\line \line int main() \{\line     int n;\line     long long k;\line     cin >> n >> k;\line \line     vector<int> a(n);\line \line     for(int i = 0; i < n; i++)\line         cin >> a[i];\line \line     k = k % n;\line \line     for(int i = 0; i < n; i++) \{\line         int idx = (i - k + n) % n;\line         cout << a[idx];\line         if(i == n - 1)\line             cout << "\\n";\line         else\line             cout << " ";\line     \}\line \line     return 0;\line \}\line }\par
+\par
+\b Java\b0\par
+{\f1\fs20 import java.util.*;\line \line public class Main \{\line     public static void main(String[] args) \{\line         Scanner sc = new Scanner(System.in);\line \line         int n = sc.nextInt();\line         long k = sc.nextLong();\line \line         int[] a = new int[n];\line \line         for(int i = 0; i < n; i++)\line             a[i] = sc.nextInt();\line \line         k = k % n;\line \line         for(int i = 0; i < n; i++) \{\line             int idx = (int)((i - k + n) % n);\line             System.out.print(a[idx]);\line \line             if(i == n - 1)\line                 System.out.println();\line             else\line                 System.out.print(" ");\line         \}\line \line         sc.close();\line     \}\line \}\line }\par
+\par
+\b C\b0\par
+{\f1\fs20 #include <stdio.h>\line \line int main()\{\line     int n;\line     long long k;\line     \line     scanf("%d %lld", &n, &k);\line     \line     int a[200000];\line     \line     for(int i = 0; i < n; i++)   // FIXED: < n\line         scanf("%d", &a[i]);\line     \line     k = k % n;  // handle large K\line     \line     for(int i = 0; i < n; i++)\{\line         int idx = (i - k + n) % n;   // FIXED: correct right rotation\line         printf("%d", a[idx]);\line         \line         if(i == n - 1)\line             printf("\\n");           // FIXED: proper newline condition\line         else\line             printf(" ");\line     \}\line     \line     return 0;\line \}\line }\par
+\par
 \par
 \page
 \fs36\b Q3. Pattern Match Count (Overlapping)\b0\fs24\par
+\b Contest:\b0 Round 1: Shattered Syntax (Debugging)\par
+\b Folder Name:\b0 E3_Pattern_Match_Count\par
 \b Difficulty:\b0 Easy\par
-\b Total Marks:\b0 10\par
 \b Problem Type:\b0 Debugging\par
 \b Problem Mode:\b0 Standard Input/Output\par
-\b Folder Name:\b0 E3_Pattern_Match_Count\par
-\b Test Cases:\b0 13 total (3 sample, 10 hidden)\par
+\b Total Marks:\b0 10\par
 \par
 \b Constraints:\b0 1 <= |T| <= 2e5; 1 <= |P| <= 1e5\par
 \b Description:\b0 Count the number of (possibly overlapping) occurrences of pattern P inside text T.\par
 \b Input Format:\b0 T\line P\par
 \b Output Format:\b0 Single integer count\par
 \par
-\fs28\b Sample Test Cases\b0\fs24\par
-\b Sample 1\b0\par
+\fs28\b Test Cases\b0\fs24\par
+\b Test Case 1 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 ababa\line aba}\par
 Output:\par
 {\f1\fs20 2}\par
 \par
-\b Sample 2\b0\par
+\b Test Case 2 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 aaaaa\line aa}\par
 Output:\par
 {\f1\fs20 4}\par
 \par
-\b Sample 3\b0\par
+\b Test Case 3 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 hello world\line ll}\par
 Output:\par
 {\f1\fs20 1}\par
 \par
+\b Test Case 4 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 mississippi\line issi}\par
+Output:\par
+{\f1\fs20 2}\par
+\par
+\b Test Case 5 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 abcabcabc\line abc}\par
+Output:\par
+{\f1\fs20 3}\par
+\par
+\b Test Case 6 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 bbbbbb\line bb}\par
+Output:\par
+{\f1\fs20 5}\par
+\par
+\b Test Case 7 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 abababababa\line aba}\par
+Output:\par
+{\f1\fs20 5}\par
+\par
+\b Test Case 8 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 xyz\line z}\par
+Output:\par
+{\f1\fs20 1}\par
+\par
+\b Test Case 9 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 aaaaaaaaaa\line aaa}\par
+Output:\par
+{\f1\fs20 8}\par
+\par
+\b Test Case 10 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\line aaaaaaaaaaaaaaaaaaaaaaaaa}\par
+Output:\par
+{\f1\fs20 26}\par
+\par
+\b Test Case 11 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 thequickbrownfox\line quick}\par
+Output:\par
+{\f1\fs20 1}\par
+\par
+\b Test Case 12 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 111011101110\line 1110}\par
+Output:\par
+{\f1\fs20 3}\par
+\par
+\b Test Case 13 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 abcd\line ef}\par
+Output:\par
+{\f1\fs20 0}\par
+\par
+\par
+\fs28\b Starter Code\b0\fs24\par
+\b Python\b0\par
+{\f1\fs20 import sys\line t = sys.stdin.readline().strip()\line p = sys.stdin.readline().strip()\line cnt = 0\line for i in range(len(t)-len(p)):   \line     if t[i:i+len(p)] != p:       \line         cnt += 1\line print(cnt)\line }\par
+\par
+\b C++\b0\par
+{\f1\fs20 #include <bits/stdc++.h>\line using namespace std;\line int main()\{\line   string t,p; getline(cin,t); getline(cin,p);\line   int cnt=0;\line   for(size_t i=0;i+t.size()<=p.size();i++)\{ \line     if(t.substr(i,p.size())==p) cnt++;      \line   \}\line   cout<<cnt<<"\\n";\line \}\line }\par
+\par
+\b Java\b0\par
+{\f1\fs20 import java.io.*;public class Solution\{\line   public static void main(String[] args)throws Exception\{\line     BufferedReader br=new BufferedReader(new InputStreamReader(System.in));\line     String t=br.readLine(); String p=br.readLine();\line     int cnt=0;\line     for(int i=0;i<t.length()-p.length();i++)\{ \line       if(t.substring(i,i+p.length())!=p) cnt++; \line     \}\line     System.out.println(cnt);\line   \}\line \}\line }\par
+\par
+\b C\b0\par
+{\f1\fs20 #include <stdio.h>\line #include <string.h>\line int main()\{\line   char t[200005], p[100005];\line   fgets(t,200005,stdin);\line   fgets(p,100005,stdin);\line   int n=strlen(t), m=strlen(p);\line   int cnt=0;\line   for(int i=0;i<=n-m;i++)\{\line     if(strncmp(t+i,p,m-1)==0) cnt++; \line   \}\line   printf("%d\\n",cnt);\line   return 0;\line \}\line }\par
+\par
+\par
+\fs28\b Solutions\b0\fs24\par
+\b Python\b0\par
+{\f1\fs20 import sys\line \line t = sys.stdin.readline().rstrip('\\n')\line p = sys.stdin.readline().rstrip('\\n')\line \line n = len(t)\line m = len(p)\line count = 0\line \line for i in range(n - m + 1):\line     if t[i:i+m] == p:\line         count += 1\line \line print(count)\line }\par
+\par
+\b C++\b0\par
+{\f1\fs20 #include <iostream>\line #include <string>\line using namespace std;\line \line int main() \{\line     string t, p;\line     getline(cin, t);\line     getline(cin, p);\line \line     int n = t.length();\line     int m = p.length();\line     int count = 0;\line \line     for (int i = 0; i <= n - m; i++) \{\line         if (t.substr(i, m) == p) \{\line             count++;\line         \}\line     \}\line \line     cout << count << endl;\line     return 0;\line \}\line }\par
+\par
+\b Java\b0\par
+{\f1\fs20 import java.util.*;\line \line public class Main \{\line     public static void main(String[] args) \{\line         Scanner sc = new Scanner(System.in);\line         \line         String t = sc.nextLine();\line         String p = sc.nextLine();\line         \line         int n = t.length();\line         int m = p.length();\line         int count = 0;\line         \line         for (int i = 0; i <= n - m; i++) \{\line             if (t.substring(i, i + m).equals(p)) \{\line                 count++;\line             \}\line         \}\line         \line         System.out.println(count);\line     \}\line \}\line }\par
+\par
+\b C\b0\par
+{\f1\fs20 #include <stdio.h>\line #include <string.h>\line \line int main() \{\line     char t[200005], p[100005];\line \line     // Read input\line     fgets(t, 200005, stdin);\line     fgets(p, 100005, stdin);\line \line     // Remove trailing newline if present\line     t[strcspn(t, "\\n")] = '\\0';\line     p[strcspn(p, "\\n")] = '\\0';\line \line     int n = strlen(t);\line     int m = strlen(p);\line     int cnt = 0;\line \line     // Count overlapping occurrences\line     for (int i = 0; i <= n - m; i++) \{\line         if (strncmp(t + i, p, m) == 0) \{\line             cnt++;\line         \}\line     \}\line \line     printf("%d\\n", cnt);\line     return 0;\line \}\line }\par
+\par
 \par
 \page
 \fs36\b Q4. Longest Valid Parentheses\b0\fs24\par
+\b Contest:\b0 Round 1: Shattered Syntax (Debugging)\par
+\b Folder Name:\b0 M1_Longest_Valid_Parentheses\par
 \b Difficulty:\b0 Medium\par
-\b Total Marks:\b0 20\par
 \b Problem Type:\b0 Debugging\par
 \b Problem Mode:\b0 Standard Input/Output\par
-\b Folder Name:\b0 M1_Longest_Valid_Parentheses\par
-\b Test Cases:\b0 13 total (3 sample, 10 hidden)\par
+\b Total Marks:\b0 20\par
 \par
 \b Constraints:\b0 0 <= |s| <= 2e5; s contains only '(' and ')'\par
 \b Description:\b0 Given a string of '(' and ')', return the length of the longest valid (well-formed) parentheses substring.\par
 \b Input Format:\b0 s\par
 \b Output Format:\b0 Single integer length\par
 \par
-\fs28\b Sample Test Cases\b0\fs24\par
-\b Sample 1\b0\par
+\fs28\b Test Cases\b0\fs24\par
+\b Test Case 1 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 )()())}\par
 Output:\par
 {\f1\fs20 4}\par
 \par
-\b Sample 2\b0\par
+\b Test Case 2 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 (()}\par
 Output:\par
 {\f1\fs20 2}\par
 \par
-\b Sample 3\b0\par
+\b Test Case 3 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 ()(()}\par
 Output:\par
 {\f1\fs20 2}\par
 \par
+\b Test Case 4 (Hidden, auto points)\b0\par
+Input:\par
+Output:\par
+{\f1\fs20 0}\par
+\par
+\b Test Case 5 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 ()}\par
+Output:\par
+{\f1\fs20 2}\par
+\par
+\b Test Case 6 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 ((()))}\par
+Output:\par
+{\f1\fs20 6}\par
+\par
+\b Test Case 7 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 ())(())}\par
+Output:\par
+{\f1\fs20 4}\par
+\par
+\b Test Case 8 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 (()())()}\par
+Output:\par
+{\f1\fs20 8}\par
+\par
+\b Test Case 9 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 (((((}\par
+Output:\par
+{\f1\fs20 0}\par
+\par
+\b Test Case 10 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 ()()()()}\par
+Output:\par
+{\f1\fs20 8}\par
+\par
+\b Test Case 11 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 (()))(()())}\par
+Output:\par
+{\f1\fs20 6}\par
+\par
+\b Test Case 12 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 ())())())()(()())}\par
+Output:\par
+{\f1\fs20 8}\par
+\par
+\b Test Case 13 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 ((()()()))(())}\par
+Output:\par
+{\f1\fs20 14}\par
+\par
+\par
+\fs28\b Starter Code\b0\fs24\par
+\b Python\b0\par
+{\f1\fs20 import sys\line s = sys.stdin.readline().strip()\line st = []              \line best = 0\line for i,ch in enumerate(s):\line     if ch == ')':    \line         st.append(i)\line     else:\line         st.pop()     \line         if len(st)==0:\line             st.append(0)   \line         best = max(best, i-st[-1])\line print(best)\line }\par
+\par
+\b C++\b0\par
+{\f1\fs20 #include <bits/stdc++.h>\line using namespace std;\line int main()\{\line   string s; cin>>s;\line   vector<int> st; st.push_back(0); \line   int best=0;\line   for(int i=0;i<(int)s.size();i++)\{\line     if(s[i]==')') st.push_back(i);  \line     else\{\line       st.pop_back();\line       if(st.empty()) st.push_back(i-1); \line       best=max(best,i-st.back());\line     \}\line   \}\line   cout<<best<<"\\n";\line \}\line }\par
+\par
+\b Java\b0\par
+{\f1\fs20 import java.io.*;import java.util.*;\line public class Solution\{\line   public static void main(String[] args)throws Exception\{\line     String s=new BufferedReader(new InputStreamReader(System.in)).readLine();\line     int[] st=new int[s.length()+5];\line     int top=0; st[top]=0; \line     int best=0;\line     for(int i=0;i<s.length();i++)\{\line       char c=s.charAt(i);\line       if(c==')') st[++top]=i; \line       else\{\line         top--;\line         if(top>=0) best=Math.max(best, i-st[top]);\line         else st[++top]=0;     \line       \}\line     \}\line     System.out.println(best);\line   \}\line \}\line }\par
+\par
+\b C\b0\par
+{\f1\fs20 #include <stdio.h>\line #include <string.h>\line int main()\{\line   char s[200005]; scanf("%s",s);\line   int n=strlen(s);\line   int st[200005], top=-1;\line   st[++top]=0;                 \line   int best=0;\line   for(int i=0;i<n;i++)\{\line     if(s[i]=='(') st[++top]=i;\line     else\{\line       top--;\line       if(top!=-1)\{\line         int len=i-st[top];\line         if(len>best) best=len;\line       \}else\{\line         st[++top]=0;           \line       \}\line     \}\line   \}\line   printf("%d\\n",best);\line \}\line }\par
+\par
+\par
+\fs28\b Solutions\b0\fs24\par
+\b Python\b0\par
+{\f1\fs20 import sys\line \line s = sys.stdin.readline().strip()\line \line if not s:\line     print(0)\line else:\line     stack = [-1]   # base index\line     best = 0\line \line     for i in range(len(s)):\line         if s[i] == '(':\line             stack.append(i)\line         else:\line             stack.pop()\line             if stack:\line                 best = max(best, i - stack[-1])\line             else:\line                 stack.append(i)\line \line     print(best)\line }\par
+\par
+\b C++\b0\par
+{\f1\fs20 #include <bits/stdc++.h>\line using namespace std;\line \line int main() \{\line     string s;\line     \line     if (!(cin >> s)) \{   // handle empty input\line         cout << 0 << endl;\line         return 0;\line     \}\line \line     int n = s.length();\line     stack<int> st;\line     \line     st.push(-1);   // base index\line     int best = 0;\line \line     for (int i = 0; i < n; i++) \{\line         if (s[i] == '(') \{\line             st.push(i);\line         \} else \{\line             st.pop();\line             if (!st.empty()) \{\line                 best = max(best, i - st.top());\line             \} else \{\line                 st.push(i);\line             \}\line         \}\line     \}\line \line     cout << best << endl;\line     return 0;\line \}\line }\par
+\par
+\b Java\b0\par
+{\f1\fs20 import java.util.*;\line \line public class Main \{\line     public static void main(String[] args) \{\line         Scanner sc = new Scanner(System.in);\line \line         if (!sc.hasNext()) \{   // handle empty input\line             System.out.println(0);\line             return;\line         \}\line \line         String s = sc.next();\line         Stack<Integer> st = new Stack<>();\line \line         st.push(-1);   // base index\line         int best = 0;\line \line         for (int i = 0; i < s.length(); i++) \{\line             if (s.charAt(i) == '(') \{\line                 st.push(i);\line             \} else \{\line                 st.pop();\line                 if (!st.isEmpty()) \{\line                     best = Math.max(best, i - st.peek());\line                 \} else \{\line                     st.push(i);\line                 \}\line             \}\line         \}\line \line         System.out.println(best);\line     \}\line \}\line }\par
+\par
+\b C\b0\par
+{\f1\fs20 #include <stdio.h>\line #include <string.h>\line \line int main() \{\line     char s[200005];\line \line     // handle empty input safely\line     if (scanf("%s", s) != 1) \{\line         printf("0\\n");\line         return 0;\line     \}\line \line     int n = strlen(s);\line \line     int st[200005], top = -1;\line \line     st[++top] = -1;   // FIXED: base index should be -1\line \line     int best = 0;\line \line     for (int i = 0; i < n; i++) \{\line         if (s[i] == '(') \{\line             st[++top] = i;\line         \} else \{\line             top--;\line \line             if (top != -1) \{\line                 int len = i - st[top];\line                 if (len > best)\line                     best = len;\line             \} else \{\line                 st[++top] = i;   // FIXED: push current index\line             \}\line         \}\line     \}\line \line     printf("%d\\n", best);\line     return 0;\line \}\line }\par
+\par
 \par
 \page
 \fs36\b Q5. Longest Substring Without Repeating Characters\b0\fs24\par
+\b Contest:\b0 Round 1: Shattered Syntax (Debugging)\par
+\b Folder Name:\b0 M2_Longest_Substring_No_Repeat\par
 \b Difficulty:\b0 Medium\par
-\b Total Marks:\b0 20\par
 \b Problem Type:\b0 Debugging\par
 \b Problem Mode:\b0 Standard Input/Output\par
-\b Folder Name:\b0 M2_Longest_Substring_No_Repeat\par
-\b Test Cases:\b0 13 total (3 sample, 10 hidden)\par
+\b Total Marks:\b0 20\par
 \par
 \b Constraints:\b0 0 <= |s| <= 2e5; ASCII characters\par
 \b Description:\b0 Given a string s, return the length of the longest substring without repeating characters.\par
 \b Input Format:\b0 s\par
 \b Output Format:\b0 Single integer length\par
 \par
-\fs28\b Sample Test Cases\b0\fs24\par
-\b Sample 1\b0\par
+\fs28\b Test Cases\b0\fs24\par
+\b Test Case 1 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 abcabcbb}\par
 Output:\par
 {\f1\fs20 3}\par
 \par
-\b Sample 2\b0\par
+\b Test Case 2 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 bbbbb}\par
 Output:\par
 {\f1\fs20 1}\par
 \par
-\b Sample 3\b0\par
+\b Test Case 3 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 pwwkew}\par
 Output:\par
 {\f1\fs20 3}\par
 \par
+\b Test Case 4 (Hidden, auto points)\b0\par
+Input:\par
+Output:\par
+{\f1\fs20 0}\par
+\par
+\b Test Case 5 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 abcdef}\par
+Output:\par
+{\f1\fs20 6}\par
+\par
+\b Test Case 6 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 abba}\par
+Output:\par
+{\f1\fs20 2}\par
+\par
+\b Test Case 7 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 dvdf}\par
+Output:\par
+{\f1\fs20 3}\par
+\par
+\b Test Case 8 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 anviaj}\par
+Output:\par
+{\f1\fs20 5}\par
+\par
+\b Test Case 9 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 tmmzuxt}\par
+Output:\par
+{\f1\fs20 5}\par
+\par
+\b Test Case 10 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 aab}\par
+Output:\par
+{\f1\fs20 2}\par
+\par
+\b Test Case 11 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 ohvhjdml}\par
+Output:\par
+{\f1\fs20 6}\par
+\par
+\b Test Case 12 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 abcdeafghijakl}\par
+Output:\par
+{\f1\fs20 10}\par
+\par
+\b Test Case 13 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa}\par
+Output:\par
+{\f1\fs20 1}\par
+\par
+\par
+\fs28\b Starter Code\b0\fs24\par
+\b Python\b0\par
+{\f1\fs20 import sys\line s=sys.stdin.readline().strip()\line last=\{\}\line l=0; best=0\line for r,ch in enumerate(s):\line     if ch in last and last[ch] > l:  \line         l = last[ch]                \line     last[ch]=r\line     best=max(best, r-l)             \line print(best)\line }\par
+\par
+\b C++\b0\par
+{\f1\fs20 #include <bits/stdc++.h>\line using namespace std;\line int main()\{\line   string s; getline(cin,s);\line   vector<int> last(256,-1);\line   int l=0,best=0;\line   for(int r=0;r<(int)s.size();r++)\{\line     unsigned char c=s[r];\line     if(last[c]>=l) l=last[c];     \line     last[c]=r;\line     best=max(best,r-l);           \line   \}\line   cout<<best<<"\\n";\line \}\line }\par
+\par
+\b Java\b0\par
+{\f1\fs20 import java.io.*;import java.util.*;\line public class Solution\{\line   public static void main(String[] args)throws Exception\{\line     String s=new BufferedReader(new InputStreamReader(System.in)).readLine();\line     int[] last=new int[256]; Arrays.fill(last,-1);\line     int l=0,best=0;\line     for(int r=0;r<s.length();r++)\{\line       int c=s.charAt(r);\line       if(last[c]>=l) l=last[c];      \line       last[c]=r;\line       best=Math.max(best,r-l);       \line     \}\line     System.out.println(best);\line   \}\line \}\line }\par
+\par
+\b C\b0\par
+{\f1\fs20 #include <stdio.h>\line #include <string.h>\line int main()\{\line   char s[200005]; scanf("%s",s);\line   int last[256]; for(int i=0;i<256;i++) last[i]=-1;\line   int l=0,best=0;\line   for(int r=0; s[r]; r++)\{\line     unsigned char c=s[r];\line     if(last[c]>l) l=last[c];            \line     last[c]=r;\line     int len=r-l; if(len>best) best=len; \line   \}\line   printf("%d\\n",best);\line \}\line }\par
+\par
+\par
+\fs28\b Solutions\b0\fs24\par
+\b Python\b0\par
+{\f1\fs20 import sys\line \line s = sys.stdin.readline().strip()\line \line if not s:\line     print(0)\line     sys.exit()\line \line last = [-1] * 256\line l = 0\line best = 0\line \line for r in range(len(s)):\line     c = ord(s[r])\line \line     if last[c] >= l:\line         l = last[c] + 1\line \line     last[c] = r\line     best = max(best, r - l + 1)\line \line print(best)\line }\par
+\par
+\b C++\b0\par
+{\f1\fs20 #include <iostream>\line #include <vector>\line using namespace std;\line \line int main() \{\line     string s;\line     \line     if (!(cin >> s)) \{\line         cout << 0 << endl;\line         return 0;\line     \}\line \line     vector<int> last(256, -1);\line     int l = 0, best = 0;\line \line     for (int r = 0; r < s.length(); r++) \{\line         unsigned char c = s[r];\line \line         if (last[c] >= l)\line             l = last[c] + 1;\line \line         last[c] = r;\line \line         best = max(best, r - l + 1);\line     \}\line \line     cout << best << endl;\line     return 0;\line \}\line }\par
+\par
+\b Java\b0\par
+{\f1\fs20 import java.util.*;\line \line public class Main \{\line     public static void main(String[] args) \{\line         Scanner sc = new Scanner(System.in);\line \line         if (!sc.hasNext()) \{\line             System.out.println(0);\line             return;\line         \}\line \line         String s = sc.next();\line \line         int[] last = new int[256];\line         Arrays.fill(last, -1);\line \line         int l = 0, best = 0;\line \line         for (int r = 0; r < s.length(); r++) \{\line             char c = s.charAt(r);\line \line             if (last[c] >= l)\line                 l = last[c] + 1;\line \line             last[c] = r;\line \line             best = Math.max(best, r - l + 1);\line         \}\line \line         System.out.println(best);\line     \}\line \}\line }\par
+\par
+\b C\b0\par
+{\f1\fs20 #include <stdio.h>\line #include <string.h>\line \line int main() \{\line     char s[200005];\line \line     // Handle empty input safely\line     if (scanf("%s", s) != 1) \{\line         printf("0\\n");\line         return 0;\line     \}\line \line     int last[256];\line     for (int i = 0; i < 256; i++)\line         last[i] = -1;\line \line     int l = 0, best = 0;\line \line     for (int r = 0; s[r]; r++) \{\line         unsigned char c = s[r];\line \line         if (last[c] >= l)      // FIXED\line             l = last[c] + 1;   // FIXED\line \line         last[c] = r;\line \line         int len = r - l + 1;   // FIXED\line         if (len > best)\line             best = len;\line     \}\line \line     printf("%d\\n", best);\line     return 0;\line \}\line }\par
+\par
 \par
 \page
 \fs36\b Q6. Coin Change (Minimum Coins)\b0\fs24\par
+\b Contest:\b0 Round 1: Shattered Syntax (Debugging)\par
+\b Folder Name:\b0 M3_Coin_Change_Min_Coins\par
 \b Difficulty:\b0 Medium\par
-\b Total Marks:\b0 20\par
 \b Problem Type:\b0 Debugging\par
 \b Problem Mode:\b0 Standard Input/Output\par
-\b Folder Name:\b0 M3_Coin_Change_Min_Coins\par
-\b Test Cases:\b0 13 total (3 sample, 10 hidden)\par
+\b Total Marks:\b0 20\par
 \par
 \b Constraints:\b0 1 <= n <= 50; 0 <= amount <= 1e5; 1 <= coin[i] <= 1e4\par
 \b Description:\b0 Given coin denominations and a target amount, output the minimum number of coins needed. If impossible, output -1.\par
 \b Input Format:\b0 n amount\line c1 c2 ... cn\par
 \b Output Format:\b0 Minimum coins or -1\par
 \par
-\fs28\b Sample Test Cases\b0\fs24\par
-\b Sample 1\b0\par
+\fs28\b Test Cases\b0\fs24\par
+\b Test Case 1 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 3 11\line 1 2 5}\par
 Output:\par
 {\f1\fs20 3}\par
 \par
-\b Sample 2\b0\par
+\b Test Case 2 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 2 3\line 2 4}\par
 Output:\par
 {\f1\fs20 -1}\par
 \par
-\b Sample 3\b0\par
+\b Test Case 3 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 1 0\line 7}\par
 Output:\par
 {\f1\fs20 0}\par
 \par
+\b Test Case 4 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3 6\line 1 3 4}\par
+Output:\par
+{\f1\fs20 2}\par
+\par
+\b Test Case 5 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 4 27\line 2 5 10 1}\par
+Output:\par
+{\f1\fs20 4}\par
+\par
+\b Test Case 6 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 2 49\line 7 14}\par
+Output:\par
+{\f1\fs20 4}\par
+\par
+\b Test Case 7 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 4 11\line 9 6 5 1}\par
+Output:\par
+{\f1\fs20 2}\par
+\par
+\b Test Case 8 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 1 1\line 2}\par
+Output:\par
+{\f1\fs20 -1}\par
+\par
+\b Test Case 9 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 1 10\line 2}\par
+Output:\par
+{\f1\fs20 5}\par
+\par
+\b Test Case 10 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 2 21\line 3 7}\par
+Output:\par
+{\f1\fs20 3}\par
+\par
+\b Test Case 11 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3 12\line 4 6 8}\par
+Output:\par
+{\f1\fs20 2}\par
+\par
+\b Test Case 12 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3 999\line 1 2 3}\par
+Output:\par
+{\f1\fs20 333}\par
+\par
+\b Test Case 13 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3 1\line 5 7 8}\par
+Output:\par
+{\f1\fs20 -1}\par
+\par
+\par
+\fs28\b Starter Code\b0\fs24\par
+\b Python\b0\par
+{\f1\fs20 import sys\line n,amt = map(int, sys.stdin.readline().split())\line coins = list(map(int, sys.stdin.readline().split()))\line INF = 10**9\line dp = [INF]*(amt+1)\line dp[0]=1              \line for c in coins:\line     for a in range(c, amt+1):\line         dp[a] = min(dp[a], dp[a-c]) \line print(-1 if dp[amt]==INF else dp[amt])\line }\par
+\par
+\b C++\b0\par
+{\f1\fs20 #include <bits/stdc++.h>\line using namespace std;\line int main()\{\line   int n,amt; cin>>n>>amt;\line   vector<int> c(n); for(int i=0;i<n;i++) cin>>c[i];\line   const int INF=1e9;\line   vector<int> dp(amt+1,INF);\line   dp[0]=1; \line   for(int coin: c)\{\line     for(int a=coin;a<=amt;a++)\{\line       dp[a]=min(dp[a], dp[a-coin]);\line     \}\line   \}\line   cout<<(dp[amt]>=INF?-1:dp[amt])<<"\\n";\line \}\line }\par
+\par
+\b Java\b0\par
+{\f1\fs20 import java.io.*;import java.util.*;\line public class Solution\{\line   public static void main(String[] args)throws Exception\{\line     FastScanner fs=new FastScanner(System.in);\line     int n=fs.nextInt(), amt=fs.nextInt();\line     int[] c=new int[n];\line     for(int i=0;i<n;i++) c[i]=fs.nextInt();\line     int INF=1_000_000_000;\line     int[] dp=new int[amt+1];\line     Arrays.fill(dp, INF);\line     dp[0]=1; \line     for(int coin: c)\{\line       for(int a=coin;a<=amt;a++)\{\line         dp[a]=Math.min(dp[a], dp[a-coin]); \line       \}\line     \}\line     System.out.println(dp[amt]>=INF?-1:dp[amt]);\line   \}\line   static class FastScanner\{\line     private final InputStream in; private final byte[] buf=new byte[1<<16];\line     private int ptr=0, len=0;\line     FastScanner(InputStream is)\{in=is;\}\line     int read() throws IOException\{ if(ptr>=len)\{ len=in.read(buf); ptr=0; if(len<=0) return -1;\} return buf[ptr++];\}\line     int nextInt() throws IOException\{\line       int c; do\{ c=read(); \}while(c<=32);\line       int sgn=1; if(c=='-')\{sgn=-1;c=read();\}\line       int x=0; while(c>32)\{ x=x*10 + (c-'0'); c=read(); \}\line       return x*sgn;\line     \}\line   \}\line \}\line }\par
+\par
+\b C\b0\par
+{\f1\fs20 #include <stdio.h>\line #define INF 1000000000\line int min(int a,int b)\{return a<b?a:b;\}\line int main()\{\line   int n,amt; scanf("%d %d",&n,&amt);\line   int c[55]; for(int i=0;i<n;i++) scanf("%d",&c[i]);\line   static int dp[100005];\line   for(int i=0;i<=amt;i++) dp[i]=INF;\line   dp[0]=1; \line   for(int i=0;i<n;i++)\{\line     for(int a=c[i]; a<=amt; a++)\{\line       dp[a]=min(dp[a], dp[a-c[i]]); \line     \}\line   \}\line   printf("%d\\n", dp[amt]>=INF?-1:dp[amt]);\line \}\line }\par
+\par
+\par
+\fs28\b Solutions\b0\fs24\par
+\b Python\b0\par
+{\f1\fs20 import sys\line \line INF = 10**9\line \line n, amt = map(int, sys.stdin.readline().split())\line coins = list(map(int, sys.stdin.readline().split()))\line \line dp = [INF] * (amt + 1)\line dp[0] = 0\line \line for coin in coins:\line     for a in range(coin, amt + 1):\line         if dp[a - coin] != INF:\line             dp[a] = min(dp[a], dp[a - coin] + 1)\line \line print(-1 if dp[amt] >= INF else dp[amt])\line }\par
+\par
+\b C++\b0\par
+{\f1\fs20 #include <bits/stdc++.h>\line using namespace std;\line \line const int INF = 1e9;\line \line int main() \{\line     int n, amt;\line     cin >> n >> amt;\line \line     vector<int> coins(n);\line     for(int i = 0; i < n; i++)\line         cin >> coins[i];\line \line     vector<int> dp(amt + 1, INF);\line     dp[0] = 0;\line \line     for(int i = 0; i < n; i++) \{\line         for(int a = coins[i]; a <= amt; a++) \{\line             if(dp[a - coins[i]] != INF)\line                 dp[a] = min(dp[a], dp[a - coins[i]] + 1);\line         \}\line     \}\line \line     cout << (dp[amt] >= INF ? -1 : dp[amt]) << endl;\line \line     return 0;\line \}\line }\par
+\par
+\b Java\b0\par
+{\f1\fs20 import java.util.*;\line \line public class Main \{\line     static final int INF = 1000000000;\line \line     public static void main(String[] args) \{\line         Scanner sc = new Scanner(System.in);\line \line         int n = sc.nextInt();\line         int amt = sc.nextInt();\line \line         int[] coins = new int[n];\line         for(int i = 0; i < n; i++)\line             coins[i] = sc.nextInt();\line \line         int[] dp = new int[amt + 1];\line         Arrays.fill(dp, INF);\line         dp[0] = 0;\line \line         for(int i = 0; i < n; i++) \{\line             for(int a = coins[i]; a <= amt; a++) \{\line                 if(dp[a - coins[i]] != INF)\line                     dp[a] = Math.min(dp[a], dp[a - coins[i]] + 1);\line             \}\line         \}\line \line         System.out.println(dp[amt] >= INF ? -1 : dp[amt]);\line \line         sc.close();\line     \}\line \}\line }\par
+\par
+\b C\b0\par
+{\f1\fs20 #include <stdio.h>\line #define INF 1000000000\line \line int min(int a, int b) \{ \line     return a < b ? a : b; \line \}\line \line int main() \{\line     int n, amt; \line     scanf("%d %d", &n, &amt);\line \line     int c[55]; \line     for(int i = 0; i < n; i++) \line         scanf("%d", &c[i]);\line \line     static int dp[100005];\line \line     // Initialize DP array\line     for(int i = 0; i <= amt; i++) \line         dp[i] = INF;\line \line     dp[0] = 0;   // Correct base case\line \line     // Unbounded coin change\line     for(int i = 0; i < n; i++)\{\line         for(int a = c[i]; a <= amt; a++)\{\line             if(dp[a - c[i]] != INF)  // optional safety check\line                 dp[a] = min(dp[a], dp[a - c[i]] + 1);\line         \}\line     \}\line \line     printf("%d\\n", dp[amt] >= INF ? -1 : dp[amt]);\line \line     return 0;\line \}\line }\par
+\par
 \par
 \page
 \fs36\b Q7. Merge Intervals\b0\fs24\par
+\b Contest:\b0 Round 1: Shattered Syntax (Debugging)\par
+\b Folder Name:\b0 M4_Merge_Intervals\par
 \b Difficulty:\b0 Medium\par
-\b Total Marks:\b0 20\par
 \b Problem Type:\b0 Debugging\par
 \b Problem Mode:\b0 Standard Input/Output\par
-\b Folder Name:\b0 M4_Merge_Intervals\par
-\b Test Cases:\b0 13 total (3 sample, 10 hidden)\par
+\b Total Marks:\b0 20\par
 \par
 \b Constraints:\b0 1 <= N <= 2e5; -1e9 <= start,end <= 1e9; start <= end\par
 \b Description:\b0 Given N intervals [start,end], merge all overlapping intervals and print merged intervals sorted by start.\par
 \b Input Format:\b0 N\line start1 end1\line ...\par
 \b Output Format:\b0 Merged intervals, one per line: start end\par
 \par
-\fs28\b Sample Test Cases\b0\fs24\par
-\b Sample 1\b0\par
+\fs28\b Test Cases\b0\fs24\par
+\b Test Case 1 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 4\line 1 3\line 2 6\line 8 10\line 15 18}\par
 Output:\par
 {\f1\fs20 1 6\line 8 10\line 15 18}\par
 \par
-\b Sample 2\b0\par
+\b Test Case 2 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 3\line 1 4\line 4 5\line 6 7}\par
 Output:\par
 {\f1\fs20 1 5\line 6 7}\par
 \par
-\b Sample 3\b0\par
+\b Test Case 3 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 1\line -1 1}\par
 Output:\par
 {\f1\fs20 -1 1}\par
 \par
+\b Test Case 4 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3\line 1 2\line 3 4\line 5 6}\par
+Output:\par
+{\f1\fs20 1 2\line 3 4\line 5 6}\par
+\par
+\b Test Case 5 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3\line 1 10\line 2 3\line 4 8}\par
+Output:\par
+{\f1\fs20 1 10}\par
+\par
+\b Test Case 6 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3\line -5 -1\line -3 2\line 10 10}\par
+Output:\par
+{\f1\fs20 -5 2\line 10 10}\par
+\par
+\b Test Case 7 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3\line 1 3\line 3 3\line 3 5}\par
+Output:\par
+{\f1\fs20 1 5}\par
+\par
+\b Test Case 8 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3\line 5 7\line 1 2\line 2 4}\par
+Output:\par
+{\f1\fs20 1 4\line 5 7}\par
+\par
+\b Test Case 9 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3\line 1 1\line 1 2\line 2 2}\par
+Output:\par
+{\f1\fs20 1 2}\par
+\par
+\b Test Case 10 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 2\line 0 100\line 101 200}\par
+Output:\par
+{\f1\fs20 0 100\line 101 200}\par
+\par
+\b Test Case 11 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3\line -10 0\line 0 0\line 0 10}\par
+Output:\par
+{\f1\fs20 -10 10}\par
+\par
+\b Test Case 12 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 4\line 1 4\line 0 0\line 5 5\line 2 3}\par
+Output:\par
+{\f1\fs20 0 0\line 1 4\line 5 5}\par
+\par
+\b Test Case 13 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 4\line 1 2\line 2 3\line 3 4\line 4 5}\par
+Output:\par
+{\f1\fs20 1 5}\par
+\par
+\par
+\fs28\b Starter Code\b0\fs24\par
+\b Python\b0\par
+{\f1\fs20 import sys\line n=int(sys.stdin.readline())\line it=[]\line for _ in range(n):\line     a,b=map(int, sys.stdin.readline().split())\line     it.append((b,a))          \line it.sort()\line res=[]\line for s,e in it:\line     if not res or s>res[-1][1]:\line         res.append([s,e])\line     else:\line         res[-1][1]=min(res[-1][1], e)  \line for s,e in res:\line     print(s,e)\line }\par
+\par
+\b C++\b0\par
+{\f1\fs20 #include <bits/stdc++.h>\line using namespace std;\line int main()\{\line   int n; cin>>n;\line   vector<pair<long long,long long>> it(n);\line   for(int i=0;i<n;i++) cin>>it[i].first>>it[i].second;\line   sort(it.begin(), it.end(), [](auto &a, auto &b)\{ return a.second<b.second; \});\line   long long cs=it[0].first, ce=it[0].second;\line   for(int i=1;i<n;i++)\{\line     if(it[i].first<=ce) ce=min(ce,it[i].second); \line     else\{ cout<<cs<<" "<<ce<<"\\n"; cs=it[i].first; ce=it[i].second; \}\line   \}\line   cout<<cs<<" "<<ce<<"\\n";\line \}\line }\par
+\par
+\b Java\b0\par
+{\f1\fs20 import java.io.*;import java.util.*;\line public class Solution\{\line   public static void main(String[] args)throws Exception\{\line     BufferedReader br=new BufferedReader(new InputStreamReader(System.in));\line     int n=Integer.parseInt(br.readLine().trim());\line     long[][] it=new long[n][2];\line     for(int i=0;i<n;i++)\{\line       StringTokenizer st=new StringTokenizer(br.readLine());\line       it[i][0]=Long.parseLong(st.nextToken());\line       it[i][1]=Long.parseLong(st.nextToken());\line     \}\line     Arrays.sort(it,(a,b)->Long.compare(a[1],b[1])); \line     long cs=it[0][0], ce=it[0][1];\line     for(int i=1;i<n;i++)\{\line       if(it[i][0]<=ce) ce=Math.min(ce,it[i][1]); \line       else\{ System.out.println(cs+" "+ce); cs=it[i][0]; ce=it[i][1]; \}\line     \}\line     System.out.println(cs+" "+ce);\line   \}\line \}\line }\par
+\par
+\b C\b0\par
+{\f1\fs20 #include <stdio.h>\line #include <stdlib.h>\line typedef struct\{ long long s,e; \} I;\line int cmp(const void* a,const void* b)\{\line   I* x=(I*)a; I* y=(I*)b;\line   return (x->e > y->e) - (x->e < y->e); \line \}\line int main()\{\line   int n; scanf("%d",&n);\line   I* it=malloc(sizeof(I)*n);\line   for(int i=0;i<n;i++)\{ scanf("%lld %lld",&it[i].s,&it[i].e); \}\line   qsort(it,n,sizeof(I),cmp);\line   long long cs=it[0].s, ce=it[0].e;\line   for(int i=1;i<n;i++)\{\line     if(it[i].s<=ce)\{\line       if(it[i].e<ce) ce=it[i].e; \line     \}else\{\line       printf("%lld %lld\\n",cs,ce);\line       cs=it[i].s; ce=it[i].e;\line     \}\line   \}\line   printf("%lld %lld\\n",cs,ce);\line \}\line }\par
+\par
+\par
+\fs28\b Solutions\b0\fs24\par
+\b Python\b0\par
+{\f1\fs20 n = int(input())\line \line intervals = []\line for _ in range(n):\line     s, e = map(int, input().split())\line     intervals.append((s, e))\line \line # Sort by start\line intervals.sort()\line \line cs, ce = intervals[0]\line \line for i in range(1, n):\line     if intervals[i][0] <= ce:\line         ce = max(ce, intervals[i][1])\line     else:\line         print(cs, ce)\line         cs, ce = intervals[i]\line \line print(cs, ce)\line }\par
+\par
+\b C++\b0\par
+{\f1\fs20 #include <bits/stdc++.h>\line using namespace std;\line \line int main() \{\line     int n;\line     cin >> n;\line \line     vector<pair<long long, long long>> intervals(n);\line \line     for (int i = 0; i < n; i++) \{\line         cin >> intervals[i].first >> intervals[i].second;\line     \}\line \line     // Sort by start\line     sort(intervals.begin(), intervals.end());\line \line     long long cs = intervals[0].first;\line     long long ce = intervals[0].second;\line \line     for (int i = 1; i < n; i++) \{\line         if (intervals[i].first <= ce) \{\line             ce = max(ce, intervals[i].second);\line         \} else \{\line             cout << cs << " " << ce << "\\n";\line             cs = intervals[i].first;\line             ce = intervals[i].second;\line         \}\line     \}\line \line     cout << cs << " " << ce << "\\n";\line \line     return 0;\line \}\line }\par
+\par
+\b Java\b0\par
+{\f1\fs20 import java.util.*;\line \line public class Main \{\line     public static void main(String[] args) \{\line         Scanner sc = new Scanner(System.in);\line \line         int n = sc.nextInt();\line         long[][] intervals = new long[n][2];\line \line         for (int i = 0; i < n; i++) \{\line             intervals[i][0] = sc.nextLong();\line             intervals[i][1] = sc.nextLong();\line         \}\line \line         // Sort by start\line         Arrays.sort(intervals, (a, b) -> Long.compare(a[0], b[0]));\line \line         long cs = intervals[0][0];\line         long ce = intervals[0][1];\line \line         for (int i = 1; i < n; i++) \{\line             if (intervals[i][0] <= ce) \{\line                 ce = Math.max(ce, intervals[i][1]);\line             \} else \{\line                 System.out.println(cs + " " + ce);\line                 cs = intervals[i][0];\line                 ce = intervals[i][1];\line             \}\line         \}\line \line         System.out.println(cs + " " + ce);\line     \}\line \}\line }\par
+\par
+\b C\b0\par
+{\f1\fs20 #include <stdio.h>\line #include <stdlib.h>\line \line typedef struct \{\line     long long s, e;\line \} I;\line \line int cmp(const void* a, const void* b) \{\line     I* x = (I*)a;\line     I* y = (I*)b;\line \line     if (x->s < y->s) return -1;\line     if (x->s > y->s) return 1;\line     return 0;\line \}\line \line int main() \{\line     int n;\line     scanf("%d", &n);\line \line     I* it = malloc(sizeof(I) * n);\line \line     for (int i = 0; i < n; i++) \{\line         scanf("%lld %lld", &it[i].s, &it[i].e);\line     \}\line \line     // Sort by start\line     qsort(it, n, sizeof(I), cmp);\line \line     long long cs = it[0].s;\line     long long ce = it[0].e;\line \line     for (int i = 1; i < n; i++) \{\line         if (it[i].s <= ce) \{\line             // Merge intervals \u8594? take maximum end\line             if (it[i].e > ce)\line                 ce = it[i].e;\line         \} else \{\line             printf("%lld %lld\\n", cs, ce);\line             cs = it[i].s;\line             ce = it[i].e;\line         \}\line     \}\line \line     printf("%lld %lld\\n", cs, ce);\line \line     free(it);\line     return 0;\line \}\line }\par
+\par
 \par
 \page
 \fs36\b Q8. Graph Connectivity Queries (BFS)\b0\fs24\par
+\b Contest:\b0 Round 1: Shattered Syntax (Debugging)\par
+\b Folder Name:\b0 H1_Graph_Connectivity_BFS\par
 \b Difficulty:\b0 Hard\par
-\b Total Marks:\b0 30\par
 \b Problem Type:\b0 Debugging\par
 \b Problem Mode:\b0 Standard Input/Output\par
-\b Folder Name:\b0 H1_Graph_Connectivity_BFS\par
-\b Test Cases:\b0 18 total (3 sample, 15 hidden)\par
+\b Total Marks:\b0 30\par
 \par
 \b Constraints:\b0 1 <= N <= 2e5; 0 <= M <= 2e5; 1 <= Q <= 2e5\par
 \b Description:\b0 Given an undirected graph and Q queries, determine for each query if there exists a path between u and v.\par
 \b Input Format:\b0 N M Q\line (M lines) u v\line (Q lines) u v\par
 \b Output Format:\b0 For each query: Yes or No\par
 \par
-\fs28\b Sample Test Cases\b0\fs24\par
-\b Sample 1\b0\par
+\fs28\b Test Cases\b0\fs24\par
+\b Test Case 1 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 5 4 3\line 1 2\line 2 3\line 4 5\line 3 1\line 1 3\line 1 5\line 4 5}\par
 Output:\par
 {\f1\fs20 Yes\line No\line Yes}\par
 \par
-\b Sample 2\b0\par
+\b Test Case 2 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 3 0 2\line 1 2\line 2 3}\par
 Output:\par
 {\f1\fs20 No\line No}\par
 \par
-\b Sample 3\b0\par
+\b Test Case 3 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 4 3 1\line 1 2\line 2 3\line 3 4\line 1 4}\par
 Output:\par
 {\f1\fs20 Yes}\par
 \par
+\b Test Case 4 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 6 5 5\line 1 2\line 2 3\line 3 4\line 4 5\line 5 6\line 1 6\line 2 5\line 1 3\line 6 1\line 3 6}\par
+Output:\par
+{\f1\fs20 Yes\line Yes\line Yes\line Yes\line Yes}\par
+\par
+\b Test Case 5 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 6 2 3\line 1 2\line 4 5\line 1 2\line 1 3\line 4 6}\par
+Output:\par
+{\f1\fs20 Yes\line No\line No}\par
+\par
+\b Test Case 6 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 1 0 2\line 1 1\line 1 1}\par
+Output:\par
+{\f1\fs20 Yes\line Yes}\par
+\par
+\b Test Case 7 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 5 4 4\line 1 2\line 2 3\line 3 1\line 4 5\line 1 3\line 1 4\line 4 5\line 2 5}\par
+Output:\par
+{\f1\fs20 Yes\line No\line Yes\line No}\par
+\par
+\b Test Case 8 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 7 6 3\line 1 2\line 2 3\line 3 4\line 4 1\line 5 6\line 6 7\line 1 4\line 1 7\line 5 7}\par
+Output:\par
+{\f1\fs20 Yes\line No\line Yes}\par
+\par
+\b Test Case 9 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 8 7 4\line 1 2\line 2 3\line 3 4\line 4 5\line 5 6\line 6 7\line 7 8\line 1 8\line 2 7\line 3 6\line 4 4}\par
+Output:\par
+{\f1\fs20 Yes\line Yes\line Yes\line Yes}\par
+\par
+\b Test Case 10 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 8 3 3\line 1 2\line 3 4\line 5 6\line 1 2\line 2 3\line 7 8}\par
+Output:\par
+{\f1\fs20 Yes\line No\line No}\par
+\par
+\b Test Case 11 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 9 8 3\line 1 2\line 2 3\line 3 4\line 4 5\line 5 1\line 6 7\line 7 8\line 8 9\line 1 5\line 1 9\line 6 9}\par
+Output:\par
+{\f1\fs20 Yes\line No\line Yes}\par
+\par
+\b Test Case 12 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 10 9 3\line 1 2\line 2 3\line 3 4\line 4 5\line 5 6\line 6 7\line 7 8\line 8 9\line 9 10\line 1 10\line 5 10\line 2 9}\par
+Output:\par
+{\f1\fs20 Yes\line Yes\line Yes}\par
+\par
+\b Test Case 13 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 4 2 3\line 1 2\line 2 3\line 3 4\line 1 3\line 2 4}\par
+Output:\par
+{\f1\fs20 No\line Yes\line No}\par
+\par
+\b Test Case 14 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 6 6 3\line 1 2\line 2 3\line 3 4\line 4 5\line 5 6\line 6 1\line 1 4\line 2 5\line 3 6}\par
+Output:\par
+{\f1\fs20 Yes\line Yes\line Yes}\par
+\par
+\b Test Case 15 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 6 3 4\line 1 2\line 2 3\line 4 5\line 1 3\line 1 5\line 4 6\line 5 4}\par
+Output:\par
+{\f1\fs20 Yes\line No\line No\line Yes}\par
+\par
+\b Test Case 16 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 7 0 3\line 1 7\line 3 3\line 5 6}\par
+Output:\par
+{\f1\fs20 No\line Yes\line No}\par
+\par
+\b Test Case 17 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 5 5 3\line 1 2\line 2 3\line 3 4\line 4 5\line 2 5\line 1 5\line 1 4\line 3 5}\par
+Output:\par
+{\f1\fs20 Yes\line Yes\line Yes}\par
+\par
+\b Test Case 18 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 5 1 3\line 2 2\line 2 2\line 1 2\line 3 3}\par
+Output:\par
+{\f1\fs20 Yes\line No\line Yes}\par
+\par
+\par
+\fs28\b Starter Code\b0\fs24\par
+\b Python\b0\par
+{\f1\fs20 import sys\line from collections import deque\line data=sys.stdin.read().split()\line n,m,q = map(int, data[:3])\line adj=[[] for _ in range(n)]          \line idx=3\line for _ in range(m):\line     u=int(data[idx]); v=int(data[idx+1]); idx+=2\line     adj[u].append(v)               \line def ok(u,v,vis):\line     dq=deque([u]); vis[u]=True\line     while dq:\line         x=dq.popleft()\line         if x==v: return True\line         for nb in adj[x]:\line             if vis[nb]: continue\line             dq.append(nb)\line     return False\line for _ in range(q):\line     u=int(data[idx]); v=int(data[idx+1]); idx+=2\line     vis=[False]*n\line     print("Yes" if ok(u,v,vis) else "No")\line }\par
+\par
+\b C++\b0\par
+{\f1\fs20 #include <bits/stdc++.h>\line using namespace std;\line int main()\{\line   ios::sync_with_stdio(false);\line   cin.tie(nullptr);\line   int n,m,q; cin>>n>>m>>q;\line   vector<vector<int>> adj(n); \line   for(int i=0;i<m;i++)\{\line     int u,v; cin>>u>>v;\line     adj[u].push_back(v);     \line   \}\line   while(q--)\{\line     int s,t; cin>>s>>t;\line     vector<int> vis(n,0);\line     queue<int> qu; qu.push(s); vis[s]=1;\line     bool found=false;\line     while(!qu.empty())\{\line       int x=qu.front(); qu.pop();\line       if(x==t)\{found=true;break;\}\line       for(int nb: adj[x])\{\line         if(vis[nb]) continue;\line         qu.push(nb);          \line       \}\line     \}\line     cout<<(found?"Yes":"No")<<"\\n";\line   \}\line \}\line }\par
+\par
+\b Java\b0\par
+{\f1\fs20 import java.io.*;import java.util.*;\line public class Solution\{\line   public static void main(String[] args)throws Exception\{\line     FastScanner fs=new FastScanner(System.in);\line     int n=fs.nextInt(), m=fs.nextInt(), q=fs.nextInt();\line     ArrayList<Integer>[] adj=new ArrayList[n]; \line     for(int i=0;i<n;i++) adj[i]=new ArrayList<>();\line     for(int i=0;i<m;i++)\{\line       int u=fs.nextInt(), v=fs.nextInt();\line       adj[u].add(v); \line     \}\line     while(q-- > 0)\{\line       int s=fs.nextInt(), t=fs.nextInt();\line       boolean[] vis=new boolean[n]; \line       ArrayDeque<Integer> qu=new ArrayDeque<>();\line       qu.add(s); vis[s]=true;\line       boolean found=false;\line       while(!qu.isEmpty())\{\line         int x=qu.poll();\line         if(x==t)\{found=true;break;\}\line         for(int nb: adj[x])\{\line           if(vis[nb]) continue;\line           qu.add(nb); \line         \}\line       \}\line       System.out.println(found?"Yes":"No");\line     \}\line   \}\line   static class FastScanner\{\line     private final InputStream in; private final byte[] buf=new byte[1<<16];\line     private int ptr=0,len=0;\line     FastScanner(InputStream is)\{in=is;\}\line     int read() throws IOException\{ if(ptr>=len)\{ len=in.read(buf); ptr=0; if(len<=0) return -1;\} return buf[ptr++];\}\line     int nextInt() throws IOException\{\line       int c; do\{ c=read(); \}while(c<=32);\line       int sgn=1; if(c=='-')\{sgn=-1;c=read();\}\line       int x=0; while(c>32)\{ x=x*10+(c-'0'); c=read(); \}\line       return x*sgn;\line     \}\line   \}\line \}\line }\par
+\par
+\b C\b0\par
+{\f1\fs20 #include <stdio.h>\line #include <stdlib.h>\line typedef struct Node\{int v; struct Node* next;\} Node;\line int main()\{\line   int n,m,q; if(scanf("%d %d %d",&n,&m,&q)!=3) return 0;\line   Node** adj=(Node**)calloc(n,sizeof(Node*)); \line   for(int i=0;i<m;i++)\{\line     int u,v; scanf("%d %d",&u,&v);\line     Node* a=(Node*)malloc(sizeof(Node)); a->v=v; a->next=adj[u]; adj[u]=a; \line     \line   \}\line   int* vis=(int*)calloc(n,sizeof(int)); \line   int* qarr=(int*)malloc(n*sizeof(int)); \line   while(q--)\{\line     int s,t; scanf("%d %d",&s,&t);\line     for(int i=0;i<n;i++) vis[i]=0;\line     int head=0,tail=0; qarr[tail++]=s; vis[s]=1;\line     int found=0;\line     while(head<tail)\{\line       int x=qarr[head++];\line       if(x==t)\{found=1;break;\}\line       for(Node* p=adj[x]; p; p=p->next)\{\line         int nb=p->v;\line         if(!vis[nb])\{ vis[nb]=1; qarr[tail++]=nb; \}\line       \}\line     \}\line     puts(found?"Yes":"No");\line   \}\line \}\line }\par
+\par
+\par
+\fs28\b Solutions\b0\fs24\par
+\b Python\b0\par
+{\f1\fs20 import sys\line from collections import deque\line \line input = sys.stdin.readline\line \line n, m, q = map(int, input().split())\line \line adj = [[] for _ in range(n + 1)]\line \line # Read edges (undirected)\line for _ in range(m):\line     u, v = map(int, input().split())\line     adj[u].append(v)\line     adj[v].append(u)\line \line for _ in range(q):\line     s, t = map(int, input().split())\line \line     vis = [False] * (n + 1)\line     queue = deque([s])\line     vis[s] = True\line \line     found = False\line \line     while queue:\line         x = queue.popleft()\line \line         if x == t:\line             found = True\line             break\line \line         for nb in adj[x]:\line             if not vis[nb]:\line                 vis[nb] = True\line                 queue.append(nb)\line \line     print("Yes" if found else "No")\line }\par
+\par
+\b C++\b0\par
+{\f1\fs20 #include <bits/stdc++.h>\line using namespace std;\line \line int main() \{\line     ios::sync_with_stdio(false);\line     cin.tie(NULL);\line \line     int n, m, q;\line     cin >> n >> m >> q;\line \line     vector<vector<int>> adj(n + 1);\line \line     // Read edges (undirected)\line     for (int i = 0; i < m; i++) \{\line         int u, v;\line         cin >> u >> v;\line         adj[u].push_back(v);\line         adj[v].push_back(u);\line     \}\line \line     while (q--) \{\line         int s, t;\line         cin >> s >> t;\line \line         vector<int> vis(n + 1, 0);\line         queue<int> qu;\line \line         qu.push(s);\line         vis[s] = 1;\line \line         bool found = false;\line \line         while (!qu.empty()) \{\line             int x = qu.front();\line             qu.pop();\line \line             if (x == t) \{\line                 found = true;\line                 break;\line             \}\line \line             for (int nb : adj[x]) \{\line                 if (!vis[nb]) \{\line                     vis[nb] = 1;\line                     qu.push(nb);\line                 \}\line             \}\line         \}\line \line         cout << (found ? "Yes\\n" : "No\\n");\line     \}\line \line     return 0;\line \}\line }\par
+\par
+\b Java\b0\par
+{\f1\fs20 import java.util.*;\line \line public class Main \{\line     public static void main(String[] args) \{\line         Scanner sc = new Scanner(System.in);\line \line         int n = sc.nextInt();\line         int m = sc.nextInt();\line         int q = sc.nextInt();\line \line         List<Integer>[] adj = new ArrayList[n + 1];\line         for (int i = 1; i <= n; i++)\line             adj[i] = new ArrayList<>();\line \line         // Read edges (undirected)\line         for (int i = 0; i < m; i++) \{\line             int u = sc.nextInt();\line             int v = sc.nextInt();\line             adj[u].add(v);\line             adj[v].add(u);\line         \}\line \line         while (q-- > 0) \{\line             int s = sc.nextInt();\line             int t = sc.nextInt();\line \line             boolean[] vis = new boolean[n + 1];\line             Queue<Integer> queue = new LinkedList<>();\line \line             queue.add(s);\line             vis[s] = true;\line \line             boolean found = false;\line \line             while (!queue.isEmpty()) \{\line                 int x = queue.poll();\line \line                 if (x == t) \{\line                     found = true;\line                     break;\line                 \}\line \line                 for (int nb : adj[x]) \{\line                     if (!vis[nb]) \{\line                         vis[nb] = true;\line                         queue.add(nb);\line                     \}\line                 \}\line             \}\line \line             System.out.println(found ? "Yes" : "No");\line         \}\line \line         sc.close();\line     \}\line \}\line }\par
+\par
+\b C\b0\par
+{\f1\fs20 #include <stdio.h>\line #include <stdlib.h>\line \line typedef struct Node \{\line     int v;\line     struct Node* next;\line \} Node;\line \line int main() \{\line     int n, m, q;\line     if (scanf("%d %d %d", &n, &m, &q) != 3)\line         return 0;\line \line     // Allocate n+1 for 1-based indexing\line     Node** adj = (Node**)calloc(n + 1, sizeof(Node*));\line \line     // Read edges\line     for (int i = 0; i < m; i++) \{\line         int u, v;\line         scanf("%d %d", &u, &v);\line \line         // Edge u -> v\line         Node* a = (Node*)malloc(sizeof(Node));\line         a->v = v;\line         a->next = adj[u];\line         adj[u] = a;\line \line         // Back edge v -> u (undirected graph)\line         Node* b = (Node*)malloc(sizeof(Node));\line         b->v = u;\line         b->next = adj[v];\line         adj[v] = b;\line     \}\line \line     int* vis = (int*)calloc(n + 1, sizeof(int));\line     int* qarr = (int*)malloc((n + 1) * sizeof(int));\line \line     while (q--) \{\line         int s, t;\line         scanf("%d %d", &s, &t);\line \line         // Reset visited array\line         for (int i = 1; i <= n; i++)\line             vis[i] = 0;\line \line         int head = 0, tail = 0;\line         qarr[tail++] = s;\line         vis[s] = 1;\line \line         int found = 0;\line \line         // BFS\line         while (head < tail) \{\line             int x = qarr[head++];\line \line             if (x == t) \{\line                 found = 1;\line                 break;\line             \}\line \line             for (Node* p = adj[x]; p != NULL; p = p->next) \{\line                 int nb = p->v;\line \line                 if (!vis[nb]) \{\line                     vis[nb] = 1;\line                     qarr[tail++] = nb;\line                 \}\line             \}\line         \}\line \line         if (found)\line             printf("Yes\\n");\line         else\line             printf("No\\n");\line     \}\line \line     return 0;\line \}\line }\par
+\par
 \par
 \page
 \fs36\b Q9. Minimum Path Sum in Grid\b0\fs24\par
+\b Contest:\b0 Round 1: Shattered Syntax (Debugging)\par
+\b Folder Name:\b0 H2_Minimum_Path_Sum_Grid\par
 \b Difficulty:\b0 Hard\par
-\b Total Marks:\b0 30\par
 \b Problem Type:\b0 Debugging\par
 \b Problem Mode:\b0 Standard Input/Output\par
-\b Folder Name:\b0 H2_Minimum_Path_Sum_Grid\par
-\b Test Cases:\b0 18 total (3 sample, 15 hidden)\par
+\b Total Marks:\b0 30\par
 \par
 \b Constraints:\b0 1 <= R,C; R*C <= 2e5; 0 <= grid[i][j] <= 1e6\par
 \b Description:\b0 Given an R\u215?C grid, find minimum path sum from (0,0) to (R-1,C-1) moving only right or down.\par
 \b Input Format:\b0 R C\line (R lines) grid row\par
 \b Output Format:\b0 Single integer minimum sum\par
 \par
-\fs28\b Sample Test Cases\b0\fs24\par
-\b Sample 1\b0\par
+\fs28\b Test Cases\b0\fs24\par
+\b Test Case 1 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 3 3\line 1 3 1\line 1 5 1\line 4 2 1}\par
 Output:\par
 {\f1\fs20 7}\par
 \par
-\b Sample 2\b0\par
+\b Test Case 2 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 1 4\line 5 1 2 3}\par
 Output:\par
 {\f1\fs20 11}\par
 \par
-\b Sample 3\b0\par
+\b Test Case 3 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 2 2\line 0 0\line 0 0}\par
 Output:\par
 {\f1\fs20 0}\par
 \par
+\b Test Case 4 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 1 1\line 1}\par
+Output:\par
+{\f1\fs20 1}\par
+\par
+\b Test Case 5 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 2 3\line 1 2 3\line 4 5 6}\par
+Output:\par
+{\f1\fs20 12}\par
+\par
+\b Test Case 6 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3 2\line 5 9\line 1 2\line 4 0}\par
+Output:\par
+{\f1\fs20 8}\par
+\par
+\b Test Case 7 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3 3\line 0 1 2\line 3 4 5\line 6 7 8}\par
+Output:\par
+{\f1\fs20 16}\par
+\par
+\b Test Case 8 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3 4\line 10 1 1 10\line 10 1 10 10\line 10 1 1 1}\par
+Output:\par
+{\f1\fs20 15}\par
+\par
+\b Test Case 9 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 4 3\line 2 2 2\line 2 2 2\line 2 2 2\line 2 2 2}\par
+Output:\par
+{\f1\fs20 12}\par
+\par
+\b Test Case 10 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3 3\line 1 100 1\line 1 100 1\line 1 1 1}\par
+Output:\par
+{\f1\fs20 5}\par
+\par
+\b Test Case 11 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 1 5\line 9 8 7 6 5}\par
+Output:\par
+{\f1\fs20 35}\par
+\par
+\b Test Case 12 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 5 1\line 1\line 2\line 3\line 4\line 5}\par
+Output:\par
+{\f1\fs20 15}\par
+\par
+\b Test Case 13 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 4 3\line 3 1 2\line 4 0 1\line 2 3 4\line 1 1 1}\par
+Output:\par
+{\f1\fs20 9}\par
+\par
+\b Test Case 14 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 2 3\line 0 0 0\line 0 0 0}\par
+Output:\par
+{\f1\fs20 0}\par
+\par
+\b Test Case 15 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 2 2\line 7 1\line 1 7}\par
+Output:\par
+{\f1\fs20 15}\par
+\par
+\b Test Case 16 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3 3\line 1 2 3\line 1 1 1\line 9 9 1}\par
+Output:\par
+{\f1\fs20 5}\par
+\par
+\b Test Case 17 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 2 2\line 1000000 1000000\line 1000000 0}\par
+Output:\par
+{\f1\fs20 2000000}\par
+\par
+\b Test Case 18 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 5 2\line 1 2\line 3 4\line 5 6\line 7 8\line 9 10}\par
+Output:\par
+{\f1\fs20 31}\par
+\par
+\par
+\fs28\b Starter Code\b0\fs24\par
+\b Python\b0\par
+{\f1\fs20 import sys\line r,c = map(int, sys.stdin.readline().split())\line g=[list(map(int, sys.stdin.readline().split())) for _ in range(r)]\line dp=[[0]*c for _ in range(r)]\line dp[0][0]=0 \line for j in range(1,c):\line     dp[0][j]=dp[0][j-1]+g[0][j]\line for i in range(1,r):\line     dp[i][0]=dp[i-1][0]+g[i][0]\line for i in range(1,r):\line     for j in range(1,c):\line         dp[i][j]=g[i][j]+max(dp[i-1][j],dp[i][j-1])  \line print(dp[r-1][c-1])\line }\par
+\par
+\b C++\b0\par
+{\f1\fs20 #include <bits/stdc++.h>\line using namespace std;\line int main()\{\line   int r,c; cin>>r>>c;\line   vector<vector<long long>> g(r, vector<long long>(c));\line   for(int i=0;i<r;i++) for(int j=0;j<c;j++) cin>>g[i][j];\line   vector<vector<long long>> dp(r, vector<long long>(c,0));\line   dp[0][0]=0; \line   for(int j=1;j<c;j++) dp[0][j]=dp[0][j-1]+g[0][j];\line   for(int i=1;i<r;i++) dp[i][0]=dp[i-1][0]+g[i][0];\line   for(int i=1;i<r;i++) for(int j=1;j<c;j++)\line     dp[i][j]=g[i][j]+max(dp[i-1][j],dp[i][j-1]); \line   cout<<dp[r-1][c-1]<<"\\n";\line \}\line }\par
+\par
+\b Java\b0\par
+{\f1\fs20 import java.io.*;import java.util.*;\line public class Solution\{\line   public static void main(String[] args)throws Exception\{\line     FastScanner fs=new FastScanner(System.in);\line     int r=fs.nextInt(), c=fs.nextInt();\line     long[][] g=new long[r][c];\line     for(int i=0;i<r;i++) for(int j=0;j<c;j++) g[i][j]=fs.nextLong();\line     long[][] dp=new long[r][c];\line     dp[0][0]=0; \line     for(int j=1;j<c;j++) dp[0][j]=dp[0][j-1]+g[0][j];\line     for(int i=1;i<r;i++) dp[i][0]=dp[i-1][0]+g[i][0];\line     for(int i=1;i<r;i++) for(int j=1;j<c;j++)\line       dp[i][j]=g[i][j]+Math.max(dp[i-1][j],dp[i][j-1]); \line     System.out.println(dp[r-1][c-1]);\line   \}\line   static class FastScanner\{\line     private final InputStream in; private final byte[] buf=new byte[1<<16];\line     private int ptr=0,len=0;\line     FastScanner(InputStream is)\{in=is;\}\line     int read() throws IOException\{ if(ptr>=len)\{ len=in.read(buf); ptr=0; if(len<=0) return -1;\} return buf[ptr++];\}\line     int nextInt() throws IOException\{\line       int c; do\{ c=read(); \}while(c<=32);\line       int sgn=1; if(c=='-')\{sgn=-1;c=read();\}\line       int x=0; while(c>32)\{ x=x*10+(c-'0'); c=read(); \}\line       return x*sgn;\line     \}\line     long nextLong() throws IOException\{\line       int c; do\{ c=read(); \}while(c<=32);\line       int sgn=1; if(c=='-')\{sgn=-1;c=read();\}\line       long x=0; while(c>32)\{ x=x*10+(c-'0'); c=read(); \}\line       return x*sgn;\line     \}\line   \}\line \}\line }\par
+\par
+\b C\b0\par
+{\f1\fs20 #include <stdio.h>\line #include <stdlib.h>\line long long minll(long long a,long long b)\{return a<b?a:b;\}\line int main()\{\line   int r,c; scanf("%d %d",&r,&c);\line   long long *dp=calloc((size_t)r*c,sizeof(long long));\line   for(int i=0;i<r;i++)\{\line     for(int j=0;j<c;j++)\{\line       long long x; scanf("%lld",&x);\line       if(i==0 && j==0) dp[0]=0;                 \line       else if(i==0) dp[j]=dp[j-1]+x;\line       else if(j==0) dp[i*c]=dp[(i-1)*c]+x;\line       else dp[i*c+j]=x+maxll(dp[(i-1)*c+j], dp[i*c+j-1]); \line     \}\line   \}\line   printf("%lld\\n", dp[r*c-1]);\line \}\line }\par
+\par
+\par
+\fs28\b Solutions\b0\fs24\par
+\b Python\b0\par
+{\f1\fs20 import sys\line input = sys.stdin.read\line data = input().split()\line \line r = int(data[0])\line c = int(data[1])\line \line dp = [0] * (r * c)\line \line index = 2\line for i in range(r):\line     for j in range(c):\line         x = int(data[index])\line         index += 1\line \line         if i == 0 and j == 0:\line             dp[0] = x\line         elif i == 0:\line             dp[j] = dp[j - 1] + x\line         elif j == 0:\line             dp[i * c] = dp[(i - 1) * c] + x\line         else:\line             dp[i * c + j] = x + min(dp[(i - 1) * c + j],\line                                     dp[i * c + j - 1])\line \line print(dp[r * c - 1])\line }\par
+\par
+\b C++\b0\par
+{\f1\fs20 #include <bits/stdc++.h>\line using namespace std;\line \line int main() \{\line     int r, c;\line     cin >> r >> c;\line \line     vector<long long> dp(r * c);\line \line     for(int i = 0; i < r; i++) \{\line         for(int j = 0; j < c; j++) \{\line             long long x;\line             cin >> x;\line \line             if(i == 0 && j == 0)\line                 dp[0] = x;\line             else if(i == 0)\line                 dp[j] = dp[j - 1] + x;\line             else if(j == 0)\line                 dp[i * c] = dp[(i - 1) * c] + x;\line             else\line                 dp[i * c + j] = x + min(dp[(i - 1) * c + j],\line                                         dp[i * c + j - 1]);\line         \}\line     \}\line \line     cout << dp[r * c - 1] << endl;\line     return 0;\line \}\line }\par
+\par
+\b Java\b0\par
+{\f1\fs20 import java.util.*;\line \line public class Main \{\line     public static void main(String[] args) \{\line         Scanner sc = new Scanner(System.in);\line \line         int r = sc.nextInt();\line         int c = sc.nextInt();\line \line         long[] dp = new long[r * c];\line \line         for(int i = 0; i < r; i++) \{\line             for(int j = 0; j < c; j++) \{\line                 long x = sc.nextLong();\line \line                 if(i == 0 && j == 0)\line                     dp[0] = x;\line                 else if(i == 0)\line                     dp[j] = dp[j - 1] + x;\line                 else if(j == 0)\line                     dp[i * c] = dp[(i - 1) * c] + x;\line                 else\line                     dp[i * c + j] = x + Math.min(\line                         dp[(i - 1) * c + j],\line                         dp[i * c + j - 1]\line                     );\line             \}\line         \}\line \line         System.out.println(dp[r * c - 1]);\line         sc.close();\line     \}\line \}\line }\par
+\par
+\b C\b0\par
+{\f1\fs20 #include <stdio.h>\line #include <stdlib.h>\line \line long long minll(long long a, long long b) \{\line     return a < b ? a : b;\line \}\line \line int main() \{\line     int r, c;\line     scanf("%d %d", &r, &c);\line     long long* dp = calloc((size_t)r * c, sizeof(long long));\line \line     for (int i = 0; i < r; i++) \{\line         for (int j = 0; j < c; j++) \{\line             long long x;\line             scanf("%lld", &x);\line             if (i == 0 && j == 0) \{\line                 dp[0] = x;\line             \} else if (i == 0) \{\line                 dp[j] = dp[j - 1] + x;\line             \} else if (j == 0) \{\line                 dp[i * c] = dp[(i - 1) * c] + x;\line             \} else \{\line                 dp[i * c + j] = x + minll(dp[(i - 1) * c + j], dp[i * c + j - 1]);\line             \}\line         \}\line     \}\line \line     printf("%lld\line ", dp[r * c - 1]);\line     return 0;\line \}\line }\par
+\par
 \par
 \page
 \fs36\b Q10. Merge K Sorted Arrays\b0\fs24\par
+\b Contest:\b0 Round 1: Shattered Syntax (Debugging)\par
+\b Folder Name:\b0 H3_Merge_K_Sorted_Arrays\par
 \b Difficulty:\b0 Hard\par
-\b Total Marks:\b0 30\par
 \b Problem Type:\b0 Debugging\par
 \b Problem Mode:\b0 Standard Input/Output\par
-\b Folder Name:\b0 H3_Merge_K_Sorted_Arrays\par
-\b Test Cases:\b0 18 total (3 sample, 15 hidden)\par
+\b Total Marks:\b0 30\par
 \par
 \b Constraints:\b0 1 <= K; total elements across arrays <= 2e5; arrays sorted non-decreasing\par
 \b Description:\b0 Given K sorted arrays, merge them into a single sorted array and print it.\par
 \b Input Format:\b0 K\line (n1 and n1 ints)\line ...\par
 \b Output Format:\b0 Merged sorted elements space-separated\par
 \par
-\fs28\b Sample Test Cases\b0\fs24\par
-\b Sample 1\b0\par
+\fs28\b Test Cases\b0\fs24\par
+\b Test Case 1 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 3\line 3 1 4 7\line 2 2 6\line 4 0 3 5 8}\par
 Output:\par
 {\f1\fs20 0 1 2 3 4 5 6 7 8}\par
 \par
-\b Sample 2\b0\par
+\b Test Case 2 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 1\line 5 -1 -1 0 2 2}\par
 Output:\par
 {\f1\fs20 -1 -1 0 2 2}\par
 \par
-\b Sample 3\b0\par
+\b Test Case 3 (Sample, 0 points)\b0\par
 Input:\par
 {\f1\fs20 2\line 0\line 3 1 1 1}\par
 Output:\par
 {\f1\fs20 1 1 1}\par
+\par
+\b Test Case 4 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3\line 3 1 3 5\line 3 2 4 6\line 2 0 7}\par
+Output:\par
+{\f1\fs20 0 1 2 3 4 5 6 7}\par
+\par
+\b Test Case 5 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3\line 3 -5 -3 -1\line 3 -4 -2 0\line 3 1 2 3}\par
+Output:\par
+{\f1\fs20 -5 -4 -3 -2 -1 0 1 2 3}\par
+\par
+\b Test Case 6 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3\line 0\line 0\line 1 1}\par
+Output:\par
+{\f1\fs20 1}\par
+\par
+\b Test Case 7 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 4\line 1 1\line 1 1\line 1 1\line 1 1}\par
+Output:\par
+{\f1\fs20 1 1 1 1}\par
+\par
+\b Test Case 8 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 1\line 5 1 2 3 4 5}\par
+Output:\par
+{\f1\fs20 1 2 3 4 5}\par
+\par
+\b Test Case 9 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3\line 2 10 20\line 3 5 15 25\line 2 0 30}\par
+Output:\par
+{\f1\fs20 0 5 10 15 20 25 30}\par
+\par
+\b Test Case 10 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3\line 3 2 2 2\line 2 2 2\line 1 2}\par
+Output:\par
+{\f1\fs20 2 2 2 2 2 2}\par
+\par
+\b Test Case 11 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 4\line 3 -10 0 10\line 3 -9 1 11\line 3 -8 2 12\line 3 -7 3 13}\par
+Output:\par
+{\f1\fs20 -10 -9 -8 -7 0 1 2 3 10 11 12 13}\par
+\par
+\b Test Case 12 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3\line 2 1 1000000\line 2 2 999999\line 2 3 500000}\par
+Output:\par
+{\f1\fs20 1 2 3 500000 999999 1000000}\par
+\par
+\b Test Case 13 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 4\line 1 0\line 2 0 0\line 3 0 0 0\line 4 0 0 0 0}\par
+Output:\par
+{\f1\fs20 0 0 0 0 0 0 0 0 0 0}\par
+\par
+\b Test Case 14 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 4\line 2 1 2\line 1 3\line 3 4 5 6\line 4 7 8 9 10}\par
+Output:\par
+{\f1\fs20 1 2 3 4 5 6 7 8 9 10}\par
+\par
+\b Test Case 15 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3\line 1 -1\line 0\line 0}\par
+Output:\par
+{\f1\fs20 -1}\par
+\par
+\b Test Case 16 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3\line 4 5 5 5 5\line 2 5 5\line 1 5}\par
+Output:\par
+{\f1\fs20 5 5 5 5 5 5 5}\par
+\par
+\b Test Case 17 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 3\line 5 1 2 2 2 3\line 3 2 2 4\line 3 0 2 5}\par
+Output:\par
+{\f1\fs20 0 1 2 2 2 2 2 2 3 4 5}\par
+\par
+\b Test Case 18 (Hidden, auto points)\b0\par
+Input:\par
+{\f1\fs20 5\line 2 9 9\line 3 1 1 1\line 3 2 2 2\line 2 3 3\line 4 4 4 4 4}\par
+Output:\par
+{\f1\fs20 1 1 1 2 2 2 3 3 4 4 4 4 9 9}\par
+\par
+\par
+\fs28\b Starter Code\b0\fs24\par
+\b Python\b0\par
+{\f1\fs20 import sys, heapq\line k=int(sys.stdin.readline())\line h=[]; arrays=[]\line for i in range(k):\line     parts=list(map(int, sys.stdin.readline().split()))\line     n=parts[0]\line     arr=parts[1:]\line     arrays.append(arr)\line     if n>0:\line         heapq.heappush(h,(arr[0],i,1))\line res=[]\line while h:\line     v,i,j=heapq.heappop(h)\line     res.append(v)\line     if j<=len(arrays[i]):\line         heapq.heappush(h,(arrays[i][j],i,j+1))\line print(" ".join(map(str,res)))\line }\par
+\par
+\b C++\b0\par
+{\f1\fs20 #include <iostream>\line #include <vector>\line #include <queue>\line #include <functional>\line using namespace std;\line struct Item\{ long long v; int i,j; \};\line int main()\{\line   int K; cin>>K;\line   vector<vector<long long>> a(K);\line   priority_queue<Item, vector<Item>, function<bool(const Item&,const Item&)>> pq(\line     [](const Item& x,const Item& y)\{ return x.v<y.v; \} \line   );\line   for(int i=0;i<K;i++)\{\line     int n; cin>>n;\line     a[i].resize(n);\line     for(int j=0;j<n;j++) cin>>a[i][j];\line     if(n>0) pq.push(\{a[i][0],i,1\}); \line   \}\line   vector<long long> res;\line   while(!pq.empty())\{\line     auto it=pq.top(); pq.pop();\line     res.push_back(it.v);\line     if(it.j<= (int)a[it.i].size())\{ \line       pq.push(\{a[it.i][it.j], it.i, it.j+1\});\line     \}\line   \}\line   for(size_t i=0;i<res.size();i++) cout<<res[i]<<(i+1==res.size()?'\\n':' ');\line \}\line }\par
+\par
+\b Java\b0\par
+{\f1\fs20 import java.io.*;import java.util.*;\line public class Solution\{\line   static class Item\{ int v,i,j; Item(int v,int i,int j)\{this.v=v;this.i=i;this.j=j;\} \}\line   public static void main(String[] args)throws Exception\{\line     BufferedReader br=new BufferedReader(new InputStreamReader(System.in));\line     int K=Integer.parseInt(br.readLine().trim());\line     ArrayList<int[]> arrays=new ArrayList<>();\line     PriorityQueue<Item> pq=new PriorityQueue<>((a,b)->b.v-a.v); \line     for(int i=0;i<K;i++)\{\line       StringTokenizer st=new StringTokenizer(br.readLine());\line       int n=Integer.parseInt(st.nextToken());\line       int[] arr=new int[n];\line       for(int j=0;j<n;j++) arr[j]=Integer.parseInt(st.nextToken());\line       arrays.add(arr);\line       if(n>0) pq.add(new Item(arr[0],i,1)); \line     \}\line     StringBuilder sb=new StringBuilder();\line     while(!pq.isEmpty())\{\line       Item it=pq.poll();\line       sb.append(it.v).append(' ');\line       int[] arr=arrays.get(it.i);\line       if(it.j<=arr.length)\{ \line         pq.add(new Item(arr[it.j], it.i, it.j+1));\line       \}\line     \}\line     System.out.print(sb.toString().trim());\line   \}\line \}\line }\par
+\par
+\b C\b0\par
+{\f1\fs20 #include <stdio.h>\line #include <stdlib.h>\line typedef struct\{ int val, i, j; \} Item;\line int cmp(const void* a,const void* b)\{\line   return ((Item*)a)->val - ((Item*)b)->val;\line \}\line int main()\{\line   int K; if(scanf("%d",&K)!=1) return 0;\line   int **arr=malloc(K*sizeof(int*));\line   int *len=malloc(K*sizeof(int));\line   Item *heap=malloc(K*sizeof(Item));\line   int hs=0;\line   for(int i=0;i<K;i++)\{\line     scanf("%d",&len[i]);\line     arr[i]=malloc(len[i]*sizeof(int));\line     for(int j=0;j<=len[i];j++) scanf("%d",&arr[i][j]); \line     if(len[i]>0)\{ heap[hs++] = (Item)\{arr[i][0], i, 1\}; \} \line   \}\line   qsort(heap,hs,sizeof(Item),cmp); \line   for(int t=0; t<hs; t++)\{\line     printf("%d ", heap[t].val);     \line   \}\line   return 0;\line \}\line }\par
+\par
+\par
+\fs28\b Solutions\b0\fs24\par
+\b Python\b0\par
+{\f1\fs20 import sys\line \line K = int(sys.stdin.readline())\line \line all_elements = []\line \line for _ in range(K):\line     line = list(map(int, sys.stdin.readline().split()))\line     n = line[0]\line     elements = line[1:n+1]\line     all_elements.extend(elements)\line \line all_elements.sort()\line \line print(*all_elements)\line }\par
+\par
+\b C++\b0\par
+{\f1\fs20 #include <iostream>\line #include <vector>\line #include <algorithm>\line using namespace std;\line \line int main() \{\line     int K;\line     if (!(cin >> K)) return 0;\line \line     vector<int> all;\line \line     // Read each array\line     for (int i = 0; i < K; i++) \{\line         int n;\line         cin >> n;\line         for (int j = 0; j < n; j++) \{\line             int x;\line             cin >> x;\line             all.push_back(x);\line         \}\line     \}\line \line     // Sort\line     sort(all.begin(), all.end());\line \line     // Print\line     for (int i = 0; i < all.size(); i++) \{\line         if (i > 0) cout << " ";\line         cout << all[i];\line     \}\line     cout << endl;\line \line     return 0;\line \}\line }\par
+\par
+\b Java\b0\par
+{\f1\fs20 import java.util.*;\line \line public class Main \{\line     public static void main(String[] args) \{\line         Scanner sc = new Scanner(System.in);\line \line         if (!sc.hasNextInt()) return;\line         int K = sc.nextInt();\line \line         ArrayList<Integer> all = new ArrayList<>();\line \line         // Read each array\line         for (int i = 0; i < K; i++) \{\line             int n = sc.nextInt();\line             for (int j = 0; j < n; j++) \{\line                 all.add(sc.nextInt());\line             \}\line         \}\line \line         // Sort\line         Collections.sort(all);\line \line         // Print\line         for (int i = 0; i < all.size(); i++) \{\line             if (i > 0) System.out.print(" ");\line             System.out.print(all.get(i));\line         \}\line         System.out.println();\line \line         sc.close();\line     \}\line \}\line }\par
+\par
+\b C\b0\par
+{\f1\fs20 #include <stdio.h>\line #include <stdlib.h>\line \line int cmp(const void* a, const void* b)\{\line     return (*(int*)a - *(int*)b);\line \}\line \line int main()\{\line     int K;\line     if(scanf("%d",&K)!=1) return 0;\line \line     int capacity = 1000;\line     int *all = malloc(capacity * sizeof(int));\line     int total = 0;\line \line     // Read each array\line     for(int i=0;i<K;i++)\{\line         int n;\line         scanf("%d",&n);\line         \line         // Expand if needed\line         while(total + n > capacity)\{\line             capacity *= 2;\line             all = realloc(all, capacity * sizeof(int));\line         \}\line         \line         for(int j=0;j<n;j++)\{\line             scanf("%d",&all[total++]);\line         \}\line     \}\line \line     // Sort all elements\line     qsort(all, total, sizeof(int), cmp);\line \line     // Print merged sorted array\line     for(int i=0;i<total;i++)\{\line         if(i > 0) printf(" ");\line         printf("%d", all[i]);\line     \}\line     printf("\\n");\line \line     free(all);\line     return 0;\line \}\line }\par
 \par
 \par
 }

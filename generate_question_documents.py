@@ -20,6 +20,9 @@ from typing import Any, Iterable, Optional
 
 DIFFICULTY_ORDER = {"easy": 0, "medium": 1, "hard": 2, "unknown": 3}
 
+LANG_ORDER = ["python", "cpp", "java", "c"]
+LANG_LABEL = {"python": "Python", "cpp": "C++", "java": "Java", "c": "C"}
+
 
 @dataclass(frozen=True)
 class Question:
@@ -34,6 +37,8 @@ class Question:
     input_format: str
     output_format: str
     test_cases: list[dict[str, Any]]
+    starter_code: dict[str, Any]
+    solutions: dict[str, Any]
     source_file: Path
 
 
@@ -45,17 +50,30 @@ def _as_str(value: Any) -> str:
     return str(value)
 
 
-def infer_difficulty(folder_name: str) -> str:
-    if not folder_name:
+def infer_difficulty(folder_name: str, total_marks: str = "") -> str:
+    """
+    Determine difficulty primarily from folder_name prefix (E/M/H).
+    Fallback: infer from marks if possible (<=10 easy, <=20 medium, else hard).
+    """
+    if folder_name:
+        ch = folder_name[0].upper()
+        if ch == "E":
+            return "easy"
+        if ch == "M":
+            return "medium"
+        if ch == "H":
+            return "hard"
+
+    try:
+        marks = int(str(total_marks).strip())
+    except ValueError:
         return "unknown"
-    ch = folder_name[0].upper()
-    if ch == "E":
+
+    if marks <= 10:
         return "easy"
-    if ch == "M":
+    if marks <= 20:
         return "medium"
-    if ch == "H":
-        return "hard"
-    return "unknown"
+    return "hard"
 
 
 def infer_order_number(folder_name: str) -> int:
@@ -109,6 +127,8 @@ def load_questions_from_dir(json_dir: Path) -> list[Question]:
                 input_format=_as_str(data.get("input_format")),
                 output_format=_as_str(data.get("output_format")),
                 test_cases=list(data.get("test_cases") or []),
+                starter_code=dict(data.get("starter_code") or {}),
+                solutions=dict(data.get("solutions") or {}),
                 source_file=json_file,
             )
         )
@@ -134,6 +154,7 @@ def rtf_escape(text: str) -> str:
     """
     if not text:
         return ""
+    text = text.replace("\r\n", "\n").replace("\r", "\n")
     out: list[str] = []
     for ch in text:
         code = ord(ch)
@@ -145,6 +166,8 @@ def rtf_escape(text: str) -> str:
             out.append(r"\}")
         elif ch == "\n":
             out.append(r"\line ")
+        elif ch == "\t":
+            out.append(r"\tab ")
         elif code < 128:
             out.append(ch)
         else:
@@ -192,8 +215,20 @@ def count_hidden_tests(test_cases: list[dict[str, Any]]) -> int:
     return hidden
 
 
+def ordered_languages(language_map: dict[str, Any]) -> list[str]:
+    keys = list(language_map.keys())
+    ordered: list[str] = []
+    for lang in LANG_ORDER:
+        if lang in language_map:
+            ordered.append(lang)
+    for lang in sorted(keys):
+        if lang not in ordered:
+            ordered.append(lang)
+    return ordered
+
+
 def question_sort_key(q: Question) -> tuple[int, int, str]:
-    difficulty = infer_difficulty(q.folder_name)
+    difficulty = infer_difficulty(q.folder_name, q.total_marks)
     difficulty_rank = DIFFICULTY_ORDER.get(difficulty, DIFFICULTY_ORDER["unknown"])
     order_num = infer_order_number(q.folder_name)
     return (difficulty_rank, order_num, q.title.lower())
@@ -236,7 +271,7 @@ def generate_rtf_document(
     # Contents (manual)
     parts.append(rf"\fs32\b Contents\b0\fs24\par" + "\n")
     for idx, q in enumerate(questions_sorted, start=1):
-        difficulty = infer_difficulty(q.folder_name).capitalize()
+        difficulty = infer_difficulty(q.folder_name, q.total_marks).capitalize()
         marks = str(q.total_marks).strip()
         suffix = []
         if marks:
@@ -253,19 +288,16 @@ def generate_rtf_document(
         if idx != 1:
             parts.append(r"\page" + "\n")
 
-        difficulty = infer_difficulty(q.folder_name)
-        hidden_count = count_hidden_tests(q.test_cases)
+        difficulty = infer_difficulty(q.folder_name, q.total_marks)
         sample_tests = select_sample_tests(q.test_cases, max_sample_tests)
 
         parts.append(rf"\fs36\b Q{idx}. {rtf_escape(q.title)}\b0\fs24\par" + "\n")
+        parts.append(rtf_label_value("Contest", str(q.contest).strip()))
+        parts.append(rtf_label_value("Folder Name", str(q.folder_name).strip()))
         parts.append(rtf_label_value("Difficulty", difficulty.capitalize() if difficulty != "unknown" else "Unknown"))
-        parts.append(rtf_label_value("Total Marks", str(q.total_marks).strip()))
         parts.append(rtf_label_value("Problem Type", str(q.problem_type).strip()))
         parts.append(rtf_label_value("Problem Mode", str(q.problem_mode).strip()))
-        if q.folder_name.strip():
-            parts.append(rtf_label_value("Folder Name", q.folder_name.strip()))
-        if q.test_cases:
-            parts.append(rtf_label_value("Test Cases", f"{len(q.test_cases)} total ({len(sample_tests)} sample, {hidden_count} hidden)"))
+        parts.append(rtf_label_value("Total Marks", str(q.total_marks).strip()))
 
         parts.append(r"\par" + "\n")
 
@@ -274,18 +306,53 @@ def generate_rtf_document(
         parts.append(rtf_label_value("Input Format", q.input_format))
         parts.append(rtf_label_value("Output Format", q.output_format))
 
-        # Sample tests
-        if sample_tests:
+        # Test cases (ALL)
+        if q.test_cases:
             parts.append(r"\par" + "\n")
-            parts.append(rf"\fs28\b Sample Test Cases\b0\fs24\par" + "\n")
-            for sidx, tc in enumerate(sample_tests, start=1):
+            parts.append(rf"\fs28\b Test Cases\b0\fs24\par" + "\n")
+
+            for tc_index, tc in enumerate(q.test_cases, start=1):
+                tc_type = _as_str(tc.get("type")).strip() or "Test"
+                tc_points = _as_str(tc.get("points")).strip()
                 tc_in = _as_str(tc.get("input"))
                 tc_out = _as_str(tc.get("output"))
-                parts.append(rf"\b Sample {sidx}\b0\par" + "\n")
+
+                header_suffix = []
+                if tc_type:
+                    header_suffix.append(tc_type)
+                if tc_points:
+                    header_suffix.append(f"{tc_points} points")
+                suffix_str = f" ({', '.join(header_suffix)})" if header_suffix else ""
+
+                parts.append(rf"\b Test Case {tc_index}{rtf_escape(suffix_str)}\b0\par" + "\n")
                 parts.append(rtf_paragraph("Input:"))
                 parts.append(rtf_code_block(tc_in))
                 parts.append(rtf_paragraph("Output:"))
                 parts.append(rtf_code_block(tc_out))
+                parts.append(r"\par" + "\n")
+
+        # Starter code (ALL)
+        starter_map = q.starter_code
+        if starter_map:
+            parts.append(r"\par" + "\n")
+            parts.append(rf"\fs28\b Starter Code\b0\fs24\par" + "\n")
+            for lang in ordered_languages(starter_map):
+                code = _as_str(starter_map.get(lang))
+                label = LANG_LABEL.get(lang, lang)
+                parts.append(rf"\b {rtf_escape(label)}\b0\par" + "\n")
+                parts.append(rtf_code_block(code))
+                parts.append(r"\par" + "\n")
+
+        # Solutions (ALL)
+        solutions_map = q.solutions
+        if solutions_map:
+            parts.append(r"\par" + "\n")
+            parts.append(rf"\fs28\b Solutions\b0\fs24\par" + "\n")
+            for lang in ordered_languages(solutions_map):
+                code = _as_str(solutions_map.get(lang))
+                label = LANG_LABEL.get(lang, lang)
+                parts.append(rf"\b {rtf_escape(label)}\b0\par" + "\n")
+                parts.append(rtf_code_block(code))
                 parts.append(r"\par" + "\n")
 
         parts.append(r"\par" + "\n")
