@@ -1,0 +1,104 @@
+{
+  "title": "Longest Substring Without Repeating Characters",
+  "contest": "Round 1: Shattered Syntax (Debugging)",
+  "problem_type": "Debugging",
+  "problem_mode": "Standard Input/Output",
+  "total_marks": "20",
+  "constraints": "0 <= |s| <= 2e5; ASCII characters",
+  "description": "Given a string s, return the length of the longest substring without repeating characters.",
+  "input_format": "s",
+  "output_format": "Single integer length",
+  "folder_name": "M2_Longest_Substring_No_Repeat",
+  "test_cases": [
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "abcabcbb",
+      "output": "3"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "bbbbb",
+      "output": "1"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "pwwkew",
+      "output": "3"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "",
+      "output": "0"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "abcdef",
+      "output": "6"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "abba",
+      "output": "2"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "dvdf",
+      "output": "3"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "anviaj",
+      "output": "5"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "tmmzuxt",
+      "output": "5"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "aab",
+      "output": "2"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "ohvhjdml",
+      "output": "6"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "abcdeafghijakl",
+      "output": "10"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "output": "1"
+    }
+  ],
+  "solutions": {
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n\n        if (!sc.hasNext()) {\n            System.out.println(0);\n            return;\n        }\n\n        String s = sc.next();\n\n        int[] last = new int[256];\n        Arrays.fill(last, -1);\n\n        int l = 0, best = 0;\n\n        for (int r = 0; r < s.length(); r++) {\n            char c = s.charAt(r);\n\n            if (last[c] >= l)\n                l = last[c] + 1;\n\n            last[c] = r;\n\n            best = Math.max(best, r - l + 1);\n        }\n\n        System.out.println(best);\n    }\n}\n",
+    "cpp": "#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    string s;\n    \n    if (!(cin >> s)) {\n        cout << 0 << endl;\n        return 0;\n    }\n\n    vector<int> last(256, -1);\n    int l = 0, best = 0;\n\n    for (int r = 0; r < s.length(); r++) {\n        unsigned char c = s[r];\n\n        if (last[c] >= l)\n            l = last[c] + 1;\n\n        last[c] = r;\n\n        best = max(best, r - l + 1);\n    }\n\n    cout << best << endl;\n    return 0;\n}\n",
+    "python": "import sys\n\ns = sys.stdin.readline().strip()\n\nif not s:\n    print(0)\n    sys.exit()\n\nlast = [-1] * 256\nl = 0\nbest = 0\n\nfor r in range(len(s)):\n    c = ord(s[r])\n\n    if last[c] >= l:\n        l = last[c] + 1\n\n    last[c] = r\n    best = max(best, r - l + 1)\n\nprint(best)\n",
+    "c": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s[200005];\n\n    // Handle empty input safely\n    if (scanf(\"%s\", s) != 1) {\n        printf(\"0\\n\");\n        return 0;\n    }\n\n    int last[256];\n    for (int i = 0; i < 256; i++)\n        last[i] = -1;\n\n    int l = 0, best = 0;\n\n    for (int r = 0; s[r]; r++) {\n        unsigned char c = s[r];\n\n        if (last[c] >= l)      // FIXED\n            l = last[c] + 1;   // FIXED\n\n        last[c] = r;\n\n        int len = r - l + 1;   // FIXED\n        if (len > best)\n            best = len;\n    }\n\n    printf(\"%d\\n\", best);\n    return 0;\n}\n"
+  },
+  "starter_code": {
+    "java": "import java.io.*;import java.util.*;\npublic class Solution{\n  public static void main(String[] args)throws Exception{\n    String s=new BufferedReader(new InputStreamReader(System.in)).readLine();\n    int[] last=new int[256]; Arrays.fill(last,-1);\n    int l=0,best=0;\n    for(int r=0;r<s.length();r++){\n      int c=s.charAt(r);\n      if(last[c]>=l) l=last[c];      \n      last[c]=r;\n      best=Math.max(best,r-l);       \n    }\n    System.out.println(best);\n  }\n}\n",
+    "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n  string s; getline(cin,s);\n  vector<int> last(256,-1);\n  int l=0,best=0;\n  for(int r=0;r<(int)s.size();r++){\n    unsigned char c=s[r];\n    if(last[c]>=l) l=last[c];     \n    last[c]=r;\n    best=max(best,r-l);           \n  }\n  cout<<best<<\"\\n\";\n}\n",
+    "python": "import sys\ns=sys.stdin.readline().strip()\nlast={}\nl=0; best=0\nfor r,ch in enumerate(s):\n    if ch in last and last[ch] > l:  \n        l = last[ch]                \n    last[ch]=r\n    best=max(best, r-l)             \nprint(best)\n",
+    "c": "#include <stdio.h>\n#include <string.h>\nint main(){\n  char s[200005]; scanf(\"%s\",s);\n  int last[256]; for(int i=0;i<256;i++) last[i]=-1;\n  int l=0,best=0;\n  for(int r=0; s[r]; r++){\n    unsigned char c=s[r];\n    if(last[c]>l) l=last[c];            \n    last[c]=r;\n    int len=r-l; if(len>best) best=len; \n  }\n  printf(\"%d\\n\",best);\n}\n"
+  }
+}

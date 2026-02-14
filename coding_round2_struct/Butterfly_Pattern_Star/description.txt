@@ -1,0 +1,17 @@
+Problem Title: Butterfly Pattern Star
+Contest: The Architect's Blueprint - Round 2
+Problem Type: Debugging
+Problem Mode: Standard Input/Output
+Total Marks: 20
+
+Constraints:
+1 <= n <= 50
+
+Description:
+Given an integer n, print a symmetric butterfly star pattern of height 2*n. For each row i in the upper half (1-indexed), print i stars, then 2*(n - i) spaces, then i stars. The lower half mirrors the upper half.
+
+Input Format:
+Single integer n
+
+Output Format:
+2*n lines forming the butterfly pattern.

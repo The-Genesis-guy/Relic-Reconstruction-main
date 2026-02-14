@@ -1,0 +1,105 @@
+{
+  "title": "Coin Change (Minimum Coins)",
+  "contest": "The Architect's Blueprint - Round 2",
+  "problem_type": "Debugging",
+  "problem_mode": "Function",
+  "function_name": "solve",
+  "total_marks": "20",
+  "constraints": "1 <= n <= 50; 0 <= amount <= 1e5; 1 <= coin[i] <= 1e4",
+  "description": "Given coin denominations and a target amount, output the minimum number of coins needed. If impossible, output -1.",
+  "input_format": "n amount\nc1 c2 ... cn",
+  "output_format": "Minimum coins or -1",
+  "folder_name": "M3_Coin_Change_Min_Coins",
+  "test_cases": [
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "3 11\n1 2 5",
+      "output": "3"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "2 3\n2 4",
+      "output": "-1"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "1 0\n7",
+      "output": "0"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3 6\n1 3 4",
+      "output": "2"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "4 27\n2 5 10 1",
+      "output": "4"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "2 49\n7 14",
+      "output": "4"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "4 11\n9 6 5 1",
+      "output": "2"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "1 1\n2",
+      "output": "-1"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "1 10\n2",
+      "output": "5"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "2 21\n3 7",
+      "output": "3"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3 12\n4 6 8",
+      "output": "2"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3 999\n1 2 3",
+      "output": "333"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3 1\n5 7 8",
+      "output": "-1"
+    }
+  ],
+  "starter_code": {
+    "python": "def solve(data: str) -> str:\n    # TODO: parse input from data and compute result\n    return \"\"\n",
+    "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nstring solve(const string& data) {\n    // TODO: parse input from data and compute result\n    return \"\";\n}\n",
+    "java": "import java.util.*;\npublic class Solution {\n    public String solve(String data) {\n        // TODO: parse input from data and compute result\n        return \"\";\n    }\n}\n",
+    "c": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nchar* solve(const char* data) {\n    // TODO: parse input from data and compute result\n    char* out = strdup(\"\");\n    return out;\n}\n"
+  },
+  "solutions": {
+    "java": "import java.util.*;\n\npublic class Main {\n    static final int INF = 1000000000;\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n\n        int n = sc.nextInt();\n        int amt = sc.nextInt();\n\n        int[] coins = new int[n];\n        for(int i = 0; i < n; i++)\n            coins[i] = sc.nextInt();\n\n        int[] dp = new int[amt + 1];\n        Arrays.fill(dp, INF);\n        dp[0] = 0;\n\n        for(int i = 0; i < n; i++) {\n            for(int a = coins[i]; a <= amt; a++) {\n                if(dp[a - coins[i]] != INF)\n                    dp[a] = Math.min(dp[a], dp[a - coins[i]] + 1);\n            }\n        }\n\n        System.out.println(dp[amt] >= INF ? -1 : dp[amt]);\n\n        sc.close();\n    }\n}\n",
+    "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nconst int INF = 1e9;\n\nint main() {\n    int n, amt;\n    cin >> n >> amt;\n\n    vector<int> coins(n);\n    for(int i = 0; i < n; i++)\n        cin >> coins[i];\n\n    vector<int> dp(amt + 1, INF);\n    dp[0] = 0;\n\n    for(int i = 0; i < n; i++) {\n        for(int a = coins[i]; a <= amt; a++) {\n            if(dp[a - coins[i]] != INF)\n                dp[a] = min(dp[a], dp[a - coins[i]] + 1);\n        }\n    }\n\n    cout << (dp[amt] >= INF ? -1 : dp[amt]) << endl;\n\n    return 0;\n}\n",
+    "python": "n, amt = map(int, input().split())\ncoins = list(map(int, input().split()))\n\nINF = 10**9\ndp = [INF] * (amt + 1)\ndp[0] = 0   # 0 coins needed to make amount 0\n\nfor c in coins:\n    for a in range(c, amt + 1):\n        if dp[a - c] != INF:\n            dp[a] = min(dp[a], dp[a - c] + 1)\n\nprint(-1 if dp[amt] == INF else dp[amt])\n",
+    "c": "#include <stdio.h>\n#define INF 1000000000\n\nint min(int a, int b) { \n    return a < b ? a : b; \n}\n\nint main() {\n    int n, amt; \n    scanf(\"%d %d\", &n, &amt);\n\n    int c[55]; \n    for(int i = 0; i < n; i++) \n        scanf(\"%d\", &c[i]);\n\n    static int dp[100005];\n\n    // Initialize DP array\n    for(int i = 0; i <= amt; i++) \n        dp[i] = INF;\n\n    dp[0] = 0;   // Correct base case\n\n    // Unbounded coin change\n    for(int i = 0; i < n; i++){\n        for(int a = c[i]; a <= amt; a++){\n            if(dp[a - c[i]] != INF)  // optional safety check\n                dp[a] = min(dp[a], dp[a - c[i]] + 1);\n        }\n    }\n\n    printf(\"%d\\n\", dp[amt] >= INF ? -1 : dp[amt]);\n\n    return 0;\n}\n"
+  }
+}

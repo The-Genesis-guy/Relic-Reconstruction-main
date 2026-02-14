@@ -1,0 +1,104 @@
+{
+  "title": "Pattern Match Count (Overlapping)",
+  "contest": "Round 1: Shattered Syntax (Debugging)",
+  "problem_type": "Debugging",
+  "problem_mode": "Standard Input/Output",
+  "total_marks": "10",
+  "constraints": "1 <= |T| <= 2e5; 1 <= |P| <= 1e5",
+  "description": "Count the number of (possibly overlapping) occurrences of pattern P inside text T.",
+  "input_format": "T\nP",
+  "output_format": "Single integer count",
+  "folder_name": "E3_Pattern_Match_Count",
+  "test_cases": [
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "ababa\naba",
+      "output": "2"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "aaaaa\naa",
+      "output": "4"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "hello world\nll",
+      "output": "1"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "mississippi\nissi",
+      "output": "2"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "abcabcabc\nabc",
+      "output": "3"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "bbbbbb\nbb",
+      "output": "5"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "abababababa\naba",
+      "output": "5"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "xyz\nz",
+      "output": "1"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "aaaaaaaaaa\naaa",
+      "output": "8"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\naaaaaaaaaaaaaaaaaaaaaaaaa",
+      "output": "26"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "thequickbrownfox\nquick",
+      "output": "1"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "111011101110\n1110",
+      "output": "3"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "abcd\nef",
+      "output": "0"
+    }
+  ],
+  "solutions": {
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        \n        String t = sc.nextLine();\n        String p = sc.nextLine();\n        \n        int n = t.length();\n        int m = p.length();\n        int count = 0;\n        \n        for (int i = 0; i <= n - m; i++) {\n            if (t.substring(i, i + m).equals(p)) {\n                count++;\n            }\n        }\n        \n        System.out.println(count);\n    }\n}\n",
+    "cpp": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string t, p;\n    getline(cin, t);\n    getline(cin, p);\n\n    int n = t.length();\n    int m = p.length();\n    int count = 0;\n\n    for (int i = 0; i <= n - m; i++) {\n        if (t.substr(i, m) == p) {\n            count++;\n        }\n    }\n\n    cout << count << endl;\n    return 0;\n}\n",
+    "python": "import sys\n\nt = sys.stdin.readline().rstrip('\\n')\np = sys.stdin.readline().rstrip('\\n')\n\nn = len(t)\nm = len(p)\ncount = 0\n\nfor i in range(n - m + 1):\n    if t[i:i+m] == p:\n        count += 1\n\nprint(count)\n",
+    "c": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char t[200005], p[100005];\n\n    // Read input\n    fgets(t, 200005, stdin);\n    fgets(p, 100005, stdin);\n\n    // Remove trailing newline if present\n    t[strcspn(t, \"\\n\")] = '\\0';\n    p[strcspn(p, \"\\n\")] = '\\0';\n\n    int n = strlen(t);\n    int m = strlen(p);\n    int cnt = 0;\n\n    // Count overlapping occurrences\n    for (int i = 0; i <= n - m; i++) {\n        if (strncmp(t + i, p, m) == 0) {\n            cnt++;\n        }\n    }\n\n    printf(\"%d\\n\", cnt);\n    return 0;\n}\n"
+  },
+  "starter_code": {
+    "java": "import java.io.*;public class Solution{\n  public static void main(String[] args)throws Exception{\n    BufferedReader br=new BufferedReader(new InputStreamReader(System.in));\n    String t=br.readLine(); String p=br.readLine();\n    int cnt=0;\n    for(int i=0;i<t.length()-p.length();i++){ \n      if(t.substring(i,i+p.length())!=p) cnt++; \n    }\n    System.out.println(cnt);\n  }\n}\n",
+    "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n  string t,p; getline(cin,t); getline(cin,p);\n  int cnt=0;\n  for(size_t i=0;i+t.size()<=p.size();i++){ \n    if(t.substr(i,p.size())==p) cnt++;      \n  }\n  cout<<cnt<<\"\\n\";\n}\n",
+    "python": "import sys\nt = sys.stdin.readline().strip()\np = sys.stdin.readline().strip()\ncnt = 0\nfor i in range(len(t)-len(p)):   \n    if t[i:i+len(p)] != p:       \n        cnt += 1\nprint(cnt)\n",
+    "c": "#include <stdio.h>\n#include <string.h>\nint main(){\n  char t[200005], p[100005];\n  fgets(t,200005,stdin);\n  fgets(p,100005,stdin);\n  int n=strlen(t), m=strlen(p);\n  int cnt=0;\n  for(int i=0;i<=n-m;i++){\n    if(strncmp(t+i,p,m-1)==0) cnt++; \n  }\n  printf(\"%d\\n\",cnt);\n  return 0;\n}\n"
+  }
+}

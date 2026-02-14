@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help & Reference - Coding Contest</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .help-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .help-section {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+        }
+        .help-section h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+        .help-section h3 {
+            color: var(--text-primary);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        .verdict-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .verdict-table th,
+        .verdict-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .verdict-table th {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        .verdict-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            min-width: 50px;
+            text-align: center;
+        }
+        .verdict-ac { background: var(--success-color); color: #000; }
+        .verdict-wa { background: #fbbf24; color: #000; }
+        .verdict-tle { background: #f87171; color: #000; }
+        .verdict-re { background: #f87171; color: #000; }
+        .verdict-ce { background: #f87171; color: #000; }
+        .verdict-pending { background: #60a5fa; color: #000; }
+        
+        .difficulty-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            min-width: 70px;
+            text-align: center;
+        }
+        .diff-easy { background: #4ade80; color: #000; }
+        .diff-medium { background: #fbbf24; color: #000; }
+        .diff-hard { background: #f87171; color: #000; }
+        
+        .info-box {
+            background: rgba(96, 165, 250, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .tip-box {
+            background: rgba(74, 222, 128, 0.1);
+            border-left: 4px solid var(--success-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .warning-box {
+            background: rgba(251, 191, 36, 0.1);
+            border-left: 4px solid #fbbf24;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        code {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="help-container">
+        <a href="/" class="back-link">← Back to Dashboard</a>
+        
+        <h1 style="color: var(--text-primary); margin-bottom: 10px;">Help & Reference Guide</h1>
+        <p style="color: var(--text-muted); margin-bottom: 30px;">Complete reference for all terms, verdicts, and features used in the platform.</p>
+
+        <!-- Verdict Codes Section -->
+        <div class="help-section">
+            <h2>📋 Submission Verdicts</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                When you submit code, it goes through our judging system. Here are all possible verdicts:
+            </p>
+            
+            <table class="verdict-table">
+                <thead>
+                    <tr>
+                        <th>Verdict</th>
+                        <th>Full Name</th>
+                        <th>Meaning</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="verdict-badge verdict-ac">AC</span></td>
+                        <td><strong>Accepted</strong></td>
+                        <td>Your code passed all test cases! ✓</td>
+                        <td style="color: var(--success-color);">Full points</td>
+                    </tr>
+                    <tr>
+                        <td><span class="verdict-badge verdict-wa">WA</span></td>
+                        <td><strong>Wrong Answer</strong></td>
+                        <td>Your code ran but produced incorrect output for some test cases.</td>
+                        <td style="color: #fbbf24;">Partial points (based on tests passed)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="verdict-badge verdict-tle">TLE</span></td>
+                        <td><strong>Time Limit Exceeded</strong></td>
+                        <td>Your code took too long to execute (> 5 seconds per test).</td>
+                        <td style="color: var(--error-color);">0 points</td>
+                    </tr>
+                    <tr>
+                        <td><span class="verdict-badge verdict-re">RE</span></td>
+                        <td><strong>Runtime Error</strong></td>
+                        <td>Your code crashed during execution (e.g., division by zero, array out of bounds).</td>
+                        <td style="color: var(--error-color);">0 points</td>
+                    </tr>
+                    <tr>
+                        <td><span class="verdict-badge verdict-ce">CE</span></td>
+                        <td><strong>Compilation Error</strong></td>
+                        <td>Your code has syntax errors and couldn't compile/run.</td>
+                        <td style="color: var(--error-color);">0 points</td>
+                    </tr>
+                    <tr>
+                        <td><span class="verdict-badge verdict-pending">Pending</span></td>
+                        <td><strong>Pending</strong></td>
+                        <td>Your submission is in the queue waiting to be judged.</td>
+                        <td style="color: var(--text-muted);">-</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="tip-box">
+                <strong>💡 Tip:</strong> Even with WA (Wrong Answer), you can get partial credit! The more test cases you pass, the more points you earn.
+            </div>
+        </div>
+
+        <!-- Problem Difficulty Section -->
+        <div class="help-section">
+            <h2>🎯 Problem Difficulty Levels</h2>
+            
+            <table class="verdict-table">
+                <thead>
+                    <tr>
+                        <th>Level</th>
+                        <th>Description</th>
+                        <th>Typical Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="difficulty-badge diff-easy">EASY</span></td>
+                        <td>Straightforward problems, basic algorithms, simple logic.</td>
+                        <td>50-100 points</td>
+                    </tr>
+                    <tr>
+                        <td><span class="difficulty-badge diff-medium">MEDIUM</span></td>
+                        <td>Requires good understanding of data structures and algorithms.</td>
+                        <td>75-150 points</td>
+                    </tr>
+                    <tr>
+                        <td><span class="difficulty-badge diff-hard">HARD</span></td>
+                        <td>Complex problems requiring advanced techniques and optimization.</td>
+                        <td>100-200 points</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Problem Types Section -->
+        <div class="help-section">
+            <h2>📝 Problem Types</h2>
+            
+            <h3>1. Coding Problems (Function Mode)</h3>
+            <p style="color: var(--text-secondary);">
+                You implement a specific function. The platform provides starter code with the function signature.
+            </p>
+            <div class="info-box">
+                <strong>Example:</strong><br>
+                <code>def twoSum(nums, target):</code><br>
+                You only need to complete the function body. Input/output handling is done automatically.
+            </div>
+
+            <h3>2. Debugging Problems (stdin/stdout Mode)</h3>
+            <p style="color: var(--text-secondary);">
+                You read input from stdin and write output to stdout. Full program required.
+            </p>
+            <div class="info-box">
+                <strong>Example:</strong><br>
+                <code>n = int(input())</code><br>
+                <code>print(result)</code><br>
+                You handle all input/output yourself.
+            </div>
+        </div>
+
+        <!-- Scoring System Section -->
+        <div class="help-section">
+            <h2>🏆 Scoring System</h2>
+            
+            <h3>How Points Are Calculated</h3>
+            <ul style="color: var(--text-secondary); line-height: 1.8;">
+                <li><strong>Sample Tests:</strong> Visible test cases that give 0 points (for practice)</li>
+                <li><strong>Hidden Tests:</strong> Secret test cases that determine your score</li>
+                <li><strong>Partial Credit:</strong> Pass X out of Y tests = (X/Y) × Total Points</li>
+                <li><strong>Best Submission:</strong> Only your highest score counts per problem</li>
+            </ul>
+
+            <div class="tip-box">
+                <strong>💡 Strategy:</strong> Test your code with sample tests first (Run button), then submit when confident!
+            </div>
+
+            <h3>Leaderboard Ranking</h3>
+            <ol style="color: var(--text-secondary); line-height: 1.8;">
+                <li><strong>Total Points:</strong> Sum of best scores across all problems</li>
+                <li><strong>Time Penalty:</strong> Earlier submissions rank higher in case of ties</li>
+                <li><strong>Problems Solved:</strong> Number of problems with points > 0</li>
+            </ol>
+        </div>
+
+        <!-- Time Limits Section -->
+        <div class="help-section">
+            <h2>⏱️ Time Limits & Constraints</h2>
+            
+            <table class="verdict-table">
+                <thead>
+                    <tr>
+                        <th>Limit Type</th>
+                        <th>Value</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Execution Time</strong></td>
+                        <td>5 seconds per test</td>
+                        <td>Maximum time your code can run for each test case</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Code Size</strong></td>
+                        <td>50 KB</td>
+                        <td>Maximum size of your submitted code</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Output Size</strong></td>
+                        <td>10 KB</td>
+                        <td>Maximum output your code can produce</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Run Cooldown</strong></td>
+                        <td>3 seconds</td>
+                        <td>Wait time between clicking "Run" button</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Submit Cooldown</strong></td>
+                        <td>10 seconds</td>
+                        <td>Wait time between submissions</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                <strong>⚠️ Important:</strong> If your code exceeds the time limit, you'll get TLE (Time Limit Exceeded) verdict with 0 points.
+            </div>
+        </div>
+
+        <!-- Supported Languages Section -->
+        <div class="help-section">
+            <h2>💻 Supported Programming Languages</h2>
+            
+            <table class="verdict-table">
+                <thead>
+                    <tr>
+                        <th>Language</th>
+                        <th>Version</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Python</strong></td>
+                        <td>3.x</td>
+                        <td>Most popular for contests, easy to write</td>
+                    </tr>
+                    <tr>
+                        <td><strong>C++</strong></td>
+                        <td>g++ (C++17)</td>
+                        <td>Fast execution, good for performance-critical problems</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Java</strong></td>
+                        <td>JDK 11+</td>
+                        <td>Object-oriented, verbose but powerful</td>
+                    </tr>
+                    <tr>
+                        <td><strong>C</strong></td>
+                        <td>gcc</td>
+                        <td>Low-level, very fast execution</td>
+                    </tr>
+                    <tr>
+                        <td><strong>JavaScript</strong></td>
+                        <td>Node.js</td>
+                        <td>Good for web developers</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Contest Features Section -->
+        <div class="help-section">
+            <h2>🎮 Contest Features</h2>
+            
+            <h3>Grace Period</h3>
+            <p style="color: var(--text-secondary);">
+                You get an extra <strong>30 seconds</strong> after the contest ends to submit your last solution. 
+                This helps if you're finishing up right at the deadline!
+            </p>
+
+            <h3>Real-Time Updates</h3>
+            <p style="color: var(--text-secondary);">
+                The leaderboard and submission status update automatically using WebSocket technology. 
+                No need to refresh the page!
+            </p>
+
+            <h3>Multiple Attempts</h3>
+            <p style="color: var(--text-secondary);">
+                You can submit as many times as you want (with 10-second cooldown). 
+                Only your <strong>best score</strong> per problem counts.
+            </p>
+        </div>
+
+        <!-- Tips & Tricks Section -->
+        <div class="help-section">
+            <h2>💡 Tips & Tricks</h2>
+            
+            <div class="tip-box">
+                <h3 style="margin-top: 0;">Before Submitting:</h3>
+                <ul style="margin-bottom: 0;">
+                    <li>Test with sample inputs using the "Run" button</li>
+                    <li>Check edge cases (empty input, maximum values, etc.)</li>
+                    <li>Verify your output format matches exactly</li>
+                    <li>Consider time complexity for large inputs</li>
+                </ul>
+            </div>
+
+            <div class="tip-box">
+                <h3 style="margin-top: 0;">If You Get WA (Wrong Answer):</h3>
+                <ul style="margin-bottom: 0;">
+                    <li>Check your logic carefully</li>
+                    <li>Test with more examples</li>
+                    <li>Look for off-by-one errors</li>
+                    <li>Verify data types (int vs float)</li>
+                </ul>
+            </div>
+
+            <div class="tip-box">
+                <h3 style="margin-top: 0;">If You Get TLE (Time Limit Exceeded):</h3>
+                <ul style="margin-bottom: 0;">
+                    <li>Optimize your algorithm (reduce time complexity)</li>
+                    <li>Avoid nested loops when possible</li>
+                    <li>Use efficient data structures (hash maps, sets)</li>
+                    <li>Remove unnecessary operations</li>
+                </ul>
+            </div>
+
+            <div class="tip-box">
+                <h3 style="margin-top: 0;">If You Get RE (Runtime Error):</h3>
+                <ul style="margin-bottom: 0;">
+                    <li>Check array/list bounds</li>
+                    <li>Handle division by zero</li>
+                    <li>Verify input parsing</li>
+                    <li>Check for null/None values</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Common Abbreviations Section -->
+        <div class="help-section">
+            <h2>📖 Common Abbreviations</h2>
+            
+            <table class="verdict-table">
+                <thead>
+                    <tr>
+                        <th>Abbreviation</th>
+                        <th>Full Form</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>AC</strong></td><td>Accepted</td></tr>
+                    <tr><td><strong>WA</strong></td><td>Wrong Answer</td></tr>
+                    <tr><td><strong>TLE</strong></td><td>Time Limit Exceeded</td></tr>
+                    <tr><td><strong>RE</strong></td><td>Runtime Error</td></tr>
+                    <tr><td><strong>CE</strong></td><td>Compilation Error</td></tr>
+                    <tr><td><strong>pts</strong></td><td>Points</td></tr>
+                    <tr><td><strong>stdin</strong></td><td>Standard Input</td></tr>
+                    <tr><td><strong>stdout</strong></td><td>Standard Output</td></tr>
+                    <tr><td><strong>TC</strong></td><td>Test Case</td></tr>
+                    <tr><td><strong>I/O</strong></td><td>Input/Output</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Need Help Section -->
+        <div class="help-section">
+            <h2>❓ Still Need Help?</h2>
+            <p style="color: var(--text-secondary);">
+                If you're experiencing issues or have questions not covered here:
+            </p>
+            <ul style="color: var(--text-secondary); line-height: 1.8;">
+                <li>Check the problem description carefully</li>
+                <li>Review your code for common errors</li>
+                <li>Contact the contest administrator</li>
+                <li>Ask for help during the contest (if allowed)</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; padding: 20px; color: var(--text-muted);">
+            <p>Good luck with your contest! 🚀</p>
+            <a href="/" class="back-link">← Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

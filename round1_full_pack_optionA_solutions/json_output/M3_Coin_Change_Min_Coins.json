@@ -1,0 +1,104 @@
+{
+  "title": "Coin Change (Minimum Coins)",
+  "contest": "Round 1: Shattered Syntax (Debugging)",
+  "problem_type": "Debugging",
+  "problem_mode": "Standard Input/Output",
+  "total_marks": "20",
+  "constraints": "1 <= n <= 50; 0 <= amount <= 1e5; 1 <= coin[i] <= 1e4",
+  "description": "Given coin denominations and a target amount, output the minimum number of coins needed. If impossible, output -1.",
+  "input_format": "n amount\nc1 c2 ... cn",
+  "output_format": "Minimum coins or -1",
+  "folder_name": "M3_Coin_Change_Min_Coins",
+  "test_cases": [
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "3 11\n1 2 5",
+      "output": "3"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "2 3\n2 4",
+      "output": "-1"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "1 0\n7",
+      "output": "0"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3 6\n1 3 4",
+      "output": "2"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "4 27\n2 5 10 1",
+      "output": "4"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "2 49\n7 14",
+      "output": "4"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "4 11\n9 6 5 1",
+      "output": "2"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "1 1\n2",
+      "output": "-1"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "1 10\n2",
+      "output": "5"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "2 21\n3 7",
+      "output": "3"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3 12\n4 6 8",
+      "output": "2"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3 999\n1 2 3",
+      "output": "333"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3 1\n5 7 8",
+      "output": "-1"
+    }
+  ],
+  "solutions": {
+    "java": "import java.util.*;\n\npublic class Main {\n    static final int INF = 1000000000;\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n\n        int n = sc.nextInt();\n        int amt = sc.nextInt();\n\n        int[] coins = new int[n];\n        for(int i = 0; i < n; i++)\n            coins[i] = sc.nextInt();\n\n        int[] dp = new int[amt + 1];\n        Arrays.fill(dp, INF);\n        dp[0] = 0;\n\n        for(int i = 0; i < n; i++) {\n            for(int a = coins[i]; a <= amt; a++) {\n                if(dp[a - coins[i]] != INF)\n                    dp[a] = Math.min(dp[a], dp[a - coins[i]] + 1);\n            }\n        }\n\n        System.out.println(dp[amt] >= INF ? -1 : dp[amt]);\n\n        sc.close();\n    }\n}\n",
+    "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nconst int INF = 1e9;\n\nint main() {\n    int n, amt;\n    cin >> n >> amt;\n\n    vector<int> coins(n);\n    for(int i = 0; i < n; i++)\n        cin >> coins[i];\n\n    vector<int> dp(amt + 1, INF);\n    dp[0] = 0;\n\n    for(int i = 0; i < n; i++) {\n        for(int a = coins[i]; a <= amt; a++) {\n            if(dp[a - coins[i]] != INF)\n                dp[a] = min(dp[a], dp[a - coins[i]] + 1);\n        }\n    }\n\n    cout << (dp[amt] >= INF ? -1 : dp[amt]) << endl;\n\n    return 0;\n}\n",
+    "python": "import sys\n\nINF = 10**9\n\nn, amt = map(int, sys.stdin.readline().split())\ncoins = list(map(int, sys.stdin.readline().split()))\n\ndp = [INF] * (amt + 1)\ndp[0] = 0\n\nfor coin in coins:\n    for a in range(coin, amt + 1):\n        if dp[a - coin] != INF:\n            dp[a] = min(dp[a], dp[a - coin] + 1)\n\nprint(-1 if dp[amt] >= INF else dp[amt])\n",
+    "c": "#include <stdio.h>\n#define INF 1000000000\n\nint min(int a, int b) { \n    return a < b ? a : b; \n}\n\nint main() {\n    int n, amt; \n    scanf(\"%d %d\", &n, &amt);\n\n    int c[55]; \n    for(int i = 0; i < n; i++) \n        scanf(\"%d\", &c[i]);\n\n    static int dp[100005];\n\n    // Initialize DP array\n    for(int i = 0; i <= amt; i++) \n        dp[i] = INF;\n\n    dp[0] = 0;   // Correct base case\n\n    // Unbounded coin change\n    for(int i = 0; i < n; i++){\n        for(int a = c[i]; a <= amt; a++){\n            if(dp[a - c[i]] != INF)  // optional safety check\n                dp[a] = min(dp[a], dp[a - c[i]] + 1);\n        }\n    }\n\n    printf(\"%d\\n\", dp[amt] >= INF ? -1 : dp[amt]);\n\n    return 0;\n}\n"
+  },
+  "starter_code": {
+    "java": "import java.io.*;import java.util.*;\npublic class Solution{\n  public static void main(String[] args)throws Exception{\n    FastScanner fs=new FastScanner(System.in);\n    int n=fs.nextInt(), amt=fs.nextInt();\n    int[] c=new int[n];\n    for(int i=0;i<n;i++) c[i]=fs.nextInt();\n    int INF=1_000_000_000;\n    int[] dp=new int[amt+1];\n    Arrays.fill(dp, INF);\n    dp[0]=1; \n    for(int coin: c){\n      for(int a=coin;a<=amt;a++){\n        dp[a]=Math.min(dp[a], dp[a-coin]); \n      }\n    }\n    System.out.println(dp[amt]>=INF?-1:dp[amt]);\n  }\n  static class FastScanner{\n    private final InputStream in; private final byte[] buf=new byte[1<<16];\n    private int ptr=0, len=0;\n    FastScanner(InputStream is){in=is;}\n    int read() throws IOException{ if(ptr>=len){ len=in.read(buf); ptr=0; if(len<=0) return -1;} return buf[ptr++];}\n    int nextInt() throws IOException{\n      int c; do{ c=read(); }while(c<=32);\n      int sgn=1; if(c=='-'){sgn=-1;c=read();}\n      int x=0; while(c>32){ x=x*10 + (c-'0'); c=read(); }\n      return x*sgn;\n    }\n  }\n}\n",
+    "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n  int n,amt; cin>>n>>amt;\n  vector<int> c(n); for(int i=0;i<n;i++) cin>>c[i];\n  const int INF=1e9;\n  vector<int> dp(amt+1,INF);\n  dp[0]=1; \n  for(int coin: c){\n    for(int a=coin;a<=amt;a++){\n      dp[a]=min(dp[a], dp[a-coin]);\n    }\n  }\n  cout<<(dp[amt]>=INF?-1:dp[amt])<<\"\\n\";\n}\n",
+    "python": "import sys\nn,amt = map(int, sys.stdin.readline().split())\ncoins = list(map(int, sys.stdin.readline().split()))\nINF = 10**9\ndp = [INF]*(amt+1)\ndp[0]=1              \nfor c in coins:\n    for a in range(c, amt+1):\n        dp[a] = min(dp[a], dp[a-c]) \nprint(-1 if dp[amt]==INF else dp[amt])\n",
+    "c": "#include <stdio.h>\n#define INF 1000000000\nint min(int a,int b){return a<b?a:b;}\nint main(){\n  int n,amt; scanf(\"%d %d\",&n,&amt);\n  int c[55]; for(int i=0;i<n;i++) scanf(\"%d\",&c[i]);\n  static int dp[100005];\n  for(int i=0;i<=amt;i++) dp[i]=INF;\n  dp[0]=1; \n  for(int i=0;i<n;i++){\n    for(int a=c[i]; a<=amt; a++){\n      dp[a]=min(dp[a], dp[a-c[i]]); \n    }\n  }\n  printf(\"%d\\n\", dp[amt]>=INF?-1:dp[amt]);\n}\n"
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "title": "Trapping Rain Water",
+  "contest": "The Architect's Blueprint - Round 2 (Debugging)",
+  "problem_type": "Debugging",
+  "problem_mode": "Standard Input/Output",
+  "total_marks": "40",
+  "constraints": "1 <= n <= 2e5\n0 <= height[i] <= 1e9",
+  "description": "Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.",
+  "input_format": "First line: integer n\nSecond line: n space-separated integers height[i]",
+  "output_format": "Single integer: total trapped water.",
+  "folder_name": "H_Trapping_Rain_Water",
+  "test_cases": [
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "6\n0 1 0 2 1 0",
+      "output": "1"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "12\n0 1 0 2 1 0 1 3 2 1 2 1",
+      "output": "6"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "4\n3 0 0 2",
+      "output": "4"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "8\n4 2 0 3 2 5 1 2",
+      "output": "10"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "5\n2 2 2 2 2",
+      "output": "0"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "4\n5 4 1 2",
+      "output": "1"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "5\n9 6 8 8 5",
+      "output": "2"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "6\n5 2 1 2 1 5",
+      "output": "14"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3\n1000000000 0 1000000000",
+      "output": "1000000000"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "5\n6 0 5 0 4",
+      "output": "9"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "4\n0 0 0 0",
+      "output": "0"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "7\n1 0 2 1 0 1 3",
+      "output": "5"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "8\n7 0 1 3 0 2 0 4",
+      "output": "18"
+    }
+  ],
+  "starter_code": {
+    "python": "import sys\n\ndef main():\n    data = sys.stdin.read().strip().split()\n    if not data:\n        return\n    n = int(data[0]); h = list(map(int, data[1:1+n]))\n    # TODO: compute trapped water and print\n\nif __name__ == \"__main__\":\n    main()\n",
+    "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n    ios::sync_with_stdio(false); cin.tie(nullptr);\n    int n; if(!(cin>>n)) return 0;\n    vector<long long> h(n); for(int i=0;i<n;i++) cin>>h[i];\n    // TODO: compute trapped water and print\n    return 0;\n}\n",
+    "java": "import java.util.*;\npublic class Main {\n    public static void main(String[] args){\n        Scanner sc = new Scanner(System.in);\n        if(!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        long[] h = new long[n];\n        for(int i=0;i<n;i++) h[i]=sc.nextLong();\n        // TODO: compute trapped water and print\n    }\n}\n",
+    "c": "#include <stdio.h>\n#include <stdlib.h>\nint main(){\n    int n; if(scanf(\"%d\", &n)!=1) return 0;\n    long long* h = malloc(sizeof(long long)*n);\n    for(int i=0;i<n;i++) scanf(\"%lld\", &h[i]);\n    // TODO: compute trapped water and print\n    free(h);\n    return 0;\n}\n"
+  },
+  "solutions": {
+    "python": "def solve(data: str) -> str:\n    parts = list(map(int, data.strip().split()))\n    if not parts: return \"\"\n    n = parts[0]; h = parts[1:]\n    l,r=0,n-1; lmax=rmax=0; water=0\n    while l<=r:\n        if h[l] <= h[r]:\n            if h[l] >= lmax: lmax = h[l]\n            else: water += lmax - h[l]\n            l += 1\n        else:\n            if h[r] >= rmax: rmax = h[r]\n            else: water += rmax - h[r]\n            r -= 1\n    return str(water)\n\n\ndef __main__():\n    import sys\n    data = sys.stdin.read()\n    result = solve(data)\n    if result is None:\n        return\n    sys.stdout.write(str(result))\n\nif __name__ == '__main__':\n    __main__()\n",
+    "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\n#include <bits/stdc++.h>\nusing namespace std;\nstring solve(const string& data){\n    istringstream ss(data); int n; if(!(ss>>n)) return \"\";\n    vector<long long> h(n); for(int i=0;i<n;i++) ss>>h[i];\n    int l=0,r=n-1; long long lmax=0,rmax=0,water=0;\n    while(l<=r){ if(h[l]<=h[r]){ if(h[l]>=lmax) lmax=h[l]; else water+=lmax-h[l]; l++; } else { if(h[r]>=rmax) rmax=h[r]; else water+=rmax-h[r]; r--; } }\n    return to_string(water);\n}\n\n\nint main() {\n    std::ostringstream ss;\n    ss << std::cin.rdbuf();\n    std::string input = ss.str();\n    std::string output = solve(input);\n    std::cout << output;\n    return 0;\n}\n",
+    "java": "import java.io.*;\nimport java.nio.charset.StandardCharsets;\n\npublic class Main {\nstatic class Solution {\n    public String solve(String data){\n        String[] p = data.trim().split(\"\\\\s+\");\n        if(p.length==0) return \"\";\n        int n = Integer.parseInt(p[0]);\n        long[] h = new long[n];\n        for(int i=0;i<n;i++) h[i] = Long.parseLong(p[i+1]);\n        int l=0, r=n-1; long lmax=0, rmax=0, water=0;\n        while(l<=r){\n            if(h[l] <= h[r]){\n                if(h[l] >= lmax) lmax = h[l]; else water += lmax - h[l];\n                l++;\n            } else {\n                if(h[r] >= rmax) rmax = h[r]; else water += rmax - h[r];\n                r--;\n            }\n        }\n        return Long.toString(water);\n    }\n}\n\n\n    public static void main(String[] args) throws Exception {\n        ByteArrayOutputStream baos = new ByteArrayOutputStream();\n        InputStream in = System.in;\n        byte[] buf = new byte[8192];\n        int n;\n        while ((n = in.read(buf)) != -1) {\n            baos.write(buf, 0, n);\n        }\n        String input = baos.toString(StandardCharsets.UTF_8);\n        Solution sol = new Solution();\n        String output = sol.solve(input);\n        if (output != null) {\n            System.out.print(output);\n        }\n    }\n}\n",
+    "c": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\n#define MAX_INPUT (1 << 20)\n\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nchar* solve(const char* data){\n    char* copy = strdup(data);\n    const char* delim = \" \\n\\t\";\n    char* tok = strtok(copy, delim);\n    if(!tok){ free(copy); return strdup(\"\"); }\n    int n = atoi(tok);\n    long long* h = malloc(sizeof(long long)*n);\n    for(int i=0;i<n;i++){ tok = strtok(NULL, delim); h[i] = atoll(tok); }\n    int l=0, r=n-1; long long lmax=0, rmax=0, water=0;\n    while(l<=r){\n        if(h[l]<=h[r]){\n            if(h[l]>=lmax) lmax=h[l]; else water+=lmax-h[l];\n            l++;\n        } else {\n            if(h[r]>=rmax) rmax=h[r]; else water+=rmax-h[r];\n            r--;\n        }\n    }\n    free(copy); free(h);\n    char buf[32]; sprintf(buf, \"%lld\", water);\n    return strdup(buf);\n}\n\n\nint main() {\n    char *input = (char *)malloc(MAX_INPUT);\n    if (!input) return 1;\n    size_t len = fread(input, 1, MAX_INPUT - 1, stdin);\n    input[len] = '\\0';\n    char *output = solve(input);\n    if (output) {\n        fputs(output, stdout);\n        free(output);\n    }\n    free(input);\n    return 0;\n}\n"
+  }
+}

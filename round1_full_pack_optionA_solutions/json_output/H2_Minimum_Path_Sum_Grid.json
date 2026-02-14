@@ -1,0 +1,134 @@
+{
+  "title": "Minimum Path Sum in Grid",
+  "contest": "Round 1: Shattered Syntax (Debugging)",
+  "problem_type": "Debugging",
+  "problem_mode": "Standard Input/Output",
+  "total_marks": "30",
+  "constraints": "1 <= R,C; R*C <= 2e5; 0 <= grid[i][j] <= 1e6",
+  "description": "Given an R×C grid, find minimum path sum from (0,0) to (R-1,C-1) moving only right or down.",
+  "input_format": "R C\n(R lines) grid row",
+  "output_format": "Single integer minimum sum",
+  "folder_name": "H2_Minimum_Path_Sum_Grid",
+  "test_cases": [
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "3 3\n1 3 1\n1 5 1\n4 2 1",
+      "output": "7"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "1 4\n5 1 2 3",
+      "output": "11"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "2 2\n0 0\n0 0",
+      "output": "0"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "1 1\n1",
+      "output": "1"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "2 3\n1 2 3\n4 5 6",
+      "output": "12"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3 2\n5 9\n1 2\n4 0",
+      "output": "8"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3 3\n0 1 2\n3 4 5\n6 7 8",
+      "output": "16"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3 4\n10 1 1 10\n10 1 10 10\n10 1 1 1",
+      "output": "15"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "4 3\n2 2 2\n2 2 2\n2 2 2\n2 2 2",
+      "output": "12"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3 3\n1 100 1\n1 100 1\n1 1 1",
+      "output": "5"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "1 5\n9 8 7 6 5",
+      "output": "35"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "5 1\n1\n2\n3\n4\n5",
+      "output": "15"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "4 3\n3 1 2\n4 0 1\n2 3 4\n1 1 1",
+      "output": "9"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "2 3\n0 0 0\n0 0 0",
+      "output": "0"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "2 2\n7 1\n1 7",
+      "output": "15"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3 3\n1 2 3\n1 1 1\n9 9 1",
+      "output": "5"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "2 2\n1000000 1000000\n1000000 0",
+      "output": "2000000"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "5 2\n1 2\n3 4\n5 6\n7 8\n9 10",
+      "output": "31"
+    }
+  ],
+  "solutions": {
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n\n        int r = sc.nextInt();\n        int c = sc.nextInt();\n\n        long[] dp = new long[r * c];\n\n        for(int i = 0; i < r; i++) {\n            for(int j = 0; j < c; j++) {\n                long x = sc.nextLong();\n\n                if(i == 0 && j == 0)\n                    dp[0] = x;\n                else if(i == 0)\n                    dp[j] = dp[j - 1] + x;\n                else if(j == 0)\n                    dp[i * c] = dp[(i - 1) * c] + x;\n                else\n                    dp[i * c + j] = x + Math.min(\n                        dp[(i - 1) * c + j],\n                        dp[i * c + j - 1]\n                    );\n            }\n        }\n\n        System.out.println(dp[r * c - 1]);\n        sc.close();\n    }\n}\n",
+    "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int r, c;\n    cin >> r >> c;\n\n    vector<long long> dp(r * c);\n\n    for(int i = 0; i < r; i++) {\n        for(int j = 0; j < c; j++) {\n            long long x;\n            cin >> x;\n\n            if(i == 0 && j == 0)\n                dp[0] = x;\n            else if(i == 0)\n                dp[j] = dp[j - 1] + x;\n            else if(j == 0)\n                dp[i * c] = dp[(i - 1) * c] + x;\n            else\n                dp[i * c + j] = x + min(dp[(i - 1) * c + j],\n                                        dp[i * c + j - 1]);\n        }\n    }\n\n    cout << dp[r * c - 1] << endl;\n    return 0;\n}\n",
+    "python": "import sys\ninput = sys.stdin.read\ndata = input().split()\n\nr = int(data[0])\nc = int(data[1])\n\ndp = [0] * (r * c)\n\nindex = 2\nfor i in range(r):\n    for j in range(c):\n        x = int(data[index])\n        index += 1\n\n        if i == 0 and j == 0:\n            dp[0] = x\n        elif i == 0:\n            dp[j] = dp[j - 1] + x\n        elif j == 0:\n            dp[i * c] = dp[(i - 1) * c] + x\n        else:\n            dp[i * c + j] = x + min(dp[(i - 1) * c + j],\n                                    dp[i * c + j - 1])\n\nprint(dp[r * c - 1])\n",
+    "c": "#include <stdio.h>\n#include <stdlib.h>\n\nlong long minll(long long a, long long b) {\n    return a < b ? a : b;\n}\n\nint main() {\n    int r, c;\n    scanf(\"%d %d\", &r, &c);\n    long long* dp = calloc((size_t)r * c, sizeof(long long));\n\n    for (int i = 0; i < r; i++) {\n        for (int j = 0; j < c; j++) {\n            long long x;\n            scanf(\"%lld\", &x);\n            if (i == 0 && j == 0) {\n                dp[0] = x;\n            } else if (i == 0) {\n                dp[j] = dp[j - 1] + x;\n            } else if (j == 0) {\n                dp[i * c] = dp[(i - 1) * c] + x;\n            } else {\n                dp[i * c + j] = x + minll(dp[(i - 1) * c + j], dp[i * c + j - 1]);\n            }\n        }\n    }\n\n    printf(\"%lld\n\", dp[r * c - 1]);\n    return 0;\n}\n"
+  },
+  "starter_code": {
+    "java": "import java.io.*;import java.util.*;\npublic class Solution{\n  public static void main(String[] args)throws Exception{\n    FastScanner fs=new FastScanner(System.in);\n    int r=fs.nextInt(), c=fs.nextInt();\n    long[][] g=new long[r][c];\n    for(int i=0;i<r;i++) for(int j=0;j<c;j++) g[i][j]=fs.nextLong();\n    long[][] dp=new long[r][c];\n    dp[0][0]=0; \n    for(int j=1;j<c;j++) dp[0][j]=dp[0][j-1]+g[0][j];\n    for(int i=1;i<r;i++) dp[i][0]=dp[i-1][0]+g[i][0];\n    for(int i=1;i<r;i++) for(int j=1;j<c;j++)\n      dp[i][j]=g[i][j]+Math.max(dp[i-1][j],dp[i][j-1]); \n    System.out.println(dp[r-1][c-1]);\n  }\n  static class FastScanner{\n    private final InputStream in; private final byte[] buf=new byte[1<<16];\n    private int ptr=0,len=0;\n    FastScanner(InputStream is){in=is;}\n    int read() throws IOException{ if(ptr>=len){ len=in.read(buf); ptr=0; if(len<=0) return -1;} return buf[ptr++];}\n    int nextInt() throws IOException{\n      int c; do{ c=read(); }while(c<=32);\n      int sgn=1; if(c=='-'){sgn=-1;c=read();}\n      int x=0; while(c>32){ x=x*10+(c-'0'); c=read(); }\n      return x*sgn;\n    }\n    long nextLong() throws IOException{\n      int c; do{ c=read(); }while(c<=32);\n      int sgn=1; if(c=='-'){sgn=-1;c=read();}\n      long x=0; while(c>32){ x=x*10+(c-'0'); c=read(); }\n      return x*sgn;\n    }\n  }\n}\n",
+    "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n  int r,c; cin>>r>>c;\n  vector<vector<long long>> g(r, vector<long long>(c));\n  for(int i=0;i<r;i++) for(int j=0;j<c;j++) cin>>g[i][j];\n  vector<vector<long long>> dp(r, vector<long long>(c,0));\n  dp[0][0]=0; \n  for(int j=1;j<c;j++) dp[0][j]=dp[0][j-1]+g[0][j];\n  for(int i=1;i<r;i++) dp[i][0]=dp[i-1][0]+g[i][0];\n  for(int i=1;i<r;i++) for(int j=1;j<c;j++)\n    dp[i][j]=g[i][j]+max(dp[i-1][j],dp[i][j-1]); \n  cout<<dp[r-1][c-1]<<\"\\n\";\n}\n",
+    "python": "import sys\nr,c = map(int, sys.stdin.readline().split())\ng=[list(map(int, sys.stdin.readline().split())) for _ in range(r)]\ndp=[[0]*c for _ in range(r)]\ndp[0][0]=0 \nfor j in range(1,c):\n    dp[0][j]=dp[0][j-1]+g[0][j]\nfor i in range(1,r):\n    dp[i][0]=dp[i-1][0]+g[i][0]\nfor i in range(1,r):\n    for j in range(1,c):\n        dp[i][j]=g[i][j]+max(dp[i-1][j],dp[i][j-1])  \nprint(dp[r-1][c-1])\n",
+    "c": "#include <stdio.h>\n#include <stdlib.h>\nlong long minll(long long a,long long b){return a<b?a:b;}\nint main(){\n  int r,c; scanf(\"%d %d\",&r,&c);\n  long long *dp=calloc((size_t)r*c,sizeof(long long));\n  for(int i=0;i<r;i++){\n    for(int j=0;j<c;j++){\n      long long x; scanf(\"%lld\",&x);\n      if(i==0 && j==0) dp[0]=0;                 \n      else if(i==0) dp[j]=dp[j-1]+x;\n      else if(j==0) dp[i*c]=dp[(i-1)*c]+x;\n      else dp[i*c+j]=x+maxll(dp[(i-1)*c+j], dp[i*c+j-1]); \n    }\n  }\n  printf(\"%lld\\n\", dp[r*c-1]);\n}\n"
+  }
+}

@@ -1,0 +1,358 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0 Calibri;}{\f1 Consolas;}}\paperw12240\paperh15840\margl1440\margr1440\margt1440\margb1440
+\fs52\b Round 1: Shattered Syntax (Debugging)\b0\fs24\par
+\fs28\b Question Set\b0\fs24\par
+Generated: 2026-02-14 07:55\par
+Questions: 10    Total Marks: 200\par
+\par
+\fs32\b Contents\b0\fs24\par
+1. Palindrome Checker (10 marks, Easy)\par
+2. Array Rotation (10 marks, Easy)\par
+3. Pattern Match Count (Overlapping) (10 marks, Easy)\par
+4. Longest Valid Parentheses (20 marks, Medium)\par
+5. Longest Substring Without Repeating Characters (20 marks, Medium)\par
+6. Coin Change (Minimum Coins) (20 marks, Medium)\par
+7. Merge Intervals (20 marks, Medium)\par
+8. Graph Connectivity Queries (BFS) (30 marks, Hard)\par
+9. Minimum Path Sum in Grid (30 marks, Hard)\par
+10. Merge K Sorted Arrays (30 marks, Hard)\par
+\page
+\fs36\b Q1. Palindrome Checker\b0\fs24\par
+\b Difficulty:\b0 Easy\par
+\b Total Marks:\b0 10\par
+\b Problem Type:\b0 Debugging\par
+\b Problem Mode:\b0 Standard Input/Output\par
+\b Folder Name:\b0 E1_Palindrome_Checker\par
+\b Test Cases:\b0 13 total (3 sample, 10 hidden)\par
+\par
+\b Constraints:\b0 1 <= T <= 50; 1 <= |s| <= 1e5 (sum lengths <= 2e5)\par
+\b Description:\b0 Given T strings, print Yes if the string is a palindrome else No. Case-sensitive; use the full string as-is.\par
+\b Input Format:\b0 T\line s1\line s2\line ...\par
+\b Output Format:\b0 For each string: Yes or No\par
+\par
+\fs28\b Sample Test Cases\b0\fs24\par
+\b Sample 1\b0\par
+Input:\par
+{\f1\fs20 3\line madam\line hello\line 1221}\par
+Output:\par
+{\f1\fs20 Yes\line No\line Yes}\par
+\par
+\b Sample 2\b0\par
+Input:\par
+{\f1\fs20 1\line a}\par
+Output:\par
+{\f1\fs20 Yes}\par
+\par
+\b Sample 3\b0\par
+Input:\par
+{\f1\fs20 2\line ab\line aba}\par
+Output:\par
+{\f1\fs20 No\line Yes}\par
+\par
+\par
+\page
+\fs36\b Q2. Array Rotation\b0\fs24\par
+\b Difficulty:\b0 Easy\par
+\b Total Marks:\b0 10\par
+\b Problem Type:\b0 Debugging\par
+\b Problem Mode:\b0 Standard Input/Output\par
+\b Folder Name:\b0 E2_Array_Rotation\par
+\b Test Cases:\b0 13 total (3 sample, 10 hidden)\par
+\par
+\b Constraints:\b0 1 <= N <= 2e5; 0 <= K <= 1e9; |ai| <= 1e9\par
+\b Description:\b0 Rotate an array of N integers to the right by K positions and print the rotated array.\par
+\b Input Format:\b0 N K\line a1 a2 ... aN\par
+\b Output Format:\b0 Rotated array elements space-separated\par
+\par
+\fs28\b Sample Test Cases\b0\fs24\par
+\b Sample 1\b0\par
+Input:\par
+{\f1\fs20 5 2\line 1 2 3 4 5}\par
+Output:\par
+{\f1\fs20 4 5 1 2 3}\par
+\par
+\b Sample 2\b0\par
+Input:\par
+{\f1\fs20 1 100\line 9}\par
+Output:\par
+{\f1\fs20 9}\par
+\par
+\b Sample 3\b0\par
+Input:\par
+{\f1\fs20 6 3\line -1 -2 -3 -4 -5 -6}\par
+Output:\par
+{\f1\fs20 -4 -5 -6 -1 -2 -3}\par
+\par
+\par
+\page
+\fs36\b Q3. Pattern Match Count (Overlapping)\b0\fs24\par
+\b Difficulty:\b0 Easy\par
+\b Total Marks:\b0 10\par
+\b Problem Type:\b0 Debugging\par
+\b Problem Mode:\b0 Standard Input/Output\par
+\b Folder Name:\b0 E3_Pattern_Match_Count\par
+\b Test Cases:\b0 13 total (3 sample, 10 hidden)\par
+\par
+\b Constraints:\b0 1 <= |T| <= 2e5; 1 <= |P| <= 1e5\par
+\b Description:\b0 Count the number of (possibly overlapping) occurrences of pattern P inside text T.\par
+\b Input Format:\b0 T\line P\par
+\b Output Format:\b0 Single integer count\par
+\par
+\fs28\b Sample Test Cases\b0\fs24\par
+\b Sample 1\b0\par
+Input:\par
+{\f1\fs20 ababa\line aba}\par
+Output:\par
+{\f1\fs20 2}\par
+\par
+\b Sample 2\b0\par
+Input:\par
+{\f1\fs20 aaaaa\line aa}\par
+Output:\par
+{\f1\fs20 4}\par
+\par
+\b Sample 3\b0\par
+Input:\par
+{\f1\fs20 hello world\line ll}\par
+Output:\par
+{\f1\fs20 1}\par
+\par
+\par
+\page
+\fs36\b Q4. Longest Valid Parentheses\b0\fs24\par
+\b Difficulty:\b0 Medium\par
+\b Total Marks:\b0 20\par
+\b Problem Type:\b0 Debugging\par
+\b Problem Mode:\b0 Standard Input/Output\par
+\b Folder Name:\b0 M1_Longest_Valid_Parentheses\par
+\b Test Cases:\b0 13 total (3 sample, 10 hidden)\par
+\par
+\b Constraints:\b0 0 <= |s| <= 2e5; s contains only '(' and ')'\par
+\b Description:\b0 Given a string of '(' and ')', return the length of the longest valid (well-formed) parentheses substring.\par
+\b Input Format:\b0 s\par
+\b Output Format:\b0 Single integer length\par
+\par
+\fs28\b Sample Test Cases\b0\fs24\par
+\b Sample 1\b0\par
+Input:\par
+{\f1\fs20 )()())}\par
+Output:\par
+{\f1\fs20 4}\par
+\par
+\b Sample 2\b0\par
+Input:\par
+{\f1\fs20 (()}\par
+Output:\par
+{\f1\fs20 2}\par
+\par
+\b Sample 3\b0\par
+Input:\par
+{\f1\fs20 ()(()}\par
+Output:\par
+{\f1\fs20 2}\par
+\par
+\par
+\page
+\fs36\b Q5. Longest Substring Without Repeating Characters\b0\fs24\par
+\b Difficulty:\b0 Medium\par
+\b Total Marks:\b0 20\par
+\b Problem Type:\b0 Debugging\par
+\b Problem Mode:\b0 Standard Input/Output\par
+\b Folder Name:\b0 M2_Longest_Substring_No_Repeat\par
+\b Test Cases:\b0 13 total (3 sample, 10 hidden)\par
+\par
+\b Constraints:\b0 0 <= |s| <= 2e5; ASCII characters\par
+\b Description:\b0 Given a string s, return the length of the longest substring without repeating characters.\par
+\b Input Format:\b0 s\par
+\b Output Format:\b0 Single integer length\par
+\par
+\fs28\b Sample Test Cases\b0\fs24\par
+\b Sample 1\b0\par
+Input:\par
+{\f1\fs20 abcabcbb}\par
+Output:\par
+{\f1\fs20 3}\par
+\par
+\b Sample 2\b0\par
+Input:\par
+{\f1\fs20 bbbbb}\par
+Output:\par
+{\f1\fs20 1}\par
+\par
+\b Sample 3\b0\par
+Input:\par
+{\f1\fs20 pwwkew}\par
+Output:\par
+{\f1\fs20 3}\par
+\par
+\par
+\page
+\fs36\b Q6. Coin Change (Minimum Coins)\b0\fs24\par
+\b Difficulty:\b0 Medium\par
+\b Total Marks:\b0 20\par
+\b Problem Type:\b0 Debugging\par
+\b Problem Mode:\b0 Standard Input/Output\par
+\b Folder Name:\b0 M3_Coin_Change_Min_Coins\par
+\b Test Cases:\b0 13 total (3 sample, 10 hidden)\par
+\par
+\b Constraints:\b0 1 <= n <= 50; 0 <= amount <= 1e5; 1 <= coin[i] <= 1e4\par
+\b Description:\b0 Given coin denominations and a target amount, output the minimum number of coins needed. If impossible, output -1.\par
+\b Input Format:\b0 n amount\line c1 c2 ... cn\par
+\b Output Format:\b0 Minimum coins or -1\par
+\par
+\fs28\b Sample Test Cases\b0\fs24\par
+\b Sample 1\b0\par
+Input:\par
+{\f1\fs20 3 11\line 1 2 5}\par
+Output:\par
+{\f1\fs20 3}\par
+\par
+\b Sample 2\b0\par
+Input:\par
+{\f1\fs20 2 3\line 2 4}\par
+Output:\par
+{\f1\fs20 -1}\par
+\par
+\b Sample 3\b0\par
+Input:\par
+{\f1\fs20 1 0\line 7}\par
+Output:\par
+{\f1\fs20 0}\par
+\par
+\par
+\page
+\fs36\b Q7. Merge Intervals\b0\fs24\par
+\b Difficulty:\b0 Medium\par
+\b Total Marks:\b0 20\par
+\b Problem Type:\b0 Debugging\par
+\b Problem Mode:\b0 Standard Input/Output\par
+\b Folder Name:\b0 M4_Merge_Intervals\par
+\b Test Cases:\b0 13 total (3 sample, 10 hidden)\par
+\par
+\b Constraints:\b0 1 <= N <= 2e5; -1e9 <= start,end <= 1e9; start <= end\par
+\b Description:\b0 Given N intervals [start,end], merge all overlapping intervals and print merged intervals sorted by start.\par
+\b Input Format:\b0 N\line start1 end1\line ...\par
+\b Output Format:\b0 Merged intervals, one per line: start end\par
+\par
+\fs28\b Sample Test Cases\b0\fs24\par
+\b Sample 1\b0\par
+Input:\par
+{\f1\fs20 4\line 1 3\line 2 6\line 8 10\line 15 18}\par
+Output:\par
+{\f1\fs20 1 6\line 8 10\line 15 18}\par
+\par
+\b Sample 2\b0\par
+Input:\par
+{\f1\fs20 3\line 1 4\line 4 5\line 6 7}\par
+Output:\par
+{\f1\fs20 1 5\line 6 7}\par
+\par
+\b Sample 3\b0\par
+Input:\par
+{\f1\fs20 1\line -1 1}\par
+Output:\par
+{\f1\fs20 -1 1}\par
+\par
+\par
+\page
+\fs36\b Q8. Graph Connectivity Queries (BFS)\b0\fs24\par
+\b Difficulty:\b0 Hard\par
+\b Total Marks:\b0 30\par
+\b Problem Type:\b0 Debugging\par
+\b Problem Mode:\b0 Standard Input/Output\par
+\b Folder Name:\b0 H1_Graph_Connectivity_BFS\par
+\b Test Cases:\b0 18 total (3 sample, 15 hidden)\par
+\par
+\b Constraints:\b0 1 <= N <= 2e5; 0 <= M <= 2e5; 1 <= Q <= 2e5\par
+\b Description:\b0 Given an undirected graph and Q queries, determine for each query if there exists a path between u and v.\par
+\b Input Format:\b0 N M Q\line (M lines) u v\line (Q lines) u v\par
+\b Output Format:\b0 For each query: Yes or No\par
+\par
+\fs28\b Sample Test Cases\b0\fs24\par
+\b Sample 1\b0\par
+Input:\par
+{\f1\fs20 5 4 3\line 1 2\line 2 3\line 4 5\line 3 1\line 1 3\line 1 5\line 4 5}\par
+Output:\par
+{\f1\fs20 Yes\line No\line Yes}\par
+\par
+\b Sample 2\b0\par
+Input:\par
+{\f1\fs20 3 0 2\line 1 2\line 2 3}\par
+Output:\par
+{\f1\fs20 No\line No}\par
+\par
+\b Sample 3\b0\par
+Input:\par
+{\f1\fs20 4 3 1\line 1 2\line 2 3\line 3 4\line 1 4}\par
+Output:\par
+{\f1\fs20 Yes}\par
+\par
+\par
+\page
+\fs36\b Q9. Minimum Path Sum in Grid\b0\fs24\par
+\b Difficulty:\b0 Hard\par
+\b Total Marks:\b0 30\par
+\b Problem Type:\b0 Debugging\par
+\b Problem Mode:\b0 Standard Input/Output\par
+\b Folder Name:\b0 H2_Minimum_Path_Sum_Grid\par
+\b Test Cases:\b0 18 total (3 sample, 15 hidden)\par
+\par
+\b Constraints:\b0 1 <= R,C; R*C <= 2e5; 0 <= grid[i][j] <= 1e6\par
+\b Description:\b0 Given an R\u215?C grid, find minimum path sum from (0,0) to (R-1,C-1) moving only right or down.\par
+\b Input Format:\b0 R C\line (R lines) grid row\par
+\b Output Format:\b0 Single integer minimum sum\par
+\par
+\fs28\b Sample Test Cases\b0\fs24\par
+\b Sample 1\b0\par
+Input:\par
+{\f1\fs20 3 3\line 1 3 1\line 1 5 1\line 4 2 1}\par
+Output:\par
+{\f1\fs20 7}\par
+\par
+\b Sample 2\b0\par
+Input:\par
+{\f1\fs20 1 4\line 5 1 2 3}\par
+Output:\par
+{\f1\fs20 11}\par
+\par
+\b Sample 3\b0\par
+Input:\par
+{\f1\fs20 2 2\line 0 0\line 0 0}\par
+Output:\par
+{\f1\fs20 0}\par
+\par
+\par
+\page
+\fs36\b Q10. Merge K Sorted Arrays\b0\fs24\par
+\b Difficulty:\b0 Hard\par
+\b Total Marks:\b0 30\par
+\b Problem Type:\b0 Debugging\par
+\b Problem Mode:\b0 Standard Input/Output\par
+\b Folder Name:\b0 H3_Merge_K_Sorted_Arrays\par
+\b Test Cases:\b0 18 total (3 sample, 15 hidden)\par
+\par
+\b Constraints:\b0 1 <= K; total elements across arrays <= 2e5; arrays sorted non-decreasing\par
+\b Description:\b0 Given K sorted arrays, merge them into a single sorted array and print it.\par
+\b Input Format:\b0 K\line (n1 and n1 ints)\line ...\par
+\b Output Format:\b0 Merged sorted elements space-separated\par
+\par
+\fs28\b Sample Test Cases\b0\fs24\par
+\b Sample 1\b0\par
+Input:\par
+{\f1\fs20 3\line 3 1 4 7\line 2 2 6\line 4 0 3 5 8}\par
+Output:\par
+{\f1\fs20 0 1 2 3 4 5 6 7 8}\par
+\par
+\b Sample 2\b0\par
+Input:\par
+{\f1\fs20 1\line 5 -1 -1 0 2 2}\par
+Output:\par
+{\f1\fs20 -1 -1 0 2 2}\par
+\par
+\b Sample 3\b0\par
+Input:\par
+{\f1\fs20 2\line 0\line 3 1 1 1}\par
+Output:\par
+{\f1\fs20 1 1 1}\par
+\par
+\par
+}

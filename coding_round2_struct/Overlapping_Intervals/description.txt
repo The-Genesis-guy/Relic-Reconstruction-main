@@ -1,0 +1,39 @@
+Title: Overlapping Intervals
+Difficulty: Medium
+Points: 20
+Tags: Sorting, Greedy
+
+Problem
+Given N closed intervals [L, R], merge all overlapping intervals and print the merged list sorted by start value.
+
+Input Format
+- First line: integer N
+- Next N lines: two integers L R
+
+Output Format
+- Print each merged interval on its own line as "L R" in ascending order of L.
+
+Constraints
+1 <= N <= 1e5
+-1e9 <= L <= R <= 1e9
+
+Sample Input 1
+4
+1 3
+2 4
+6 8
+9 10
+
+Sample Output 1
+1 4
+6 8
+9 10
+
+Sample Input 2
+3
+1 5
+2 3
+4 6
+
+Sample Output 2
+1 6

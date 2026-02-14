@@ -1,0 +1,77 @@
+# Test Case 1 (Sample) - 0 points
+INPUT:
+abcabcbb
+OUTPUT:
+3
+
+# Test Case 2 (Sample) - 0 points
+INPUT:
+bbbbb
+OUTPUT:
+1
+
+# Test Case 3 (Sample) - 0 points
+INPUT:
+pwwkew
+OUTPUT:
+3
+
+# Test Case 4 (Hidden) - will get auto points
+INPUT:
+
+OUTPUT:
+0
+
+# Test Case 5 (Hidden) - will get auto points
+INPUT:
+abcdef
+OUTPUT:
+6
+
+# Test Case 6 (Hidden) - will get auto points
+INPUT:
+abba
+OUTPUT:
+2
+
+# Test Case 7 (Hidden) - will get auto points
+INPUT:
+dvdf
+OUTPUT:
+3
+
+# Test Case 8 (Hidden) - will get auto points
+INPUT:
+anviaj
+OUTPUT:
+5
+
+# Test Case 9 (Hidden) - will get auto points
+INPUT:
+tmmzuxt
+OUTPUT:
+5
+
+# Test Case 10 (Hidden) - will get auto points
+INPUT:
+aab
+OUTPUT:
+2
+
+# Test Case 11 (Hidden) - will get auto points
+INPUT:
+ohvhjdml
+OUTPUT:
+6
+
+# Test Case 12 (Hidden) - will get auto points
+INPUT:
+abcdeafghijakl
+OUTPUT:
+10
+
+# Test Case 13 (Hidden) - will get auto points
+INPUT:
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+OUTPUT:
+1

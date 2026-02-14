@@ -1,0 +1,104 @@
+{
+  "title": "Merge Intervals",
+  "contest": "Round 1: Shattered Syntax (Debugging)",
+  "problem_type": "Debugging",
+  "problem_mode": "Standard Input/Output",
+  "total_marks": "20",
+  "constraints": "1 <= N <= 2e5; -1e9 <= start,end <= 1e9; start <= end",
+  "description": "Given N intervals [start,end], merge all overlapping intervals and print merged intervals sorted by start.",
+  "input_format": "N\nstart1 end1\n...",
+  "output_format": "Merged intervals, one per line: start end",
+  "folder_name": "M4_Merge_Intervals",
+  "test_cases": [
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "4\n1 3\n2 6\n8 10\n15 18",
+      "output": "1 6\n8 10\n15 18"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "3\n1 4\n4 5\n6 7",
+      "output": "1 5\n6 7"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "1\n-1 1",
+      "output": "-1 1"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3\n1 2\n3 4\n5 6",
+      "output": "1 2\n3 4\n5 6"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3\n1 10\n2 3\n4 8",
+      "output": "1 10"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3\n-5 -1\n-3 2\n10 10",
+      "output": "-5 2\n10 10"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3\n1 3\n3 3\n3 5",
+      "output": "1 5"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3\n5 7\n1 2\n2 4",
+      "output": "1 4\n5 7"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3\n1 1\n1 2\n2 2",
+      "output": "1 2"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "2\n0 100\n101 200",
+      "output": "0 100\n101 200"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3\n-10 0\n0 0\n0 10",
+      "output": "-10 10"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "4\n1 4\n0 0\n5 5\n2 3",
+      "output": "0 0\n1 4\n5 5"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "4\n1 2\n2 3\n3 4\n4 5",
+      "output": "1 5"
+    }
+  ],
+  "solutions": {
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n\n        int n = sc.nextInt();\n        long[][] intervals = new long[n][2];\n\n        for (int i = 0; i < n; i++) {\n            intervals[i][0] = sc.nextLong();\n            intervals[i][1] = sc.nextLong();\n        }\n\n        // Sort by start\n        Arrays.sort(intervals, (a, b) -> Long.compare(a[0], b[0]));\n\n        long cs = intervals[0][0];\n        long ce = intervals[0][1];\n\n        for (int i = 1; i < n; i++) {\n            if (intervals[i][0] <= ce) {\n                ce = Math.max(ce, intervals[i][1]);\n            } else {\n                System.out.println(cs + \" \" + ce);\n                cs = intervals[i][0];\n                ce = intervals[i][1];\n            }\n        }\n\n        System.out.println(cs + \" \" + ce);\n    }\n}\n",
+    "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n\n    vector<pair<long long, long long>> intervals(n);\n\n    for (int i = 0; i < n; i++) {\n        cin >> intervals[i].first >> intervals[i].second;\n    }\n\n    // Sort by start\n    sort(intervals.begin(), intervals.end());\n\n    long long cs = intervals[0].first;\n    long long ce = intervals[0].second;\n\n    for (int i = 1; i < n; i++) {\n        if (intervals[i].first <= ce) {\n            ce = max(ce, intervals[i].second);\n        } else {\n            cout << cs << \" \" << ce << \"\\n\";\n            cs = intervals[i].first;\n            ce = intervals[i].second;\n        }\n    }\n\n    cout << cs << \" \" << ce << \"\\n\";\n\n    return 0;\n}\n",
+    "python": "n = int(input())\n\nintervals = []\nfor _ in range(n):\n    s, e = map(int, input().split())\n    intervals.append((s, e))\n\n# Sort by start\nintervals.sort()\n\ncs, ce = intervals[0]\n\nfor i in range(1, n):\n    if intervals[i][0] <= ce:\n        ce = max(ce, intervals[i][1])\n    else:\n        print(cs, ce)\n        cs, ce = intervals[i]\n\nprint(cs, ce)\n",
+    "c": "#include <stdio.h>\n#include <stdlib.h>\n\ntypedef struct {\n    long long s, e;\n} I;\n\nint cmp(const void* a, const void* b) {\n    I* x = (I*)a;\n    I* y = (I*)b;\n\n    if (x->s < y->s) return -1;\n    if (x->s > y->s) return 1;\n    return 0;\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n\n    I* it = malloc(sizeof(I) * n);\n\n    for (int i = 0; i < n; i++) {\n        scanf(\"%lld %lld\", &it[i].s, &it[i].e);\n    }\n\n    // Sort by start\n    qsort(it, n, sizeof(I), cmp);\n\n    long long cs = it[0].s;\n    long long ce = it[0].e;\n\n    for (int i = 1; i < n; i++) {\n        if (it[i].s <= ce) {\n            // Merge intervals \u2192 take maximum end\n            if (it[i].e > ce)\n                ce = it[i].e;\n        } else {\n            printf(\"%lld %lld\\n\", cs, ce);\n            cs = it[i].s;\n            ce = it[i].e;\n        }\n    }\n\n    printf(\"%lld %lld\\n\", cs, ce);\n\n    free(it);\n    return 0;\n}\n"
+  },
+  "starter_code": {
+    "java": "import java.io.*;import java.util.*;\npublic class Solution{\n  public static void main(String[] args)throws Exception{\n    BufferedReader br=new BufferedReader(new InputStreamReader(System.in));\n    int n=Integer.parseInt(br.readLine().trim());\n    long[][] it=new long[n][2];\n    for(int i=0;i<n;i++){\n      StringTokenizer st=new StringTokenizer(br.readLine());\n      it[i][0]=Long.parseLong(st.nextToken());\n      it[i][1]=Long.parseLong(st.nextToken());\n    }\n    Arrays.sort(it,(a,b)->Long.compare(a[1],b[1])); \n    long cs=it[0][0], ce=it[0][1];\n    for(int i=1;i<n;i++){\n      if(it[i][0]<=ce) ce=Math.min(ce,it[i][1]); \n      else{ System.out.println(cs+\" \"+ce); cs=it[i][0]; ce=it[i][1]; }\n    }\n    System.out.println(cs+\" \"+ce);\n  }\n}\n",
+    "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n  int n; cin>>n;\n  vector<pair<long long,long long>> it(n);\n  for(int i=0;i<n;i++) cin>>it[i].first>>it[i].second;\n  sort(it.begin(), it.end(), [](auto &a, auto &b){ return a.second<b.second; });\n  long long cs=it[0].first, ce=it[0].second;\n  for(int i=1;i<n;i++){\n    if(it[i].first<=ce) ce=min(ce,it[i].second); \n    else{ cout<<cs<<\" \"<<ce<<\"\\n\"; cs=it[i].first; ce=it[i].second; }\n  }\n  cout<<cs<<\" \"<<ce<<\"\\n\";\n}\n",
+    "python": "import sys\nn=int(sys.stdin.readline())\nit=[]\nfor _ in range(n):\n    a,b=map(int, sys.stdin.readline().split())\n    it.append((b,a))          \nit.sort()\nres=[]\nfor s,e in it:\n    if not res or s>res[-1][1]:\n        res.append([s,e])\n    else:\n        res[-1][1]=min(res[-1][1], e)  \nfor s,e in res:\n    print(s,e)\n",
+    "c": "#include <stdio.h>\n#include <stdlib.h>\ntypedef struct{ long long s,e; } I;\nint cmp(const void* a,const void* b){\n  I* x=(I*)a; I* y=(I*)b;\n  return (x->e > y->e) - (x->e < y->e); \n}\nint main(){\n  int n; scanf(\"%d\",&n);\n  I* it=malloc(sizeof(I)*n);\n  for(int i=0;i<n;i++){ scanf(\"%lld %lld\",&it[i].s,&it[i].e); }\n  qsort(it,n,sizeof(I),cmp);\n  long long cs=it[0].s, ce=it[0].e;\n  for(int i=1;i<n;i++){\n    if(it[i].s<=ce){\n      if(it[i].e<ce) ce=it[i].e; \n    }else{\n      printf(\"%lld %lld\\n\",cs,ce);\n      cs=it[i].s; ce=it[i].e;\n    }\n  }\n  printf(\"%lld %lld\\n\",cs,ce);\n}\n"
+  }
+}

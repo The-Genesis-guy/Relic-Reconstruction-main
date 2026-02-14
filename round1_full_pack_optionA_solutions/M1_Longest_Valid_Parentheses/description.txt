@@ -1,0 +1,19 @@
+Problem Title: Longest Valid Parentheses
+Contest: Round 1: Shattered Syntax (Debugging)
+Problem Type: Debugging
+Problem Mode: Standard Input/Output
+Total Marks: 20
+
+Constraints:
+0 <= |s| <= 2e5; s contains only '(' and ')'
+
+Description:
+Given a string of '(' and ')', return the length of the longest valid (well-formed) parentheses substring.
+
+Input Format:
+s
+
+
+Output Format:
+Single integer length
+

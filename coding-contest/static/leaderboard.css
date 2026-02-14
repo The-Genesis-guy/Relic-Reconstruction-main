@@ -1,0 +1,46 @@
+.leaderboard-header {
+    text-align: center;
+    margin: 3rem 0;
+}
+
+.leaderboard-title {
+    font-size: 3rem;
+    font-weight: 800;
+    font-family: var(--font-display);
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+}
+
+.filter-section {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.leaderboard-card {
+    background: var(--surface);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+}
+
+.rank-1 {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, transparent 100%);
+}
+
+.rank-2 {
+    background: linear-gradient(135deg, rgba(192, 192, 192, 0.1) 0%, transparent 100%);
+}
+
+.rank-3 {
+    background: linear-gradient(135deg, rgba(205, 127, 50, 0.1) 0%, transparent 100%);
+}
+
+.rank-cell {
+    font-size: 1.5rem;
+    font-weight: 800;
+}

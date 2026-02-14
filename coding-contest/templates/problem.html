@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ problem.title }} - Relic Reconstruction</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/problem.css">
+    <script src="/static/libs/socket.io.min.js"></script>
+    <script src="/static/libs/monaco-editor/min/vs/loader.js"></script>
+    <script src="/static/notifications.js"></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <div class="navbar-brand">Relic Reconstruction</div>
+                <div class="navbar-links">
+                    <a href="/dashboard">Back to Dashboard</a>
+                    {% if leaderboard_enabled %}
+                    <a href="/leaderboard">Leaderboard</a>
+                    {% endif %}
+                    <a href="/help" title="Help & Reference">❓ Help</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Problem Navigation Sidebar -->
+    {% if contest_problems and contest_problems|length > 0 %}
+    <div id="problemSidebar" class="problem-sidebar">
+        <div class="sidebar-header">
+            <h3 style="margin: 0; font-size: 1rem; color: var(--text-primary);">Problems</h3>
+            <button onclick="toggleSidebar()" class="sidebar-close" title="Close sidebar">✕</button>
+        </div>
+        <div class="sidebar-content">
+            {% for p in contest_problems %}
+            <a href="/problem/{{ p.id }}" data-problem-id="{{ p.id }}"
+                class="sidebar-problem-item {% if p.id == problem.id %}active{% endif %} {% if p.solved > 0 %}solved{% elif p.attempted > 0 %}attempted{% endif %}">
+                <div class="problem-status">
+                    {% if p.solved > 0 %}
+                    <span class="status-icon solved">✓</span>
+                    {% elif p.attempted > 0 %}
+                    <span class="status-icon attempted">○</span>
+                    {% else %}
+                    <span class="status-icon">○</span>
+                    {% endif %}
+                </div>
+                <div class="problem-info">
+                    <div class="problem-title">{{ p.title }}</div>
+                    <div class="problem-meta">{{ p.problem_type }}</div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <button id="sidebarToggle" onclick="toggleSidebar()" class="sidebar-toggle" title="Show problems">
+        <span class="toggle-icon">➔</span>
+        <span class="toggle-text">Problem Set</span>
+    </button>
+    {% endif %}
+
+    <div class="container" style="padding: 2rem 0;">
+        <div class="fade-in">
+            <h1 style="font-size: 2.5rem; font-weight: 800; color: var(--accent); margin-bottom: 0.5rem;">
+                {{ problem.title }}
+            </h1>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
+                <div style="display: flex; gap: 1rem;">
+                    <span class="badge badge-info">{{ problem.problem_type or 'coding' }}</span>
+                    {% if show_difficulty_to_students and problem.difficulty %}
+                    {% if problem.difficulty == 'easy' %}
+                    <span class="badge badge-success">Easy</span>
+                    {% elif problem.difficulty == 'medium' %}
+                    <span class="badge badge-warning">Medium</span>
+                    {% elif problem.difficulty == 'hard' %}
+                    <span class="badge badge-danger">Hard</span>
+                    {% endif %}
+                    {% endif %}
+                    <span class="badge badge-success">{{ problem.problem_mode or 'stdin' }}</span>
+                    {% if problem.problem_mode == 'function' %}
+                    <span class="badge badge-warning">function: {{ problem.function_name or 'solve' }}</span>
+                    {% endif %}
+                    {% if show_scores_to_students %}
+                    <span class="badge"
+                        style="background: rgba(255, 193, 7, 0.2); color: #ffc107; border: 1px solid rgba(255, 193, 7, 0.3);">
+                        🏆 Max Points: {{ problem.total_marks or 100 }}
+                    </span>
+                    {% endif %}
+                </div>
+                {% if problem.contest_id %}
+                <div class="contest-timer" data-contest-id="{{ problem.contest_id }}"
+                    style="font-family: monospace; font-size: 1.1rem; font-weight: 700; background: rgba(0,0,0,0.2); padding: 0.5rem 1rem; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1);">
+                    Syncing timer...
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="problem-layout">
+            <!-- Problem Description -->
+            <div class="problem-section fade-in">
+                <h2 class="section-title">Problem Description</h2>
+                <div class="problem-content">
+                    <div class="rich-text">{{ problem.description | safe }}</div>
+
+                    <h3>Input Format</h3>
+                    <pre
+                        style="background: var(--bg-darker); padding: 1rem; border-radius: var(--radius); overflow-x: auto;">{{ problem.input_format }}</pre>
+
+                    <h3>Output Format</h3>
+                    <pre
+                        style="background: var(--bg-darker); padding: 1rem; border-radius: var(--radius); overflow-x: auto;">{{ problem.output_format }}</pre>
+
+                    {% if problem.constraints %}
+                    <h3>Constraints</h3>
+                    <pre
+                        style="background: var(--bg-darker); padding: 1rem; border-radius: var(--radius); overflow-x: auto;">{{ problem.constraints }}</pre>
+                    {% endif %}
+
+                    <h3>Sample Test Cases</h3>
+                    {% if sample_tests and sample_tests|length > 0 %}
+                    {% for test in sample_tests %}
+                    <div
+                        style="margin-bottom: 1.5rem; padding: 1rem; background: var(--bg-darker); border-radius: var(--radius); border-left: 3px solid var(--accent);">
+                        <h4 style="margin-top: 0; color: var(--accent); font-size: 0.9rem;">Test Case {{ loop.index }}
+                        </h4>
+                        <div style="margin-bottom: 0.75rem;">
+                            <strong style="color: var(--text-secondary);">Input:</strong>
+                            <pre
+                                style="background: rgba(0,0,0,0.3); padding: 0.5rem; border-radius: 4px; margin-top: 0.25rem; overflow-x: auto;">{{ test.input }}</pre>
+                        </div>
+                        <div>
+                            <strong style="color: var(--text-secondary);">Expected Output:</strong>
+                            <pre
+                                style="background: rgba(0,0,0,0.3); padding: 0.5rem; border-radius: 4px; margin-top: 0.25rem; overflow-x: auto;">{{ test.expected_output }}</pre>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <!-- Fallback to old format if no test cases in database -->
+                    <div
+                        style="margin-bottom: 1.5rem; padding: 1rem; background: var(--bg-darker); border-radius: var(--radius); border-left: 3px solid var(--accent);">
+                        <h4 style="margin-top: 0; color: var(--accent); font-size: 0.9rem;">Sample Test Case</h4>
+                        <div style="margin-bottom: 0.75rem;">
+                            <strong style="color: var(--text-secondary);">Input:</strong>
+                            <pre
+                                style="background: rgba(0,0,0,0.3); padding: 0.5rem; border-radius: 4px; margin-top: 0.25rem; overflow-x: auto;">{{ problem.sample_input }}</pre>
+                        </div>
+                        <div>
+                            <strong style="color: var(--text-secondary);">Expected Output:</strong>
+                            <pre
+                                style="background: rgba(0,0,0,0.3); padding: 0.5rem; border-radius: 4px; margin-top: 0.25rem; overflow-x: auto;">{{ problem.sample_output }}</pre>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Code Editor -->
+            <div class="code-section fade-in">
+                <h2 class="section-title">Code Editor</h2>
+
+                <!-- Status Bar -->
+                <div class="status-bar"
+                    style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.875rem; font-weight: 600; border: 1px solid rgba(255,255,255,0.1);">
+                    <span style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 1.2rem;">⏱️</span>
+                        <span id="statusTimer">Loading...</span>
+                    </span>
+                    <span style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 1.2rem;">🎯</span>
+                        <span>Problem: {{ problem.title }}</span>
+                    </span>
+                </div>
+
+                <!-- Help Box -->
+                <div
+                    style="background: rgba(52, 152, 219, 0.1); border-left: 4px solid #3498db; padding: 1rem; margin-bottom: 1.5rem; border-radius: 4px;">
+                    <h4 style="margin-top: 0; color: #3498db; font-size: 0.95rem;">💡 How to Use:</h4>
+                    <ul style="margin: 0; padding-left: 1.5rem; font-size: 0.875rem; line-height: 1.6;">
+                        <li><strong>Run:</strong> Test your code with the 3 visible sample cases above (3s cooldown)
+                        </li>
+                        <li><strong>Submit:</strong> Grade your code with ALL test cases including hidden ones (10s
+                            cooldown)</li>
+                        {% if show_scores_to_students %}
+                        <li><strong>Points:</strong> You earn points only from hidden test cases, not samples. Max
+                            points: {{ problem.total_marks or 100 }}</li>
+                        {% else %}
+                        <li><strong>Points:</strong> You earn points only from hidden test cases, not samples</li>
+                        {% endif %}
+                        <li><strong>Tip:</strong> Test with "Run" first, then "Submit" when confident!</li>
+                    </ul>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Language</label>
+                    <select id="language" class="form-select">
+                        <option value="python">Python</option>
+                        <option value="cpp">C++</option>
+                        <option value="java">Java</option>
+                        <option value="c">C</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Your Code</label>
+                    <div id="editor-container"
+                        style="height: 500px; border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius); overflow: hidden;">
+                    </div>
+                    <textarea id="code" style="display: none;"></textarea>
+                </div>
+
+                <div class="action-buttons">
+                    <button onclick="runCode()" class="btn btn-outline" id="runBtn"
+                        title="Test your code with visible sample test cases (3s cooldown)">
+                        <span style="font-size: 1.1rem; margin-right: 0.25rem;">🏃</span>
+                        Run Code
+                        <span id="runCooldown" style="margin-left: 0.5rem; font-size: 0.85rem; display: none;"></span>
+                    </button>
+                    <button onclick="submitCode()" class="btn btn-primary" id="submitBtn"
+                        title="Submit for grading with all test cases including hidden ones (3s cooldown)">
+                        <span style="font-size: 1.1rem; margin-right: 0.25rem;">📤</span>
+                        Submit for Grading
+                        <span id="submitCooldown"
+                            style="margin-left: 0.5rem; font-size: 0.85rem; display: none;"></span>
+                    </button>
+                </div>
+
+                <div id="result" class="hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="problem-meta" data-problem-id="{{ problem.id | tojson }}"
+        data-starter-code-map='{{ starter_code_map | tojson }}' data-problem-mode="{{ problem.problem_mode or 'stdin' }}"
+        data-function-name="{{ problem.function_name or 'solve' }}"
+        data-show-scores="{{ 'true' if show_scores_to_students else 'false' }}" style="display: none;">
+    </div>
+
+    <script>
+        (function () {
+            const meta = document.getElementById('problem-meta');
+            window.PROBLEM_DATA = {
+                problemId: meta.dataset.problemId,
+                starterCodeMap: meta.dataset.starterCodeMap,
+                problemMode: meta.dataset.problemMode,
+                functionName: meta.dataset.functionName,
+                showScores: meta.dataset.showScores === 'true'
+            };
+        })();
+
+        // Sidebar toggle functionality
+        window.toggleSidebar = function toggleSidebar() {
+            const sidebar = document.getElementById('problemSidebar');
+            if (sidebar) {
+                sidebar.classList.toggle('open');
+            }
+        }
+
+        // Close sidebar when clicking outside
+        document.addEventListener('click', function (event) {
+            const sidebar = document.getElementById('problemSidebar');
+            const toggle = document.getElementById('sidebarToggle');
+            if (sidebar && toggle && sidebar.classList.contains('open')) {
+                if (!sidebar.contains(event.target) && !toggle.contains(event.target)) {
+                    sidebar.classList.remove('open');
+                    toggle.classList.remove('active');
+                }
+            }
+        });
+
+        // Keyboard shortcut: Press 'P' to toggle sidebar
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'p' || event.key === 'P') {
+                // Only if not typing in an input/textarea
+                if (!['INPUT', 'TEXTAREA'].includes(event.target.tagName)) {
+                    toggleSidebar();
+                }
+            }
+        });
+    </script>
+    <script defer src="/static/problem.js?v=1"></script>
+    <script>
+        window.addEventListener('load', () => {
+            if (typeof window.runCode !== 'function' || typeof window.submitCode !== 'function') {
+                console.warn('problem.js did not load. Please hard refresh.');
+            }
+        });
+    </script>
+    <script src="/static/proctor.js"></script>
+</body>
+
+</html>

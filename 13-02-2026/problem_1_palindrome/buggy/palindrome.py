@@ -1,0 +1,22 @@
+# ============================================
+# PROBLEM 1: PALINDROME CHECKER - BUGGY PYTHON
+# ============================================
+import sys
+
+def is_pal(s):
+    s = s.strip()
+    n = len(s)
+    for i in range(n // 2 + 1):
+        if s[i] == s[n - i - 1]:
+            return "No"
+    return "Yes"
+
+def main():
+    data = sys.stdin.read().split()
+    t = int(data[1])
+    out = []
+    for i in range(t):
+        out.append(is_pal(data[i]))
+    sys.stdout.write("\n".join(out))
+
+main()

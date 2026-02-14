@@ -1,0 +1,105 @@
+{
+  "title": "Longest Substring Without Repeating Characters",
+  "contest": "The Architect's Blueprint - Round 2",
+  "problem_type": "Debugging",
+  "problem_mode": "Function",
+  "function_name": "solve",
+  "total_marks": "20",
+  "constraints": "0 <= |s| <= 2e5; ASCII characters",
+  "description": "Given a string s, return the length of the longest substring without repeating characters.",
+  "input_format": "s",
+  "output_format": "Single integer length",
+  "folder_name": "M2_Longest_Substring_No_Repeat",
+  "test_cases": [
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "abcabcbb",
+      "output": "3"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "bbbbb",
+      "output": "1"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "pwwkew",
+      "output": "3"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "",
+      "output": "0"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "abcdef",
+      "output": "6"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "abba",
+      "output": "2"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "dvdf",
+      "output": "3"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "anviaj",
+      "output": "5"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "tmmzuxt",
+      "output": "5"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "aab",
+      "output": "2"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "ohvhjdml",
+      "output": "6"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "abcdeafghijakl",
+      "output": "10"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "output": "1"
+    }
+  ],
+  "starter_code": {
+    "python": "def solve(data: str) -> str:\n    # TODO: parse input from data and compute result\n    return \"\"\n",
+    "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nstring solve(const string& data) {\n    // TODO: parse input from data and compute result\n    return \"\";\n}\n",
+    "java": "import java.util.*;\npublic class Solution {\n    public String solve(String data) {\n        // TODO: parse input from data and compute result\n        return \"\";\n    }\n}\n",
+    "c": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nchar* solve(const char* data) {\n    // TODO: parse input from data and compute result\n    char* out = strdup(\"\");\n    return out;\n}\n"
+  },
+  "solutions": {
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n\n        if (!sc.hasNext()) {\n            System.out.println(0);\n            return;\n        }\n\n        String s = sc.next();\n\n        int[] last = new int[256];\n        Arrays.fill(last, -1);\n\n        int l = 0, best = 0;\n\n        for (int r = 0; r < s.length(); r++) {\n            char c = s.charAt(r);\n\n            if (last[c] >= l)\n                l = last[c] + 1;\n\n            last[c] = r;\n\n            best = Math.max(best, r - l + 1);\n        }\n\n        System.out.println(best);\n    }\n}\n",
+    "cpp": "#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    string s;\n    \n    if (!(cin >> s)) {\n        cout << 0 << endl;\n        return 0;\n    }\n\n    vector<int> last(256, -1);\n    int l = 0, best = 0;\n\n    for (int r = 0; r < s.length(); r++) {\n        unsigned char c = s[r];\n\n        if (last[c] >= l)\n            l = last[c] + 1;\n\n        last[c] = r;\n\n        best = max(best, r - l + 1);\n    }\n\n    cout << best << endl;\n    return 0;\n}\n",
+    "python": "s = input().strip()\n\nlast = {}\nl = 0\nbest = 0\n\nfor r, ch in enumerate(s):\n    if ch in last and last[ch] >= l:\n        l = last[ch] + 1\n    last[ch] = r\n    best = max(best, r - l + 1)\n\nprint(best)\n",
+    "c": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s[200005];\n\n    // Handle empty input safely\n    if (scanf(\"%s\", s) != 1) {\n        printf(\"0\\n\");\n        return 0;\n    }\n\n    int last[256];\n    for (int i = 0; i < 256; i++)\n        last[i] = -1;\n\n    int l = 0, best = 0;\n\n    for (int r = 0; s[r]; r++) {\n        unsigned char c = s[r];\n\n        if (last[c] >= l)      // FIXED\n            l = last[c] + 1;   // FIXED\n\n        last[c] = r;\n\n        int len = r - l + 1;   // FIXED\n        if (len > best)\n            best = len;\n    }\n\n    printf(\"%d\\n\", best);\n    return 0;\n}\n"
+  }
+}

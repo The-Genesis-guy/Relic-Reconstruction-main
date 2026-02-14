@@ -1,0 +1,104 @@
+{
+  "title": "Pascal Triangle",
+  "contest": "The Architect's Blueprint - Round 2 (Debugging)",
+  "problem_type": "Debugging",
+  "problem_mode": "Standard Input/Output",
+  "total_marks": "10",
+  "constraints": "1 <= n <= 30",
+  "description": "Given an integer n, generate the first n rows of Pascal's triangle. Each row's values are separated by a single space.",
+  "input_format": "Single integer n",
+  "output_format": "Print n lines; line i (1-indexed) contains the i-th row of Pascal's triangle with values space-separated.",
+  "folder_name": "E_Pascal_Triangle",
+  "test_cases": [
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "4",
+      "output": "1\n1 1\n1 2 1\n1 3 3 1"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "1",
+      "output": "1"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "5",
+      "output": "1\n1 1\n1 2 1\n1 3 3 1\n1 4 6 4 1"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "2",
+      "output": "1\n1 1"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3",
+      "output": "1\n1 1\n1 2 1"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "6",
+      "output": "1\n1 1\n1 2 1\n1 3 3 1\n1 4 6 4 1\n1 5 10 10 5 1"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "7",
+      "output": "1\n1 1\n1 2 1\n1 3 3 1\n1 4 6 4 1\n1 5 10 10 5 1\n1 6 15 20 15 6 1"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "8",
+      "output": "1\n1 1\n1 2 1\n1 3 3 1\n1 4 6 4 1\n1 5 10 10 5 1\n1 6 15 20 15 6 1\n1 7 21 35 35 21 7 1"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "10",
+      "output": "1\n1 1\n1 2 1\n1 3 3 1\n1 4 6 4 1\n1 5 10 10 5 1\n1 6 15 20 15 6 1\n1 7 21 35 35 21 7 1\n1 8 28 56 70 56 28 8 1\n1 9 36 84 126 126 84 36 9 1"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "12",
+      "output": "1\n1 1\n1 2 1\n1 3 3 1\n1 4 6 4 1\n1 5 10 10 5 1\n1 6 15 20 15 6 1\n1 7 21 35 35 21 7 1\n1 8 28 56 70 56 28 8 1\n1 9 36 84 126 126 84 36 9 1\n1 10 45 120 210 252 210 120 45 10 1\n1 11 55 165 330 462 462 330 165 55 11 1"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "15",
+      "output": "1\n1 1\n1 2 1\n1 3 3 1\n1 4 6 4 1\n1 5 10 10 5 1\n1 6 15 20 15 6 1\n1 7 21 35 35 21 7 1\n1 8 28 56 70 56 28 8 1\n1 9 36 84 126 126 84 36 9 1\n1 10 45 120 210 252 210 120 45 10 1\n1 11 55 165 330 462 462 330 165 55 11 1\n1 12 66 220 495 792 924 792 495 220 66 12 1\n1 13 78 286 715 1287 1716 1716 1287 715 286 78 13 1\n1 14 91 364 1001 2002 3003 3432 3003 2002 1001 364 91 14 1"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "20",
+      "output": "1\n1 1\n1 2 1\n1 3 3 1\n1 4 6 4 1\n1 5 10 10 5 1\n1 6 15 20 15 6 1\n1 7 21 35 35 21 7 1\n1 8 28 56 70 56 28 8 1\n1 9 36 84 126 126 84 36 9 1\n1 10 45 120 210 252 210 120 45 10 1\n1 11 55 165 330 462 462 330 165 55 11 1\n1 12 66 220 495 792 924 792 495 220 66 12 1\n1 13 78 286 715 1287 1716 1716 1287 715 286 78 13 1\n1 14 91 364 1001 2002 3003 3432 3003 2002 1001 364 91 14 1\n1 15 105 455 1365 3003 5005 6435 6435 5005 3003 1365 455 105 15 1\n1 16 120 560 1820 4368 8008 11440 12870 11440 8008 4368 1820 560 120 16 1\n1 17 136 680 2380 6188 12376 19448 24310 24310 19448 12376 6188 2380 680 136 17 1\n1 18 153 816 3060 8568 18564 31824 43758 48620 43758 31824 18564 8568 3060 816 153 18 1\n1 19 171 969 3876 11628 27132 50388 75582 92378 92378 75582 50388 27132 11628 3876 969 171 19 1"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "30",
+      "output": "1\n1 1\n1 2 1\n1 3 3 1\n1 4 6 4 1\n1 5 10 10 5 1\n1 6 15 20 15 6 1\n1 7 21 35 35 21 7 1\n1 8 28 56 70 56 28 8 1\n1 9 36 84 126 126 84 36 9 1\n1 10 45 120 210 252 210 120 45 10 1\n1 11 55 165 330 462 462 330 165 55 11 1\n1 12 66 220 495 792 924 792 495 220 66 12 1\n1 13 78 286 715 1287 1716 1716 1287 715 286 78 13 1\n1 14 91 364 1001 2002 3003 3432 3003 2002 1001 364 91 14 1\n1 15 105 455 1365 3003 5005 6435 6435 5005 3003 1365 455 105 15 1\n1 16 120 560 1820 4368 8008 11440 12870 11440 8008 4368 1820 560 120 16 1\n1 17 136 680 2380 6188 12376 19448 24310 24310 19448 12376 6188 2380 680 136 17 1\n1 18 153 816 3060 8568 18564 31824 43758 48620 43758 31824 18564 8568 3060 816 153 18 1\n1 19 171 969 3876 11628 27132 50388 75582 92378 92378 75582 50388 27132 11628 3876 969 171 19 1\n1 20 190 1140 4845 15504 38760 77520 125970 167960 184756 167960 125970 77520 38760 15504 4845 1140 190 20 1\n1 21 210 1330 5985 20349 54264 116280 203490 293930 352716 352716 293930 203490 116280 54264 20349 5985 1330 210 21 1\n1 22 231 1540 7315 26334 74613 170544 319770 497420 646646 705432 646646 497420 319770 170544 74613 26334 7315 1540 231 22 1\n1 23 253 1771 8855 33649 100947 245157 490314 817190 1144066 1352078 1352078 1144066 817190 490314 245157 100947 33649 8855 1771 253 23 1\n1 24 276 2024 10626 42504 134596 346104 735471 1307504 1961256 2496144 2704156 2496144 1961256 1307504 735471 346104 134596 42504 10626 2024 276 24 1\n1 25 300 2300 12650 53130 177100 480700 1081575 2042975 3268760 4457400 5200300 5200300 4457400 3268760 2042975 1081575 480700 177100 53130 12650 2300 300 25 1\n1 26 325 2600 14950 65780 230230 657800 1562275 3124550 5311735 7726160 9657700 10400600 9657700 7726160 5311735 3124550 1562275 657800 230230 65780 14950 2600 325 26 1\n1 27 351 2925 17550 80730 296010 888030 2220075 4686825 8436285 13037895 17383860 20058300 20058300 17383860 13037895 8436285 4686825 2220075 888030 296010 80730 17550 2925 351 27 1\n1 28 378 3276 20475 98280 376740 1184040 3108105 6906900 13123110 21474180 30421755 37442160 40116600 37442160 30421755 21474180 13123110 6906900 3108105 1184040 376740 98280 20475 3276 378 28 1\n1 29 406 3654 23751 118755 475020 1560780 4292145 10015005 20030010 34597290 51895935 67863915 77558760 77558760 67863915 51895935 34597290 20030010 10015005 4292145 1560780 475020 118755 23751 3654 406 29 1"
+    }
+  ],
+  "starter_code": {
+    "python": "import sys\n\ndef main():\n    data = sys.stdin.read().strip()\n    if not data:\n        return\n    n = int(data.split()[0])\n    # TODO: generate and print n rows of Pascal's triangle\n\nif __name__ == \"__main__\":\n    main()\n",
+    "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n    int n; if(!(cin>>n)) return 0;\n    // TODO: generate Pascal's triangle and print\n    return 0;\n}\n",
+    "java": "import java.util.*;\npublic class Main {\n    public static void main(String[] args){\n        Scanner sc = new Scanner(System.in);\n        if(!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        // TODO: generate Pascal's triangle and print\n    }\n}\n",
+    "c": "#include <stdio.h>\nint main(){\n    int n; if(scanf(\"%d\", &n)!=1) return 0;\n    // TODO: generate Pascal's triangle and print\n    return 0;\n}\n"
+  },
+  "solutions": {
+    "python": "def solve(data: str) -> str:\n    n = int(data.strip())\n    rows = []\n    row = [1]\n    for _ in range(n):\n        rows.append(' '.join(map(str, row)))\n        new = [1]\n        for i in range(len(row)-1):\n            new.append(row[i]+row[i+1])\n        new.append(1)\n        row = new\n    return '\\n'.join(rows)\n\n\ndef __main__():\n    import sys\n    data = sys.stdin.read()\n    result = solve(data)\n    if result is None:\n        return\n    sys.stdout.write(str(result))\n\nif __name__ == '__main__':\n    __main__()\n",
+    "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\n#include <bits/stdc++.h>\nusing namespace std;\nstring solve(const string& data){\n    int n = stoi(data);\n    vector<long long> row{1};\n    stringstream out;\n    for(int r=0;r<n;r++){\n        for(size_t i=0;i<row.size();i++){ if(i) out << ' '; out << row[i]; }\n        if(r!=n-1) out << '\\n';\n        vector<long long> nxt(row.size()+1,1);\n        for(size_t i=1;i<row.size();i++) nxt[i]=row[i-1]+row[i];\n        row.swap(nxt);\n    }\n    return out.str();\n}\n\n\nint main() {\n    std::ostringstream ss;\n    ss << std::cin.rdbuf();\n    std::string input = ss.str();\n    std::string output = solve(input);\n    std::cout << output;\n    return 0;\n}\n",
+    "java": "import java.io.*;\nimport java.nio.charset.StandardCharsets;\n\npublic class Main {\nstatic class Solution {\n    public String solve(String data){\n        data = data.trim();\n        if(data.isEmpty()) return \"\";\n        int n = Integer.parseInt(data);\n        java.util.List<Long> row = new java.util.ArrayList<>();\n        row.add(1L);\n        StringBuilder sb = new StringBuilder();\n        for(int r=0;r<n;r++){\n            for(int i=0;i<row.size();i++){ if(i>0) sb.append(' '); sb.append(row.get(i)); }\n            if(r!=n-1) sb.append('\\n');\n            java.util.List<Long> nxt = new java.util.ArrayList<>(row.size()+1);\n            nxt.add(1L);\n            for(int i=1;i<row.size();i++) nxt.add(row.get(i-1)+row.get(i));\n            nxt.add(1L);\n            row = nxt;\n        }\n        return sb.toString();\n    }\n}\n\n\n    public static void main(String[] args) throws Exception {\n        ByteArrayOutputStream baos = new ByteArrayOutputStream();\n        InputStream in = System.in;\n        byte[] buf = new byte[8192];\n        int n;\n        while ((n = in.read(buf)) != -1) {\n            baos.write(buf, 0, n);\n        }\n        String input = baos.toString(StandardCharsets.UTF_8);\n        Solution sol = new Solution();\n        String output = sol.solve(input);\n        if (output != null) {\n            System.out.print(output);\n        }\n    }\n}\n",
+    "c": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\n#define MAX_INPUT (1 << 20)\n\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nchar* solve(const char* data){\n    int n = atoi(data);\n    long long row[64];\n    long long nxt[64];\n    int pos=0; int buf=10000;\n    char* out = malloc(buf);\n    row[0]=1; int len=1;\n    for(int r=0;r<n;r++){\n        for(int i=0;i<len;i++){\n            if(pos+32 >= buf){ buf*=2; out=realloc(out, buf); }\n            if(i) out[pos++]=' ';\n            pos += sprintf(out+pos, \"%lld\", row[i]);\n        }\n        if(r!=n-1) out[pos++]='\\n';\n        nxt[0]=1; nxt[len]=1;\n        for(int i=1;i<len;i++) nxt[i]=row[i-1]+row[i];\n        memcpy(row,nxt,sizeof(long long)*(len+1));\n        len++;\n    }\n    out[pos]='\\0';\n    return out;\n}\n\n\nint main() {\n    char *input = (char *)malloc(MAX_INPUT);\n    if (!input) return 1;\n    size_t len = fread(input, 1, MAX_INPUT - 1, stdin);\n    input[len] = '\\0';\n    char *output = solve(input);\n    if (output) {\n        fputs(output, stdout);\n        free(output);\n    }\n    free(input);\n    return 0;\n}\n"
+  }
+}

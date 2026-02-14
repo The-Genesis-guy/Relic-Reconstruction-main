@@ -1,0 +1,92 @@
+{
+  "title": "Merge Intervals",
+  "contest": "Round 1: Shattered Syntax (Debugging)",
+  "problem_type": "Debugging",
+  "problem_mode": "Standard Input/Output",
+  "total_marks": "20",
+  "constraints": "1 <= N <= 2e5; -1e9 <= start,end <= 1e9; start <= end",
+  "description": "Given N intervals [start,end], merge all overlapping intervals and print merged intervals sorted by start.",
+  "input_format": "",
+  "output_format": "",
+  "folder_name": "M4_Merge_Intervals",
+  "test_cases": [
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "4\n1 3\n2 6\n8 10\n15 18",
+      "output": "1 6\n8 10\n15 18"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "3\n1 4\n4 5\n6 7",
+      "output": "1 5\n6 7"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "1\n-1 1",
+      "output": "-1 1"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3\n1 2\n3 4\n5 6",
+      "output": "1 2\n3 4\n5 6"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3\n1 10\n2 3\n4 8",
+      "output": "1 10"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3\n-5 -1\n-3 2\n10 10",
+      "output": "-5 2\n10 10"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3\n1 3\n3 3\n3 5",
+      "output": "1 5"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3\n5 7\n1 2\n2 4",
+      "output": "1 4\n5 7"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3\n1 1\n1 2\n2 2",
+      "output": "1 2"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "2\n0 100\n101 200",
+      "output": "0 100\n101 200"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3\n-10 0\n0 0\n0 10",
+      "output": "-10 10"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "4\n1 4\n0 0\n5 5\n2 3",
+      "output": "0 0\n1 4\n5 5"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "4\n1 2\n2 3\n3 4\n4 5",
+      "output": "1 5"
+    }
+  ]
+}

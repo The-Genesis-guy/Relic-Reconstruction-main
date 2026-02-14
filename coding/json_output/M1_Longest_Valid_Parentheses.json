@@ -1,0 +1,105 @@
+{
+  "title": "Longest Valid Parentheses",
+  "contest": "The Architect's Blueprint - Round 2",
+  "problem_type": "Debugging",
+  "problem_mode": "Function",
+  "function_name": "solve",
+  "total_marks": "20",
+  "constraints": "0 <= |s| <= 2e5; s contains only '(' and ')'",
+  "description": "Given a string of '(' and ')', return the length of the longest valid (well-formed) parentheses substring.",
+  "input_format": "s",
+  "output_format": "Single integer length",
+  "folder_name": "M1_Longest_Valid_Parentheses",
+  "test_cases": [
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": ")()())",
+      "output": "4"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "(()",
+      "output": "2"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "()(()",
+      "output": "2"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "",
+      "output": "0"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "()",
+      "output": "2"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "((()))",
+      "output": "6"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "())(())",
+      "output": "4"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "(()())()",
+      "output": "8"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "(((((",
+      "output": "0"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "()()()()",
+      "output": "8"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "(()))(()())",
+      "output": "6"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "())())())()(()())",
+      "output": "8"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "((()()()))(())",
+      "output": "14"
+    }
+  ],
+  "starter_code": {
+    "python": "def solve(data: str) -> str:\n    # TODO: parse input from data and compute result\n    return \"\"\n",
+    "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nstring solve(const string& data) {\n    // TODO: parse input from data and compute result\n    return \"\";\n}\n",
+    "java": "import java.util.*;\npublic class Solution {\n    public String solve(String data) {\n        // TODO: parse input from data and compute result\n        return \"\";\n    }\n}\n",
+    "c": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\nchar* solve(const char* data) {\n    // TODO: parse input from data and compute result\n    char* out = strdup(\"\");\n    return out;\n}\n"
+  },
+  "solutions": {
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n\n        if (!sc.hasNext()) {   // handle empty input\n            System.out.println(0);\n            return;\n        }\n\n        String s = sc.next();\n        Stack<Integer> st = new Stack<>();\n\n        st.push(-1);   // base index\n        int best = 0;\n\n        for (int i = 0; i < s.length(); i++) {\n            if (s.charAt(i) == '(') {\n                st.push(i);\n            } else {\n                st.pop();\n                if (!st.isEmpty()) {\n                    best = Math.max(best, i - st.peek());\n                } else {\n                    st.push(i);\n                }\n            }\n        }\n\n        System.out.println(best);\n    }\n}\n",
+    "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    string s;\n    \n    if (!(cin >> s)) {   // handle empty input\n        cout << 0 << endl;\n        return 0;\n    }\n\n    int n = s.length();\n    stack<int> st;\n    \n    st.push(-1);   // base index\n    int best = 0;\n\n    for (int i = 0; i < n; i++) {\n        if (s[i] == '(') {\n            st.push(i);\n        } else {\n            st.pop();\n            if (!st.empty()) {\n                best = max(best, i - st.top());\n            } else {\n                st.push(i);\n            }\n        }\n    }\n\n    cout << best << endl;\n    return 0;\n}\n",
+    "python": "s = input().strip()\n\nst = [-1]   # initialize with base index\nbest = 0\n\nfor i, ch in enumerate(s):\n    if ch == '(':\n        st.append(i)\n    else:\n        st.pop()\n        if not st:\n            st.append(i)\n        else:\n            best = max(best, i - st[-1])\n\nprint(best)\n",
+    "c": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s[200005];\n\n    // handle empty input safely\n    if (scanf(\"%s\", s) != 1) {\n        printf(\"0\\n\");\n        return 0;\n    }\n\n    int n = strlen(s);\n\n    int st[200005], top = -1;\n\n    st[++top] = -1;   // FIXED: base index should be -1\n\n    int best = 0;\n\n    for (int i = 0; i < n; i++) {\n        if (s[i] == '(') {\n            st[++top] = i;\n        } else {\n            top--;\n\n            if (top != -1) {\n                int len = i - st[top];\n                if (len > best)\n                    best = len;\n            } else {\n                st[++top] = i;   // FIXED: push current index\n            }\n        }\n    }\n\n    printf(\"%d\\n\", best);\n    return 0;\n}\n"
+  }
+}

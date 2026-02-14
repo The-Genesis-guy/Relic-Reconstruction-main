@@ -1,0 +1,104 @@
+{
+  "title": "Array Rotation",
+  "contest": "Round 1: Shattered Syntax (Debugging)",
+  "problem_type": "Debugging",
+  "problem_mode": "Standard Input/Output",
+  "total_marks": "10",
+  "constraints": "1 <= N <= 2e5; 0 <= K <= 1e9; |ai| <= 1e9",
+  "description": "Rotate an array of N integers to the right by K positions and print the rotated array.",
+  "input_format": "N K\na1 a2 ... aN",
+  "output_format": "Rotated array elements space-separated",
+  "folder_name": "E2_Array_Rotation",
+  "test_cases": [
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "5 2\n1 2 3 4 5",
+      "output": "4 5 1 2 3"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "1 100\n9",
+      "output": "9"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "6 3\n-1 -2 -3 -4 -5 -6",
+      "output": "-4 -5 -6 -1 -2 -3"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "10 0\n1 2 3 4 5 6 7 8 9 10",
+      "output": "1 2 3 4 5 6 7 8 9 10"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "10 1\n1 2 3 4 5 6 7 8 9 10",
+      "output": "10 1 2 3 4 5 6 7 8 9"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "10 12\n1 2 3 4 5 6 7 8 9 10",
+      "output": "9 10 1 2 3 4 5 6 7 8"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "7 3\n5 5 5 5 5 5 5",
+      "output": "5 5 5 5 5 5 5"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "8 7\n8 7 6 5 4 3 2 1",
+      "output": "7 6 5 4 3 2 1 8"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "5 4\n0 1 0 1 0",
+      "output": "1 0 1 0 0"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "6 2\n1000000000 -1000000000 3 4 5 6",
+      "output": "5 6 1000000000 -1000000000 3 4"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "9 3\n1 1 2 2 3 3 4 4 5",
+      "output": "4 4 5 1 1 2 2 3 3"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "4 2\n-10 -20 -30 -40",
+      "output": "-30 -40 -10 -20"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "12 5\n3 1 4 1 5 9 2 6 5 3 5 8",
+      "output": "6 5 3 5 8 3 1 4 1 5 9 2"
+    }
+  ],
+  "solutions": {
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n\n        int n = sc.nextInt();\n        long k = sc.nextLong();\n\n        int[] a = new int[n];\n\n        for(int i = 0; i < n; i++)\n            a[i] = sc.nextInt();\n\n        k = k % n;\n\n        for(int i = 0; i < n; i++) {\n            int idx = (int)((i - k + n) % n);\n            System.out.print(a[idx]);\n\n            if(i == n - 1)\n                System.out.println();\n            else\n                System.out.print(\" \");\n        }\n\n        sc.close();\n    }\n}\n",
+    "cpp": "#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    int n;\n    long long k;\n    cin >> n >> k;\n\n    vector<int> a(n);\n\n    for(int i = 0; i < n; i++)\n        cin >> a[i];\n\n    k = k % n;\n\n    for(int i = 0; i < n; i++) {\n        int idx = (i - k + n) % n;\n        cout << a[idx];\n        if(i == n - 1)\n            cout << \"\\n\";\n        else\n            cout << \" \";\n    }\n\n    return 0;\n}\n",
+    "python": "import sys\n\nn, k = map(int, sys.stdin.readline().split())\na = list(map(int, sys.stdin.readline().split()))\n\nk %= n\n\nfor i in range(n):\n    idx = (i - k + n) % n\n    if i == n - 1:\n        print(a[idx])\n    else:\n        print(a[idx], end=\" \")\n",
+    "c": "#include <stdio.h>\n\nint main(){\n    int n;\n    long long k;\n    \n    scanf(\"%d %lld\", &n, &k);\n    \n    int a[200000];\n    \n    for(int i = 0; i < n; i++)   // FIXED: < n\n        scanf(\"%d\", &a[i]);\n    \n    k = k % n;  // handle large K\n    \n    for(int i = 0; i < n; i++){\n        int idx = (i - k + n) % n;   // FIXED: correct right rotation\n        printf(\"%d\", a[idx]);\n        \n        if(i == n - 1)\n            printf(\"\\n\");           // FIXED: proper newline condition\n        else\n            printf(\" \");\n    }\n    \n    return 0;\n}\n"
+  },
+  "starter_code": {
+    "java": "import java.io.*;import java.util.*;\npublic class Solution{\n  public static void main(String[] args)throws Exception{\n    Scanner sc=new Scanner(System.in);\n    int n=sc.nextInt(); long k=sc.nextLong();\n    int[] a=new int[n];\n    for(int i=0;i<=n;i++) a[i]=sc.nextInt(); \n    int r=(int)(k%(n-1));                    \n    int[] b=new int[n];\n    for(int i=0;i<n;i++){\n      b[(i+r)%n]=a[i];                       \n    }\n    for(int i=0;i<n;i++) System.out.print(b[i]+\" \");\n  }\n}\n",
+    "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n  int n; long long k; cin>>n>>k;\n  vector<long long>a(n);\n  for(int i=0;i<n;i++) cin>>a[i];\n  k = k % n;\n  rotate(a.begin(), a.begin()+k, a.end()); \n  for(int i=0;i<=n;i++){                   \n    cout<<a[i]<<(i==n-1?'\\n':' ');\n  }\n}\n",
+    "python": "import sys\ndef main():\n    n,k = map(int, sys.stdin.readline().split())\n    arr = list(map(int, sys.stdin.readline().split()))\n    k = k % (n-1)          \n    res = arr[k:]+arr[:k]  \n    print(\" \".join(res))   \n    \nmain()\n",
+    "c": "#include <stdio.h>\nint main(){\n  int n; long long k;\n  scanf(\"%d %lld\",&n,&k);\n  int a[200000];\n  for(int i=0;i<=n;i++) scanf(\"%d\",&a[i]);\n  k = k % n;\n  for(int i=0;i<n;i++){\n    int idx = (i+k)%n;                    \n    printf(\"%d%c\", a[idx], i==n?'\\n':' ');\n  }\n  return 0;\n}\n"
+  }
+}

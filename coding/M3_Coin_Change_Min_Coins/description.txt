@@ -1,0 +1,20 @@
+Problem Title: Coin Change (Minimum Coins)
+Contest: Round 1: Shattered Syntax (Debugging)
+Problem Type: Debugging
+Problem Mode: Standard Input/Output
+Total Marks: 20
+
+Constraints:
+1 <= n <= 50; 0 <= amount <= 1e5; 1 <= coin[i] <= 1e4
+
+Description:
+Given coin denominations and a target amount, output the minimum number of coins needed. If impossible, output -1.
+
+Input Format:
+n amount
+c1 c2 ... cn
+
+
+Output Format:
+Minimum coins or -1
+

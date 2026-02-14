@@ -1,0 +1,21 @@
+Problem Title: Two Sum
+Contest: The Architect's Blueprint - Round 2
+Problem Type: Coding
+Problem Mode: Function
+Total Marks: 10
+
+Constraints:
+2 <= n <= 1e5
+-1e9 <= nums[i], target <= 1e9
+Exactly one valid pair exists
+
+Description:
+Given an array of integers nums and an integer target, return the indices of the two numbers such that they add up to target. Return the answer as two 0-indexed integers i and j with i < j.
+
+Input Format:
+First line: integer n
+Second line: n space-separated integers nums[i]
+Third line: integer target
+
+Output Format:
+Two integers i and j separated by a space

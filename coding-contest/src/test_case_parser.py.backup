@@ -1,0 +1,117 @@
+#!/usr/bin/env python3
+"""
+Test case file parser.
+Parses test case files in the format described in TEST_CASE_FORMAT.md
+"""
+
+import re
+
+def parse_test_case_file(file_content):
+    """
+    Parse test case file and return list of test cases.
+    
+    AUTOMATIC SAMPLE MARKING:
+    - First 3 test cases are ALWAYS marked as SAMPLE (visible to students)
+    - Remaining test cases are ALWAYS marked as HIDDEN (for grading)
+    - This happens automatically regardless of what's written in the file
+    
+    Args:
+        file_content: String content of the test case file
+    
+    Returns:
+        List of dicts: [{'input': str, 'output': str, 'is_sample': bool, 'points': int}, ...]
+    """
+    test_cases = []
+    lines = file_content.split('\n')
+    
+    i = 0
+    while i < len(lines):
+        line = lines[i].strip()
+        
+        # Look for test case header (# Test Case N ...)
+        if line.startswith('#') and 'test case' in line.lower():
+            # Parse header (but we'll override is_sample based on position)
+            is_sample_in_file = 'sample' in line.lower()
+            
+            # Extract points
+            points_match = re.search(r'(\d+)\s*points?', line, re.IGNORECASE)
+            points = 0 if is_sample_in_file else (int(points_match.group(1)) if points_match else 10)
+            
+            # Find INPUT: section
+            i += 1
+            while i < len(lines) and not lines[i].strip().upper().startswith('INPUT:'):
+                i += 1
+            
+            if i >= len(lines):
+                break
+            
+            # Collect input lines
+            i += 1
+            input_lines = []
+            while i < len(lines) and not lines[i].strip().upper().startswith('OUTPUT:'):
+                input_lines.append(lines[i])
+                i += 1
+            
+            if i >= len(lines):
+                break
+            
+            # Collect output lines
+            i += 1
+            output_lines = []
+            while i < len(lines):
+                line = lines[i].strip()
+                # Stop at next test case or end
+                if line.startswith('#') and 'test case' in line.lower():
+                    break
+                output_lines.append(lines[i])
+                i += 1
+            
+            # Create test case
+            test_input = '\n'.join(input_lines).strip()
+            expected_output = '\n'.join(output_lines).strip()
+            
+            if test_input and expected_output:
+                test_cases.append({
+                    'input': test_input,
+                    'expected_output': expected_output,
+                    'is_sample': False,  # Will be set below based on position
+                    'points': points
+                })
+        else:
+            i += 1
+    
+    # AUTOMATIC MARKING: First 3 are SAMPLE, rest are HIDDEN
+    for idx, tc in enumerate(test_cases):
+        if idx < 3:
+            tc['is_sample'] = True
+            tc['points'] = 0  # Sample tests always get 0 points
+        else:
+            tc['is_sample'] = False
+            # Points will be redistributed later based on total_marks
+    
+    return test_cases
+
+def import_test_cases_to_db(conn, problem_id, test_cases):
+    """
+    Import test cases to database for a problem.
+    
+    Args:
+        conn: Database connection
+        problem_id: Problem ID
+        test_cases: List of test case dicts from parse_test_case_file()
+    
+    Returns:
+        Number of test cases imported
+    """
+    # Clear existing test cases for this problem
+    conn.execute('DELETE FROM test_cases WHERE problem_id = ?', (problem_id,))
+    
+    # Insert new test cases
+    for order, tc in enumerate(test_cases):
+        conn.execute('''
+            INSERT INTO test_cases (problem_id, input, expected_output, is_sample, points, test_order)
+            VALUES (?, ?, ?, ?, ?, ?)
+        ''', (problem_id, tc['input'], tc['expected_output'], tc['is_sample'], tc['points'], order))
+    
+    conn.commit()
+    return len(test_cases)

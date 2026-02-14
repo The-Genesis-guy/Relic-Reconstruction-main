@@ -1,0 +1,32 @@
+// =============================================
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[200005];
+    scanf("%s", s);
+    int last[256];
+    
+    for (int i = 0; i < 256; i++) {
+        last[i] = -1;
+    }
+    
+    int l = 0, best = 0;
+    
+    for (int r = 0; s[r]; r++) {
+        unsigned char c = s[r];
+        if (last[c] > l) {
+            l = last[c];
+        }
+        last[c] = r;
+        int len = r - l;
+        if (len > best) best = len;
+    }
+    
+    printf("%d\n", best);
+    return 0;
+}
+
+
+// ===================================================
+// PROBLEM 3: COIN CHANGE - BUGGY C

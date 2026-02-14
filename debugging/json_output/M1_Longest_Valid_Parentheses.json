@@ -1,0 +1,92 @@
+{
+  "title": "Longest Valid Parentheses",
+  "contest": "Round 1: Shattered Syntax (Debugging)",
+  "problem_type": "Debugging",
+  "problem_mode": "Standard Input/Output",
+  "total_marks": "20",
+  "constraints": "0 <= |s| <= 2e5; s contains only '(' and ')'",
+  "description": "Given a string of '(' and ')', return the length of the longest valid (well-formed) parentheses substring.",
+  "input_format": "",
+  "output_format": "",
+  "folder_name": "M1_Longest_Valid_Parentheses",
+  "test_cases": [
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": ")()())",
+      "output": "4"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "(()",
+      "output": "2"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "()(()",
+      "output": "2"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "",
+      "output": "0"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "()",
+      "output": "2"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "((()))",
+      "output": "6"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "())(())",
+      "output": "4"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "(()())()",
+      "output": "8"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "(((((",
+      "output": "0"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "()()()()",
+      "output": "8"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "(()))(()())",
+      "output": "6"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "())())())()(()())",
+      "output": "8"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "((()()()))(())",
+      "output": "14"
+    }
+  ]
+}

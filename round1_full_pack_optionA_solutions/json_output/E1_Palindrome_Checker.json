@@ -1,0 +1,104 @@
+{
+  "title": "Palindrome Checker",
+  "contest": "Round 1: Shattered Syntax (Debugging)",
+  "problem_type": "Debugging",
+  "problem_mode": "Standard Input/Output",
+  "total_marks": "10",
+  "constraints": "1 <= T <= 50; 1 <= |s| <= 1e5 (sum lengths <= 2e5)",
+  "description": "Given T strings, print Yes if the string is a palindrome else No. Case-sensitive; use the full string as-is.",
+  "input_format": "T\ns1\ns2\n...",
+  "output_format": "For each string: Yes or No",
+  "folder_name": "E1_Palindrome_Checker",
+  "test_cases": [
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "3\nmadam\nhello\n1221",
+      "output": "Yes\nNo\nYes"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "1\na",
+      "output": "Yes"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "2\nab\naba",
+      "output": "No\nYes"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "4\nracecar\nlevel\nnoon\nabc",
+      "output": "Yes\nYes\nYes\nNo"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "2\nabba\nabca",
+      "output": "Yes\nNo"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "1\naaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "output": "Yes"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "1\nabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab",
+      "output": "No"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3\n1\n11\n121",
+      "output": "Yes\nYes\nYes"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "1\nxyzzyx",
+      "output": "Yes"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "1\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "output": "Yes"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "2\nAa\nAba",
+      "output": "No\nNo"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "1\n012210",
+      "output": "Yes"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "1\nabccbaabccba",
+      "output": "Yes"
+    }
+  ],
+  "solutions": {
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int T = sc.nextInt();\n\n        while (T-- > 0) {\n            String s = sc.next();\n            int n = s.length();\n            boolean ok = true;\n\n            for (int i = 0; i < n / 2; i++) {\n                if (s.charAt(i) != s.charAt(n - i - 1)) {\n                    ok = false;\n                    break;\n                }\n            }\n\n            if (ok)\n                System.out.println(\"Yes\");\n            else\n                System.out.println(\"No\");\n        }\n\n        sc.close();\n    }\n}\n",
+    "cpp": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    int T;\n    cin >> T;\n\n    while (T--) {\n        string s;\n        cin >> s;\n\n        int n = s.length();\n        bool ok = true;\n\n        for (int i = 0; i < n / 2; i++) {\n            if (s[i] != s[n - i - 1]) {\n                ok = false;\n                break;\n            }\n        }\n\n        if (ok)\n            cout << \"Yes\\n\";\n        else\n            cout << \"No\\n\";\n    }\n\n    return 0;\n}\n",
+    "python": "import sys\n\nT = int(sys.stdin.readline())\n\nfor _ in range(T):\n    s = sys.stdin.readline().strip()\n    n = len(s)\n    ok = True\n\n    for i in range(n // 2):\n        if s[i] != s[n - i - 1]:\n            ok = False\n            break\n\n    if ok:\n        print(\"Yes\")\n    else:\n        print(\"No\")\n",
+    "c": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    int T; \n    char s[200005];\n\n    scanf(\"%d\", &T);\n\n    for (int tc = 0; tc < T; tc++) {   // Fixed: tc < T\n        scanf(\"%s\", s);\n\n        int n = strlen(s);\n        int ok = 1;\n\n        for (int i = 0; i < n / 2; i++) {   // Fixed: i < n/2\n            if (s[i] != s[n - i - 1]) {     // Fixed: !=\n                ok = 0;\n                break;                      // Stop early if mismatch\n            }\n        }\n\n        if (ok)\n            printf(\"Yes\\n\");\n        else\n            printf(\"No\\n\");\n    }\n\n    return 0;\n}\n\n"
+  },
+  "starter_code": {
+    "java": "import java.io.*;\nimport java.util.*;\npublic class Solution{\n  static String solve(String s){\n    s = s.trim();\n    int n = s.length();\n    for(int i=0;i<=n/2;i++){\n      if(s.charAt(i)==s.charAt(n-i-1)) return \"No\"; \n    }\n    return \"Yes\";\n  }\n  public static void main(String[] args)throws Exception{\n    BufferedReader br=new BufferedReader(new InputStreamReader(System.in));\n    int T=Integer.parseInt(br.readLine().trim());\n    for(int tc=0; tc<=T; tc++){ \n      String s=br.readLine();\n      System.out.println(solve(s));\n    }\n  }\n}\n",
+    "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n    int T; cin>>T;\n    for(int tc=0; tc<T; ++tc){\n        string s; getline(cin,s);          \n        int n=s.size();\n        bool ok=true;\n        for(int i=0;i<n/2;i++){\n            if(s[i]=s[n-i-1]) ok=false;    \n        }\n        cout<<(ok?\"Yes\":\"No\")<<\"\\n\";\n    }\n}\n",
+    "python": "import sys\ndef is_pal(s):\n    \n    s = s.strip()\n    n = len(s)\n    for i in range(n//2 + 1):\n        if s[i] == s[n-i-1]:  \n            return \"No\"\n    return \"Yes\"\ndef main():\n    data = sys.stdin.read().split()\n    t = int(data[1])  \n    out=[]\n    for i in range(t):\n        out.append(is_pal(data[i]))  \n    sys.stdout.write(\"\\n\".join(out))\nmain()\n",
+    "c": "#include <stdio.h>\n#include <string.h>\nint main(){\n    int T; char s[200005];\n    scanf(\"%d\",&T);\n    for(int tc=0; tc<=T; tc++){            \n        scanf(\"%s\", s);\n        int n=strlen(s);\n        int ok=1;\n        for(int i=0;i<=n/2;i++){           \n            if(s[i]==s[n-i-1]) ok=0;       \n        }\n        printf(ok?\"Yes\\n\":\"No\\n\");\n    }\n    return 0;\n}\n"
+  }
+}

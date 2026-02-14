@@ -1,0 +1,32 @@
+{
+  "title": "Sample Problem",
+  "folder_name": "E1_Sample_Problem",
+  "contest": "Round 1: Shattered Syntax (Debugging)",
+  "problem_type": "Debugging",
+  "problem_mode": "Standard Input/Output",
+  "total_marks": 10,
+  "constraints": "1 <= N <= 1e5",
+  "description": "Given an integer N, print N.",
+  "input_format": "N",
+  "output_format": "N",
+  "test_cases": [
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "5",
+      "output": "5"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "10",
+      "output": "10"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "100",
+      "output": "100"
+    }
+  ]
+}

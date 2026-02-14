@@ -1,0 +1,1132 @@
+[
+  {
+    "title": "Palindrome Checker",
+    "contest": "Round 1: Shattered Syntax (Debugging)",
+    "problem_type": "Debugging",
+    "problem_mode": "Standard Input/Output",
+    "total_marks": "10",
+    "constraints": "1 <= T <= 50; 1 <= |s| <= 1e5 (sum lengths <= 2e5)",
+    "description": "Given T strings, print Yes if the string is a palindrome else No. Case-sensitive; use the full string as-is.",
+    "input_format": "T\ns1\ns2\n...",
+    "output_format": "For each string: Yes or No",
+    "folder_name": "E1_Palindrome_Checker",
+    "test_cases": [
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "3\nmadam\nhello\n1221",
+        "output": "Yes\nNo\nYes"
+      },
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "1\na",
+        "output": "Yes"
+      },
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "2\nab\naba",
+        "output": "No\nYes"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "4\nracecar\nlevel\nnoon\nabc",
+        "output": "Yes\nYes\nYes\nNo"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "2\nabba\nabca",
+        "output": "Yes\nNo"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "1\naaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "output": "Yes"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "1\nabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab",
+        "output": "No"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3\n1\n11\n121",
+        "output": "Yes\nYes\nYes"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "1\nxyzzyx",
+        "output": "Yes"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "1\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "output": "Yes"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "2\nAa\nAba",
+        "output": "No\nNo"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "1\n012210",
+        "output": "Yes"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "1\nabccbaabccba",
+        "output": "Yes"
+      }
+    ],
+    "solutions": {
+      "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int T = sc.nextInt();\n\n        while (T-- > 0) {\n            String s = sc.next();\n            int n = s.length();\n            boolean ok = true;\n\n            for (int i = 0; i < n / 2; i++) {\n                if (s.charAt(i) != s.charAt(n - i - 1)) {\n                    ok = false;\n                    break;\n                }\n            }\n\n            if (ok)\n                System.out.println(\"Yes\");\n            else\n                System.out.println(\"No\");\n        }\n\n        sc.close();\n    }\n}\n",
+      "cpp": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    int T;\n    cin >> T;\n\n    while (T--) {\n        string s;\n        cin >> s;\n\n        int n = s.length();\n        bool ok = true;\n\n        for (int i = 0; i < n / 2; i++) {\n            if (s[i] != s[n - i - 1]) {\n                ok = false;\n                break;\n            }\n        }\n\n        if (ok)\n            cout << \"Yes\\n\";\n        else\n            cout << \"No\\n\";\n    }\n\n    return 0;\n}\n",
+      "python": "T = int(input())\n\nfor _ in range(T):\n    s = input().strip()\n    n = len(s)\n    ok = True\n\n    for i in range(n // 2):\n        if s[i] != s[n - i - 1]:\n            ok = False\n            break\n\n    if ok:\n        print(\"Yes\")\n    else:\n        print(\"No\")\n",
+      "c": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    int T; \n    char s[200005];\n\n    scanf(\"%d\", &T);\n\n    for (int tc = 0; tc < T; tc++) {   // Fixed: tc < T\n        scanf(\"%s\", s);\n\n        int n = strlen(s);\n        int ok = 1;\n\n        for (int i = 0; i < n / 2; i++) {   // Fixed: i < n/2\n            if (s[i] != s[n - i - 1]) {     // Fixed: !=\n                ok = 0;\n                break;                      // Stop early if mismatch\n            }\n        }\n\n        if (ok)\n            printf(\"Yes\\n\");\n        else\n            printf(\"No\\n\");\n    }\n\n    return 0;\n}\n\n"
+    },
+    "starter_code": {
+      "java": "import java.io.*;\nimport java.util.*;\npublic class Solution{\n  static String solve(String s){\n    s = s.trim();\n    int n = s.length();\n    for(int i=0;i<=n/2;i++){\n      if(s.charAt(i)==s.charAt(n-i-1)) return \"No\"; \n    }\n    return \"Yes\";\n  }\n  public static void main(String[] args)throws Exception{\n    BufferedReader br=new BufferedReader(new InputStreamReader(System.in));\n    int T=Integer.parseInt(br.readLine().trim());\n    for(int tc=0; tc<=T; tc++){ \n      String s=br.readLine();\n      System.out.println(solve(s));\n    }\n  }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n    int T; cin>>T;\n    for(int tc=0; tc<T; ++tc){\n        string s; getline(cin,s);          \n        int n=s.size();\n        bool ok=true;\n        for(int i=0;i<n/2;i++){\n            if(s[i]=s[n-i-1]) ok=false;    \n        }\n        cout<<(ok?\"Yes\":\"No\")<<\"\\n\";\n    }\n}\n",
+      "python": "def is_pal(s):\n    s = s.strip()\n    n = len(s)\n    for i in range(n // 2 + 1):   \n        if s[i] == s[n - i - 1]:  \n            return \"No\"\n    return \"Yes\"\n\ndef main():\n    t = int(input())   \n    out = []\n    strings = []\n\n    for _ in range(t):\n        strings.append(input())\n\n    for i in range(t):\n        out.append(is_pal(strings[i]))  \n\n    print(\"\\n\".join(out))\n\nmain()\n",
+      "c": "#include <stdio.h>\n#include <string.h>\nint main(){\n    int T; char s[200005];\n    scanf(\"%d\",&T);\n    for(int tc=0; tc<=T; tc++){            \n        scanf(\"%s\", s);\n        int n=strlen(s);\n        int ok=1;\n        for(int i=0;i<=n/2;i++){           \n            if(s[i]==s[n-i-1]) ok=0;       \n        }\n        printf(ok?\"Yes\\n\":\"No\\n\");\n    }\n    return 0;\n}\n"
+    }
+  },
+  {
+    "title": "Array Rotation",
+    "contest": "Round 1: Shattered Syntax (Debugging)",
+    "problem_type": "Debugging",
+    "problem_mode": "Standard Input/Output",
+    "total_marks": "10",
+    "constraints": "1 <= N <= 2e5; 0 <= K <= 1e9; |ai| <= 1e9",
+    "description": "Rotate an array of N integers to the right by K positions and print the rotated array.",
+    "input_format": "N K\na1 a2 ... aN",
+    "output_format": "Rotated array elements space-separated",
+    "folder_name": "E2_Array_Rotation",
+    "test_cases": [
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "5 2\n1 2 3 4 5",
+        "output": "4 5 1 2 3"
+      },
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "1 100\n9",
+        "output": "9"
+      },
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "6 3\n-1 -2 -3 -4 -5 -6",
+        "output": "-4 -5 -6 -1 -2 -3"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "10 0\n1 2 3 4 5 6 7 8 9 10",
+        "output": "1 2 3 4 5 6 7 8 9 10"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "10 1\n1 2 3 4 5 6 7 8 9 10",
+        "output": "10 1 2 3 4 5 6 7 8 9"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "10 12\n1 2 3 4 5 6 7 8 9 10",
+        "output": "9 10 1 2 3 4 5 6 7 8"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "7 3\n5 5 5 5 5 5 5",
+        "output": "5 5 5 5 5 5 5"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "8 7\n8 7 6 5 4 3 2 1",
+        "output": "7 6 5 4 3 2 1 8"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "5 4\n0 1 0 1 0",
+        "output": "1 0 1 0 0"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "6 2\n1000000000 -1000000000 3 4 5 6",
+        "output": "5 6 1000000000 -1000000000 3 4"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "9 3\n1 1 2 2 3 3 4 4 5",
+        "output": "4 4 5 1 1 2 2 3 3"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "4 2\n-10 -20 -30 -40",
+        "output": "-30 -40 -10 -20"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "12 5\n3 1 4 1 5 9 2 6 5 3 5 8",
+        "output": "6 5 3 5 8 3 1 4 1 5 9 2"
+      }
+    ],
+    "solutions": {
+      "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n\n        int n = sc.nextInt();\n        long k = sc.nextLong();\n\n        int[] a = new int[n];\n\n        for(int i = 0; i < n; i++)\n            a[i] = sc.nextInt();\n\n        k = k % n;\n\n        for(int i = 0; i < n; i++) {\n            int idx = (int)((i - k + n) % n);\n            System.out.print(a[idx]);\n\n            if(i == n - 1)\n                System.out.println();\n            else\n                System.out.print(\" \");\n        }\n\n        sc.close();\n    }\n}\n",
+      "cpp": "#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    int n;\n    long long k;\n    cin >> n >> k;\n\n    vector<int> a(n);\n\n    for(int i = 0; i < n; i++)\n        cin >> a[i];\n\n    k = k % n;\n\n    for(int i = 0; i < n; i++) {\n        int idx = (i - k + n) % n;\n        cout << a[idx];\n        if(i == n - 1)\n            cout << \"\\n\";\n        else\n            cout << \" \";\n    }\n\n    return 0;\n}\n",
+      "python": "def main():\n    n, k = map(int, input().split())\n    arr = list(map(int, input().split()))\n    \n    k = k % n                 # Correct modulo\n    res = arr[-k:] + arr[:-k] # Right rotation\n    \n    print(\" \".join(map(str, res)))  # Convert integers to strings\n\nmain()\n",
+      "c": "#include <stdio.h>\n\nint main(){\n    int n;\n    long long k;\n    \n    scanf(\"%d %lld\", &n, &k);\n    \n    int a[200000];\n    \n    for(int i = 0; i < n; i++)   // FIXED: < n\n        scanf(\"%d\", &a[i]);\n    \n    k = k % n;  // handle large K\n    \n    for(int i = 0; i < n; i++){\n        int idx = (i - k + n) % n;   // FIXED: correct right rotation\n        printf(\"%d\", a[idx]);\n        \n        if(i == n - 1)\n            printf(\"\\n\");           // FIXED: proper newline condition\n        else\n            printf(\" \");\n    }\n    \n    return 0;\n}\n"
+    },
+    "starter_code": {
+      "java": "import java.io.*;import java.util.*;\npublic class Solution{\n  public static void main(String[] args)throws Exception{\n    Scanner sc=new Scanner(System.in);\n    int n=sc.nextInt(); long k=sc.nextLong();\n    int[] a=new int[n];\n    for(int i=0;i<=n;i++) a[i]=sc.nextInt(); \n    int r=(int)(k%(n-1));                    \n    int[] b=new int[n];\n    for(int i=0;i<n;i++){\n      b[(i+r)%n]=a[i];                       \n    }\n    for(int i=0;i<n;i++) System.out.print(b[i]+\" \");\n  }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n  int n; long long k; cin>>n>>k;\n  vector<long long>a(n);\n  for(int i=0;i<n;i++) cin>>a[i];\n  k = k % n;\n  rotate(a.begin(), a.begin()+k, a.end()); \n  for(int i=0;i<=n;i++){                   \n    cout<<a[i]<<(i==n-1?'\\n':' ');\n  }\n}\n",
+      "python": "def main():\n    n, k = map(int, input().split())\n    arr = list(map(int, input().split()))\n    \n    k = k % (n - 1)          \n    res = arr[k:] + arr[:k]  \n    \n    print(\" \".join(res))     \n\nmain()\n",
+      "c": "#include <stdio.h>\nint main(){\n  int n; long long k;\n  scanf(\"%d %lld\",&n,&k);\n  int a[200000];\n  for(int i=0;i<=n;i++) scanf(\"%d\",&a[i]);\n  k = k % n;\n  for(int i=0;i<n;i++){\n    int idx = (i+k)%n;                    \n    printf(\"%d%c\", a[idx], i==n?'\\n':' ');\n  }\n  return 0;\n}\n"
+    }
+  },
+  {
+    "title": "Pattern Match Count (Overlapping)",
+    "contest": "Round 1: Shattered Syntax (Debugging)",
+    "problem_type": "Debugging",
+    "problem_mode": "Standard Input/Output",
+    "total_marks": "10",
+    "constraints": "1 <= |T| <= 2e5; 1 <= |P| <= 1e5",
+    "description": "Count the number of (possibly overlapping) occurrences of pattern P inside text T.",
+    "input_format": "T\nP",
+    "output_format": "Single integer count",
+    "folder_name": "E3_Pattern_Match_Count",
+    "test_cases": [
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "ababa\naba",
+        "output": "2"
+      },
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "aaaaa\naa",
+        "output": "4"
+      },
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "hello world\nll",
+        "output": "1"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "mississippi\nissi",
+        "output": "2"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "abcabcabc\nabc",
+        "output": "3"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "bbbbbb\nbb",
+        "output": "5"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "abababababa\naba",
+        "output": "5"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "xyz\nz",
+        "output": "1"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "aaaaaaaaaa\naaa",
+        "output": "8"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\naaaaaaaaaaaaaaaaaaaaaaaaa",
+        "output": "26"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "thequickbrownfox\nquick",
+        "output": "1"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "111011101110\n1110",
+        "output": "3"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "abcd\nef",
+        "output": "0"
+      }
+    ],
+    "solutions": {
+      "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        \n        String t = sc.nextLine();\n        String p = sc.nextLine();\n        \n        int n = t.length();\n        int m = p.length();\n        int count = 0;\n        \n        for (int i = 0; i <= n - m; i++) {\n            if (t.substring(i, i + m).equals(p)) {\n                count++;\n            }\n        }\n        \n        System.out.println(count);\n    }\n}\n",
+      "cpp": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string t, p;\n    getline(cin, t);\n    getline(cin, p);\n\n    int n = t.length();\n    int m = p.length();\n    int count = 0;\n\n    for (int i = 0; i <= n - m; i++) {\n        if (t.substr(i, m) == p) {\n            count++;\n        }\n    }\n\n    cout << count << endl;\n    return 0;\n}\n",
+      "python": "t = input().strip()\np = input().strip()\n\ncnt = 0\nn = len(t)\nm = len(p)\n\nfor i in range(n - m + 1):   # Correct range (+1 added)\n    if t[i:i+m] == p:        # Correct comparison\n        cnt += 1\n\nprint(cnt)\n",
+      "c": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char t[200005], p[100005];\n\n    // Read input\n    fgets(t, 200005, stdin);\n    fgets(p, 100005, stdin);\n\n    // Remove trailing newline if present\n    t[strcspn(t, \"\\n\")] = '\\0';\n    p[strcspn(p, \"\\n\")] = '\\0';\n\n    int n = strlen(t);\n    int m = strlen(p);\n    int cnt = 0;\n\n    // Count overlapping occurrences\n    for (int i = 0; i <= n - m; i++) {\n        if (strncmp(t + i, p, m) == 0) {\n            cnt++;\n        }\n    }\n\n    printf(\"%d\\n\", cnt);\n    return 0;\n}\n"
+    },
+    "starter_code": {
+      "java": "import java.io.*;public class Solution{\n  public static void main(String[] args)throws Exception{\n    BufferedReader br=new BufferedReader(new InputStreamReader(System.in));\n    String t=br.readLine(); String p=br.readLine();\n    int cnt=0;\n    for(int i=0;i<t.length()-p.length();i++){ \n      if(t.substring(i,i+p.length())!=p) cnt++; \n    }\n    System.out.println(cnt);\n  }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n  string t,p; getline(cin,t); getline(cin,p);\n  int cnt=0;\n  for(size_t i=0;i+t.size()<=p.size();i++){ \n    if(t.substr(i,p.size())==p) cnt++;      \n  }\n  cout<<cnt<<\"\\n\";\n}\n",
+      "python": "t = input().strip()\np = input().strip()\n\ncnt = 0\n\nfor i in range(len(t) - len(p)):   \n    if t[i:i+len(p)] != p:         \n        cnt += 1\n\nprint(cnt)\n",
+      "c": "#include <stdio.h>\n#include <string.h>\nint main(){\n  char t[200005], p[100005];\n  fgets(t,200005,stdin);\n  fgets(p,100005,stdin);\n  int n=strlen(t), m=strlen(p);\n  int cnt=0;\n  for(int i=0;i<=n-m;i++){\n    if(strncmp(t+i,p,m-1)==0) cnt++; \n  }\n  printf(\"%d\\n\",cnt);\n  return 0;\n}\n"
+    }
+  },
+  {
+    "title": "Graph Connectivity Queries (BFS)",
+    "contest": "Round 1: Shattered Syntax (Debugging)",
+    "problem_type": "Debugging",
+    "problem_mode": "Standard Input/Output",
+    "total_marks": "30",
+    "constraints": "1 <= N <= 2e5; 0 <= M <= 2e5; 1 <= Q <= 2e5",
+    "description": "Given an undirected graph and Q queries, determine for each query if there exists a path between u and v.",
+    "input_format": "N M Q\n(M lines) u v\n(Q lines) u v",
+    "output_format": "For each query: Yes or No",
+    "folder_name": "H1_Graph_Connectivity_BFS",
+    "test_cases": [
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "5 4 3\n1 2\n2 3\n4 5\n3 1\n1 3\n1 5\n4 5",
+        "output": "Yes\nNo\nYes"
+      },
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "3 0 2\n1 2\n2 3",
+        "output": "No\nNo"
+      },
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "4 3 1\n1 2\n2 3\n3 4\n1 4",
+        "output": "Yes"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "6 5 5\n1 2\n2 3\n3 4\n4 5\n5 6\n1 6\n2 5\n1 3\n6 1\n3 6",
+        "output": "Yes\nYes\nYes\nYes\nYes"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "6 2 3\n1 2\n4 5\n1 2\n1 3\n4 6",
+        "output": "Yes\nNo\nNo"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "1 0 2\n1 1\n1 1",
+        "output": "Yes\nYes"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "5 4 4\n1 2\n2 3\n3 1\n4 5\n1 3\n1 4\n4 5\n2 5",
+        "output": "Yes\nNo\nYes\nNo"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "7 6 3\n1 2\n2 3\n3 4\n4 1\n5 6\n6 7\n1 4\n1 7\n5 7",
+        "output": "Yes\nNo\nYes"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "8 7 4\n1 2\n2 3\n3 4\n4 5\n5 6\n6 7\n7 8\n1 8\n2 7\n3 6\n4 4",
+        "output": "Yes\nYes\nYes\nYes"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "8 3 3\n1 2\n3 4\n5 6\n1 2\n2 3\n7 8",
+        "output": "Yes\nNo\nNo"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "9 8 3\n1 2\n2 3\n3 4\n4 5\n5 1\n6 7\n7 8\n8 9\n1 5\n1 9\n6 9",
+        "output": "Yes\nNo\nYes"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "10 9 3\n1 2\n2 3\n3 4\n4 5\n5 6\n6 7\n7 8\n8 9\n9 10\n1 10\n5 10\n2 9",
+        "output": "Yes\nYes\nYes"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "4 2 3\n1 2\n2 3\n3 4\n1 3\n2 4",
+        "output": "No\nYes\nNo"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "6 6 3\n1 2\n2 3\n3 4\n4 5\n5 6\n6 1\n1 4\n2 5\n3 6",
+        "output": "Yes\nYes\nYes"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "6 3 4\n1 2\n2 3\n4 5\n1 3\n1 5\n4 6\n5 4",
+        "output": "Yes\nNo\nNo\nYes"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "7 0 3\n1 7\n3 3\n5 6",
+        "output": "No\nYes\nNo"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "5 5 3\n1 2\n2 3\n3 4\n4 5\n2 5\n1 5\n1 4\n3 5",
+        "output": "Yes\nYes\nYes"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "5 1 3\n2 2\n2 2\n1 2\n3 3",
+        "output": "Yes\nNo\nYes"
+      }
+    ],
+    "solutions": {
+      "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n\n        int n = sc.nextInt();\n        int m = sc.nextInt();\n        int q = sc.nextInt();\n\n        List<Integer>[] adj = new ArrayList[n + 1];\n        for (int i = 1; i <= n; i++)\n            adj[i] = new ArrayList<>();\n\n        // Read edges (undirected)\n        for (int i = 0; i < m; i++) {\n            int u = sc.nextInt();\n            int v = sc.nextInt();\n            adj[u].add(v);\n            adj[v].add(u);\n        }\n\n        while (q-- > 0) {\n            int s = sc.nextInt();\n            int t = sc.nextInt();\n\n            boolean[] vis = new boolean[n + 1];\n            Queue<Integer> queue = new LinkedList<>();\n\n            queue.add(s);\n            vis[s] = true;\n\n            boolean found = false;\n\n            while (!queue.isEmpty()) {\n                int x = queue.poll();\n\n                if (x == t) {\n                    found = true;\n                    break;\n                }\n\n                for (int nb : adj[x]) {\n                    if (!vis[nb]) {\n                        vis[nb] = true;\n                        queue.add(nb);\n                    }\n                }\n            }\n\n            System.out.println(found ? \"Yes\" : \"No\");\n        }\n\n        sc.close();\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(NULL);\n\n    int n, m, q;\n    cin >> n >> m >> q;\n\n    vector<vector<int>> adj(n + 1);\n\n    // Read edges (undirected)\n    for (int i = 0; i < m; i++) {\n        int u, v;\n        cin >> u >> v;\n        adj[u].push_back(v);\n        adj[v].push_back(u);\n    }\n\n    while (q--) {\n        int s, t;\n        cin >> s >> t;\n\n        vector<int> vis(n + 1, 0);\n        queue<int> qu;\n\n        qu.push(s);\n        vis[s] = 1;\n\n        bool found = false;\n\n        while (!qu.empty()) {\n            int x = qu.front();\n            qu.pop();\n\n            if (x == t) {\n                found = true;\n                break;\n            }\n\n            for (int nb : adj[x]) {\n                if (!vis[nb]) {\n                    vis[nb] = 1;\n                    qu.push(nb);\n                }\n            }\n        }\n\n        cout << (found ? \"Yes\\n\" : \"No\\n\");\n    }\n\n    return 0;\n}\n",
+      "python": "from collections import deque\n\nn, m, q = map(int, input().split())\n\nadj = [[] for _ in range(n + 1)]\n\nfor _ in range(m):\n    u, v = map(int, input().split())\n    adj[u].append(v)\n    adj[v].append(u)\n\nfor _ in range(q):\n    u, v = map(int, input().split())\n\n    vis = [False] * (n + 1)\n    dq = deque([u])\n    vis[u] = True\n    found = False\n\n    while dq:\n        x = dq.popleft()\n        if x == v:\n            found = True\n            break\n        for nb in adj[x]:\n            if not vis[nb]:\n                vis[nb] = True\n                dq.append(nb)\n\n    print(\"Yes\" if found else \"No\")\n",
+      "c": "#include <stdio.h>\n#include <stdlib.h>\n\ntypedef struct Node {\n    int v;\n    struct Node* next;\n} Node;\n\nint main() {\n    int n, m, q;\n    if (scanf(\"%d %d %d\", &n, &m, &q) != 3)\n        return 0;\n\n    // Allocate n+1 for 1-based indexing\n    Node** adj = (Node**)calloc(n + 1, sizeof(Node*));\n\n    // Read edges\n    for (int i = 0; i < m; i++) {\n        int u, v;\n        scanf(\"%d %d\", &u, &v);\n\n        // Edge u -> v\n        Node* a = (Node*)malloc(sizeof(Node));\n        a->v = v;\n        a->next = adj[u];\n        adj[u] = a;\n\n        // Back edge v -> u (undirected graph)\n        Node* b = (Node*)malloc(sizeof(Node));\n        b->v = u;\n        b->next = adj[v];\n        adj[v] = b;\n    }\n\n    int* vis = (int*)calloc(n + 1, sizeof(int));\n    int* qarr = (int*)malloc((n + 1) * sizeof(int));\n\n    while (q--) {\n        int s, t;\n        scanf(\"%d %d\", &s, &t);\n\n        // Reset visited array\n        for (int i = 1; i <= n; i++)\n            vis[i] = 0;\n\n        int head = 0, tail = 0;\n        qarr[tail++] = s;\n        vis[s] = 1;\n\n        int found = 0;\n\n        // BFS\n        while (head < tail) {\n            int x = qarr[head++];\n\n            if (x == t) {\n                found = 1;\n                break;\n            }\n\n            for (Node* p = adj[x]; p != NULL; p = p->next) {\n                int nb = p->v;\n\n                if (!vis[nb]) {\n                    vis[nb] = 1;\n                    qarr[tail++] = nb;\n                }\n            }\n        }\n\n        if (found)\n            printf(\"Yes\\n\");\n        else\n            printf(\"No\\n\");\n    }\n\n    return 0;\n}\n"
+    },
+    "starter_code": {
+      "java": "import java.io.*;import java.util.*;\npublic class Solution{\n  public static void main(String[] args)throws Exception{\n    FastScanner fs=new FastScanner(System.in);\n    int n=fs.nextInt(), m=fs.nextInt(), q=fs.nextInt();\n    ArrayList<Integer>[] adj=new ArrayList[n]; \n    for(int i=0;i<n;i++) adj[i]=new ArrayList<>();\n    for(int i=0;i<m;i++){\n      int u=fs.nextInt(), v=fs.nextInt();\n      adj[u].add(v); \n    }\n    while(q-- > 0){\n      int s=fs.nextInt(), t=fs.nextInt();\n      boolean[] vis=new boolean[n]; \n      ArrayDeque<Integer> qu=new ArrayDeque<>();\n      qu.add(s); vis[s]=true;\n      boolean found=false;\n      while(!qu.isEmpty()){\n        int x=qu.poll();\n        if(x==t){found=true;break;}\n        for(int nb: adj[x]){\n          if(vis[nb]) continue;\n          qu.add(nb); \n        }\n      }\n      System.out.println(found?\"Yes\":\"No\");\n    }\n  }\n  static class FastScanner{\n    private final InputStream in; private final byte[] buf=new byte[1<<16];\n    private int ptr=0,len=0;\n    FastScanner(InputStream is){in=is;}\n    int read() throws IOException{ if(ptr>=len){ len=in.read(buf); ptr=0; if(len<=0) return -1;} return buf[ptr++];}\n    int nextInt() throws IOException{\n      int c; do{ c=read(); }while(c<=32);\n      int sgn=1; if(c=='-'){sgn=-1;c=read();}\n      int x=0; while(c>32){ x=x*10+(c-'0'); c=read(); }\n      return x*sgn;\n    }\n  }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n  ios::sync_with_stdio(false);\n  cin.tie(nullptr);\n  int n,m,q; cin>>n>>m>>q;\n  vector<vector<int>> adj(n); \n  for(int i=0;i<m;i++){\n    int u,v; cin>>u>>v;\n    adj[u].push_back(v);     \n  }\n  while(q--){\n    int s,t; cin>>s>>t;\n    vector<int> vis(n,0);\n    queue<int> qu; qu.push(s); vis[s]=1;\n    bool found=false;\n    while(!qu.empty()){\n      int x=qu.front(); qu.pop();\n      if(x==t){found=true;break;}\n      for(int nb: adj[x]){\n        if(vis[nb]) continue;\n        qu.push(nb);          \n      }\n    }\n    cout<<(found?\"Yes\":\"No\")<<\"\\n\";\n  }\n}\n",
+      "python": "from collections import deque\n\ndata = input().split()   # BUG: only reads one line, not full input\n\nn, m, q = map(int, data[:3])\nadj = [[] for _ in range(n)]          \nidx = 3\n\nfor _ in range(m):\n    u = int(data[idx]); v = int(data[idx+1]); idx += 2\n    adj[u].append(v)                # BUG: undirected graph but only one direction added\n\ndef ok(u, v, vis):\n    dq = deque([u])\n    vis[u] = True\n    while dq:\n        x = dq.popleft()\n        if x == v:\n            return True\n        for nb in adj[x]:\n            if vis[nb]:\n                continue\n            dq.append(nb)          # BUG: vis[nb] never marked True\n    return False\n\nfor _ in range(q):\n    u = int(data[idx]); v = int(data[idx+1]); idx += 2\n    vis = [False] * n\n    print(\"Yes\" if ok(u, v, vis) else \"No\")\n",
+      "c": "#include <stdio.h>\n#include <stdlib.h>\ntypedef struct Node{int v; struct Node* next;} Node;\nint main(){\n  int n,m,q; if(scanf(\"%d %d %d\",&n,&m,&q)!=3) return 0;\n  Node** adj=(Node**)calloc(n,sizeof(Node*)); \n  for(int i=0;i<m;i++){\n    int u,v; scanf(\"%d %d\",&u,&v);\n    Node* a=(Node*)malloc(sizeof(Node)); a->v=v; a->next=adj[u]; adj[u]=a; \n    \n  }\n  int* vis=(int*)calloc(n,sizeof(int)); \n  int* qarr=(int*)malloc(n*sizeof(int)); \n  while(q--){\n    int s,t; scanf(\"%d %d\",&s,&t);\n    for(int i=0;i<n;i++) vis[i]=0;\n    int head=0,tail=0; qarr[tail++]=s; vis[s]=1;\n    int found=0;\n    while(head<tail){\n      int x=qarr[head++];\n      if(x==t){found=1;break;}\n      for(Node* p=adj[x]; p; p=p->next){\n        int nb=p->v;\n        if(!vis[nb]){ vis[nb]=1; qarr[tail++]=nb; }\n      }\n    }\n    puts(found?\"Yes\":\"No\");\n  }\n}\n"
+    }
+  },
+  {
+    "title": "Minimum Path Sum in Grid",
+    "contest": "Round 1: Shattered Syntax (Debugging)",
+    "problem_type": "Debugging",
+    "problem_mode": "Standard Input/Output",
+    "total_marks": "30",
+    "constraints": "1 <= R,C; R*C <= 2e5; 0 <= grid[i][j] <= 1e6",
+    "description": "Given an R\u00d7C grid, find minimum path sum from (0,0) to (R-1,C-1) moving only right or down.",
+    "input_format": "R C\n(R lines) grid row",
+    "output_format": "Single integer minimum sum",
+    "folder_name": "H2_Minimum_Path_Sum_Grid",
+    "test_cases": [
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "3 3\n1 3 1\n1 5 1\n4 2 1",
+        "output": "7"
+      },
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "1 4\n5 1 2 3",
+        "output": "11"
+      },
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "2 2\n0 0\n0 0",
+        "output": "0"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "1 1\n1",
+        "output": "1"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "2 3\n1 2 3\n4 5 6",
+        "output": "12"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3 2\n5 9\n1 2\n4 0",
+        "output": "8"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3 3\n0 1 2\n3 4 5\n6 7 8",
+        "output": "16"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3 4\n10 1 1 10\n10 1 10 10\n10 1 1 1",
+        "output": "15"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "4 3\n2 2 2\n2 2 2\n2 2 2\n2 2 2",
+        "output": "12"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3 3\n1 100 1\n1 100 1\n1 1 1",
+        "output": "5"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "1 5\n9 8 7 6 5",
+        "output": "35"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "5 1\n1\n2\n3\n4\n5",
+        "output": "15"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "4 3\n3 1 2\n4 0 1\n2 3 4\n1 1 1",
+        "output": "9"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "2 3\n0 0 0\n0 0 0",
+        "output": "0"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "2 2\n7 1\n1 7",
+        "output": "15"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3 3\n1 2 3\n1 1 1\n9 9 1",
+        "output": "5"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "2 2\n1000000 1000000\n1000000 0",
+        "output": "2000000"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "5 2\n1 2\n3 4\n5 6\n7 8\n9 10",
+        "output": "31"
+      }
+    ],
+    "solutions": {
+      "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n\n        int r = sc.nextInt();\n        int c = sc.nextInt();\n\n        long[] dp = new long[r * c];\n\n        for(int i = 0; i < r; i++) {\n            for(int j = 0; j < c; j++) {\n                long x = sc.nextLong();\n\n                if(i == 0 && j == 0)\n                    dp[0] = x;\n                else if(i == 0)\n                    dp[j] = dp[j - 1] + x;\n                else if(j == 0)\n                    dp[i * c] = dp[(i - 1) * c] + x;\n                else\n                    dp[i * c + j] = x + Math.min(\n                        dp[(i - 1) * c + j],\n                        dp[i * c + j - 1]\n                    );\n            }\n        }\n\n        System.out.println(dp[r * c - 1]);\n        sc.close();\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int r, c;\n    cin >> r >> c;\n\n    vector<long long> dp(r * c);\n\n    for(int i = 0; i < r; i++) {\n        for(int j = 0; j < c; j++) {\n            long long x;\n            cin >> x;\n\n            if(i == 0 && j == 0)\n                dp[0] = x;\n            else if(i == 0)\n                dp[j] = dp[j - 1] + x;\n            else if(j == 0)\n                dp[i * c] = dp[(i - 1) * c] + x;\n            else\n                dp[i * c + j] = x + min(dp[(i - 1) * c + j],\n                                        dp[i * c + j - 1]);\n        }\n    }\n\n    cout << dp[r * c - 1] << endl;\n    return 0;\n}\n",
+      "python": "r, c = map(int, input().split())\n\ng = [list(map(int, input().split())) for _ in range(r)]\n\ndp = [[0] * c for _ in range(r)]\n\n# FIX: initialize starting cell correctly\ndp[0][0] = g[0][0]\n\n# First row\nfor j in range(1, c):\n    dp[0][j] = dp[0][j - 1] + g[0][j]\n\n# First column\nfor i in range(1, r):\n    dp[i][0] = dp[i - 1][0] + g[i][0]\n\n# Fill remaining cells\nfor i in range(1, r):\n    for j in range(1, c):\n        dp[i][j] = g[i][j] + max(dp[i - 1][j], dp[i][j - 1])\n\nprint(dp[r - 1][c - 1])\n",
+      "c": "#include <stdio.h>\n#include <stdlib.h>\nlong long maxll(long long a,long long b){return a>b?a:b;}\nint main(){\n  int r,c; scanf(\"%d %d\",&r,&c);\n  long long *dp=calloc((size_t)r*c,sizeof(long long));\n  for(int i=0;i<r;i++){\n    for(int j=0;j<c;j++){\n      long long x; scanf(\"%lld\",&x);\n      if(i==0 && j==0) dp[0]=0;                 // BUG: should be x\n      else if(i==0) dp[j]=dp[j-1]+x;\n      else if(j==0) dp[i*c]=dp[(i-1)*c]+x;\n      else dp[i*c+j]=x+maxll(dp[(i-1)*c+j], dp[i*c+j-1]); // BUG: max\n    }\n  }\n  printf(\"%lld\\n\", dp[r*c-1]);\n}\n"
+    },
+    "starter_code": {
+      "java": "import java.io.*;import java.util.*;\npublic class Solution{\n  public static void main(String[] args)throws Exception{\n    FastScanner fs=new FastScanner(System.in);\n    int r=fs.nextInt(), c=fs.nextInt();\n    long[][] g=new long[r][c];\n    for(int i=0;i<r;i++) for(int j=0;j<c;j++) g[i][j]=fs.nextLong();\n    long[][] dp=new long[r][c];\n    dp[0][0]=0; \n    for(int j=1;j<c;j++) dp[0][j]=dp[0][j-1]+g[0][j];\n    for(int i=1;i<r;i++) dp[i][0]=dp[i-1][0]+g[i][0];\n    for(int i=1;i<r;i++) for(int j=1;j<c;j++)\n      dp[i][j]=g[i][j]+Math.max(dp[i-1][j],dp[i][j-1]); \n    System.out.println(dp[r-1][c-1]);\n  }\n  static class FastScanner{\n    private final InputStream in; private final byte[] buf=new byte[1<<16];\n    private int ptr=0,len=0;\n    FastScanner(InputStream is){in=is;}\n    int read() throws IOException{ if(ptr>=len){ len=in.read(buf); ptr=0; if(len<=0) return -1;} return buf[ptr++];}\n    int nextInt() throws IOException{\n      int c; do{ c=read(); }while(c<=32);\n      int sgn=1; if(c=='-'){sgn=-1;c=read();}\n      int x=0; while(c>32){ x=x*10+(c-'0'); c=read(); }\n      return x*sgn;\n    }\n    long nextLong() throws IOException{\n      int c; do{ c=read(); }while(c<=32);\n      int sgn=1; if(c=='-'){sgn=-1;c=read();}\n      long x=0; while(c>32){ x=x*10+(c-'0'); c=read(); }\n      return x*sgn;\n    }\n  }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n  int r,c; cin>>r>>c;\n  vector<vector<long long>> g(r, vector<long long>(c));\n  for(int i=0;i<r;i++) for(int j=0;j<c;j++) cin>>g[i][j];\n  vector<vector<long long>> dp(r, vector<long long>(c,0));\n  dp[0][0]=0; \n  for(int j=1;j<c;j++) dp[0][j]=dp[0][j-1]+g[0][j];\n  for(int i=1;i<r;i++) dp[i][0]=dp[i-1][0]+g[i][0];\n  for(int i=1;i<r;i++) for(int j=1;j<c;j++)\n    dp[i][j]=g[i][j]+max(dp[i-1][j],dp[i][j-1]); \n  cout<<dp[r-1][c-1]<<\"\\n\";\n}\n",
+      "python": "r, c = map(int, input().split())\n\ng = [list(map(int, input().split())) for _ in range(r)]\n\ndp = [[0] * c for _ in range(r)]\n\ndp[0][0] = 0   # BUG: should be g[0][0]\n\nfor j in range(1, c):\n    dp[0][j] = dp[0][j-1] + g[0][j]\n\nfor i in range(1, r):\n    dp[i][0] = dp[i-1][0] + g[i][0]\n\nfor i in range(1, r):\n    for j in range(1, c):\n        dp[i][j] = g[i][j] + max(dp[i-1][j], dp[i][j-1])  \n\nprint(dp[r-1][c-1])\n",
+      "c": "#include <stdio.h>\n#include <stdlib.h>\nlong long maxll(long long a,long long b){return a>b?a:b;}\nint main(){\n  int r,c; scanf(\"%d %d\",&r,&c);\n  long long *dp=calloc((size_t)r*c,sizeof(long long));\n  for(int i=0;i<r;i++){\n    for(int j=0;j<c;j++){\n      long long x; scanf(\"%lld\",&x);\n      if(i==0 && j==0) dp[0]=0;                 \n      else if(i==0) dp[j]=dp[j-1]+x;\n      else if(j==0) dp[i*c]=dp[(i-1)*c]+x;\n      else dp[i*c+j]=x+maxll(dp[(i-1)*c+j], dp[i*c+j-1]); \n    }\n  }\n  printf(\"%lld\\n\", dp[r*c-1]);\n}\n"
+    }
+  },
+  {
+    "title": "Merge K Sorted Arrays",
+    "contest": "Round 1: Shattered Syntax (Debugging)",
+    "problem_type": "Debugging",
+    "problem_mode": "Standard Input/Output",
+    "total_marks": "30",
+    "constraints": "1 <= K; total elements across arrays <= 2e5; arrays sorted non-decreasing",
+    "description": "Given K sorted arrays, merge them into a single sorted array and print it.",
+    "input_format": "K\n(n1 and n1 ints)\n...",
+    "output_format": "Merged sorted elements space-separated",
+    "folder_name": "H3_Merge_K_Sorted_Arrays",
+    "test_cases": [
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "3\n3 1 4 7\n2 2 6\n4 0 3 5 8",
+        "output": "0 1 2 3 4 5 6 7 8"
+      },
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "1\n5 -1 -1 0 2 2",
+        "output": "-1 -1 0 2 2"
+      },
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "2\n0\n3 1 1 1",
+        "output": "1 1 1"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3\n3 1 3 5\n3 2 4 6\n2 0 7",
+        "output": "0 1 2 3 4 5 6 7"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3\n3 -5 -3 -1\n3 -4 -2 0\n3 1 2 3",
+        "output": "-5 -4 -3 -2 -1 0 1 2 3"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3\n0\n0\n1 1",
+        "output": "1"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "4\n1 1\n1 1\n1 1\n1 1",
+        "output": "1 1 1 1"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "1\n5 1 2 3 4 5",
+        "output": "1 2 3 4 5"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3\n2 10 20\n3 5 15 25\n2 0 30",
+        "output": "0 5 10 15 20 25 30"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3\n3 2 2 2\n2 2 2\n1 2",
+        "output": "2 2 2 2 2 2"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "4\n3 -10 0 10\n3 -9 1 11\n3 -8 2 12\n3 -7 3 13",
+        "output": "-10 -9 -8 -7 0 1 2 3 10 11 12 13"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3\n2 1 1000000\n2 2 999999\n2 3 500000",
+        "output": "1 2 3 500000 999999 1000000"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "4\n1 0\n2 0 0\n3 0 0 0\n4 0 0 0 0",
+        "output": "0 0 0 0 0 0 0 0 0 0"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "4\n2 1 2\n1 3\n3 4 5 6\n4 7 8 9 10",
+        "output": "1 2 3 4 5 6 7 8 9 10"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3\n1 -1\n0\n0",
+        "output": "-1"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3\n4 5 5 5 5\n2 5 5\n1 5",
+        "output": "5 5 5 5 5 5 5"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3\n5 1 2 2 2 3\n3 2 2 4\n3 0 2 5",
+        "output": "0 1 2 2 2 2 2 2 3 4 5"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "5\n2 9 9\n3 1 1 1\n3 2 2 2\n2 3 3\n4 4 4 4 4",
+        "output": "1 1 1 2 2 2 3 3 4 4 4 4 9 9"
+      }
+    ],
+    "solutions": {
+      "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n\n        if (!sc.hasNextInt()) return;\n        int K = sc.nextInt();\n\n        int[] len = new int[K];\n        int total = 0;\n\n        // Read sizes\n        for (int i = 0; i < K; i++) {\n            len[i] = sc.nextInt();\n            total += len[i];\n        }\n\n        int[] all = new int[total];\n        int idx = 0;\n\n        // Read elements\n        for (int i = 0; i < K; i++) {\n            for (int j = 0; j < len[i]; j++) {\n                all[idx++] = sc.nextInt();\n            }\n        }\n\n        // Sort\n        Arrays.sort(all);\n\n        // Print\n        for (int i = 0; i < total; i++) {\n            System.out.print(all[i] + \" \");\n        }\n\n        sc.close();\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int K;\n    if (!(cin >> K)) return 0;\n\n    vector<int> len(K);\n    int total = 0;\n\n    // Read sizes\n    for (int i = 0; i < K; i++) {\n        cin >> len[i];\n        total += len[i];\n    }\n\n    vector<int> all;\n    all.reserve(total);\n\n    // Read elements\n    for (int i = 0; i < K; i++) {\n        for (int j = 0; j < len[i]; j++) {\n            int x;\n            cin >> x;\n            all.push_back(x);\n        }\n    }\n\n    // Sort\n    sort(all.begin(), all.end());\n\n    // Print\n    for (int x : all)\n        cout << x << \" \";\n\n    return 0;\n}\n",
+      "python": "import heapq\n\nk = int(input())\n\nh = []\narrays = []\n\nfor i in range(k):\n    parts = list(map(int, input().split()))\n    n = parts[0]\n    arr = parts[1:]\n    arrays.append(arr)\n    if n > 0:\n        heapq.heappush(h, (arr[0], i, 1))\n\nres = []\n\nwhile h:\n    v, i, j = heapq.heappop(h)\n    res.append(v)\n    if j < len(arrays[i]):   # fixed condition\n        heapq.heappush(h, (arrays[i][j], i, j + 1))\n\nprint(\" \".join(map(str, res)))\n ",
+      "c": "#include <stdio.h>\n#include <stdlib.h>\n\nint cmp(const void* a, const void* b){\n    return (*(int*)a - *(int*)b);\n}\n\nint main(){\n    int K;\n    if(scanf(\"%d\",&K)!=1) return 0;\n\n    int total = 0;\n    int *len = malloc(K*sizeof(int));\n\n    // First read sizes\n    for(int i=0;i<K;i++){\n        scanf(\"%d\",&len[i]);\n        total += len[i];\n    }\n\n    int *all = malloc(total * sizeof(int));\n    int idx = 0;\n\n    // Now read elements\n    for(int i=0;i<K;i++){\n        for(int j=0;j<len[i];j++){\n            scanf(\"%d\",&all[idx++]);\n        }\n    }\n\n    // Sort all elements\n    qsort(all, total, sizeof(int), cmp);\n\n    // Print merged sorted array\n    for(int i=0;i<total;i++){\n        printf(\"%d \", all[i]);\n    }\n\n    return 0;\n}\n"
+    },
+    "starter_code": {
+      "java": "import java.io.*;import java.util.*;\npublic class Solution{\n  static class Item{ int v,i,j; Item(int v,int i,int j){this.v=v;this.i=i;this.j=j;} }\n  public static void main(String[] args)throws Exception{\n    BufferedReader br=new BufferedReader(new InputStreamReader(System.in));\n    int K=Integer.parseInt(br.readLine().trim());\n    ArrayList<int[]> arrays=new ArrayList<>();\n    PriorityQueue<Item> pq=new PriorityQueue<>((a,b)->b.v-a.v); \n    for(int i=0;i<K;i++){\n      StringTokenizer st=new StringTokenizer(br.readLine());\n      int n=Integer.parseInt(st.nextToken());\n      int[] arr=new int[n];\n      for(int j=0;j<n;j++) arr[j]=Integer.parseInt(st.nextToken());\n      arrays.add(arr);\n      if(n>0) pq.add(new Item(arr[0],i,1)); \n    }\n    StringBuilder sb=new StringBuilder();\n    while(!pq.isEmpty()){\n      Item it=pq.poll();\n      sb.append(it.v).append(' ');\n      int[] arr=arrays.get(it.i);\n      if(it.j<=arr.length){ \n        pq.add(new Item(arr[it.j], it.i, it.j+1));\n      }\n    }\n    System.out.print(sb.toString().trim());\n  }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nstruct Item{ long long v; int i,j; };\nint main(){\n  int K; cin>>K;\n  vector<vector<long long>> a(K);\n  priority_queue<Item, vector<Item>, function<bool(const Item&,const Item&)>> pq(\n    [](const Item& x,const Item& y){ return x.v<y.v; } \n  );\n  for(int i=0;i<K;i++){\n    int n; cin>>n;\n    a[i].resize(n);\n    for(int j=0;j<n;j++) cin>>a[i][j];\n    if(n>0) pq.push({a[i][0],i,1}); \n  }\n  vector<long long> res;\n  while(!pq.empty()){\n    auto it=pq.top(); pq.pop();\n    res.push_back(it.v);\n    if(it.j<= (int)a[it.i].size()){ \n      pq.push({a[it.i][it.j], it.i, it.j+1});\n    }\n  }\n  for(size_t i=0;i<res.size();i++) cout<<res[i]<<(i+1==res.size()?'\\n':' ');\n}\n",
+      "python": "import heapq\n\nk = int(input())\n\nh = []\narrays = []\n\nfor i in range(k):\n    parts = list(map(int, input().split()))\n    n = parts[0]\n    arr = parts[1:]\n    arrays.append(arr)\n    if n > 0:\n        heapq.heappush(h, (arr[0], i, 1))\n\nres = []\n\nwhile h:\n    v, i, j = heapq.heappop(h)\n    res.append(v)\n    if j <= len(arrays[i]):   # BUG: should be j < len(arrays[i])\n        heapq.heappush(h, (arrays[i][j], i, j + 1))\n\nprint(\" \".join(map(str, res)))\n",
+      "c": "#include <stdio.h>\n#include <stdlib.h>\ntypedef struct{ int val, i, j; } Item;\nint cmp(const void* a,const void* b){\n  return ((Item*)a)->val - ((Item*)b)->val;\n}\nint main(){\n  int K; if(scanf(\"%d\",&K)!=1) return 0;\n  int **arr=malloc(K*sizeof(int*));\n  int *len=malloc(K*sizeof(int));\n  Item *heap=malloc(K*sizeof(Item));\n  int hs=0;\n  for(int i=0;i<K;i++){\n    scanf(\"%d\",&len[i]);\n    arr[i]=malloc(len[i]*sizeof(int));\n    for(int j=0;j<=len[i];j++) scanf(\"%d\",&arr[i][j]); \n    if(len[i]>0){ heap[hs++] = (Item){arr[i][0], i, 1}; } \n  }\n  qsort(heap,hs,sizeof(Item),cmp); \n  for(int t=0; t<hs; t++){\n    printf(\"%d \", heap[t].val);     \n  }\n  return 0;\n}\n"
+    }
+  },
+  {
+    "title": "Longest Valid Parentheses",
+    "contest": "Round 1: Shattered Syntax (Debugging)",
+    "problem_type": "Debugging",
+    "problem_mode": "Standard Input/Output",
+    "total_marks": "20",
+    "constraints": "0 <= |s| <= 2e5; s contains only '(' and ')'",
+    "description": "Given a string of '(' and ')', return the length of the longest valid (well-formed) parentheses substring.",
+    "input_format": "s",
+    "output_format": "Single integer length",
+    "folder_name": "M1_Longest_Valid_Parentheses",
+    "test_cases": [
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": ")()())",
+        "output": "4"
+      },
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "(()",
+        "output": "2"
+      },
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "()(()",
+        "output": "2"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "",
+        "output": "0"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "()",
+        "output": "2"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "((()))",
+        "output": "6"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "())(())",
+        "output": "4"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "(()())()",
+        "output": "8"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "(((((",
+        "output": "0"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "()()()()",
+        "output": "8"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "(()))(()())",
+        "output": "6"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "())())())()(()())",
+        "output": "8"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "((()()()))(())",
+        "output": "14"
+      }
+    ],
+    "solutions": {
+      "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n\n        if (!sc.hasNext()) {   // handle empty input\n            System.out.println(0);\n            return;\n        }\n\n        String s = sc.next();\n        Stack<Integer> st = new Stack<>();\n\n        st.push(-1);   // base index\n        int best = 0;\n\n        for (int i = 0; i < s.length(); i++) {\n            if (s.charAt(i) == '(') {\n                st.push(i);\n            } else {\n                st.pop();\n                if (!st.isEmpty()) {\n                    best = Math.max(best, i - st.peek());\n                } else {\n                    st.push(i);\n                }\n            }\n        }\n\n        System.out.println(best);\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    string s;\n    \n    if (!(cin >> s)) {   // handle empty input\n        cout << 0 << endl;\n        return 0;\n    }\n\n    int n = s.length();\n    stack<int> st;\n    \n    st.push(-1);   // base index\n    int best = 0;\n\n    for (int i = 0; i < n; i++) {\n        if (s[i] == '(') {\n            st.push(i);\n        } else {\n            st.pop();\n            if (!st.empty()) {\n                best = max(best, i - st.top());\n            } else {\n                st.push(i);\n            }\n        }\n    }\n\n    cout << best << endl;\n    return 0;\n}\n",
+      "python": "s = input().strip()\n\nst = [-1]   # initialize with base index\nbest = 0\n\nfor i, ch in enumerate(s):\n    if ch == '(':\n        st.append(i)\n    else:\n        st.pop()\n        if not st:\n            st.append(i)\n        else:\n            best = max(best, i - st[-1])\n\nprint(best)\n",
+      "c": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s[200005];\n\n    // handle empty input safely\n    if (scanf(\"%s\", s) != 1) {\n        printf(\"0\\n\");\n        return 0;\n    }\n\n    int n = strlen(s);\n\n    int st[200005], top = -1;\n\n    st[++top] = -1;   // FIXED: base index should be -1\n\n    int best = 0;\n\n    for (int i = 0; i < n; i++) {\n        if (s[i] == '(') {\n            st[++top] = i;\n        } else {\n            top--;\n\n            if (top != -1) {\n                int len = i - st[top];\n                if (len > best)\n                    best = len;\n            } else {\n                st[++top] = i;   // FIXED: push current index\n            }\n        }\n    }\n\n    printf(\"%d\\n\", best);\n    return 0;\n}\n"
+    },
+    "starter_code": {
+      "java": "import java.io.*;import java.util.*;\npublic class Solution{\n  public static void main(String[] args)throws Exception{\n    String s=new BufferedReader(new InputStreamReader(System.in)).readLine();\n    int[] st=new int[s.length()+5];\n    int top=0; st[top]=0; \n    int best=0;\n    for(int i=0;i<s.length();i++){\n      char c=s.charAt(i);\n      if(c==')') st[++top]=i; \n      else{\n        top--;\n        if(top>=0) best=Math.max(best, i-st[top]);\n        else st[++top]=0;     \n      }\n    }\n    System.out.println(best);\n  }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n  string s; cin>>s;\n  vector<int> st; st.push_back(0); \n  int best=0;\n  for(int i=0;i<(int)s.size();i++){\n    if(s[i]==')') st.push_back(i);  \n    else{\n      st.pop_back();\n      if(st.empty()) st.push_back(i-1); \n      best=max(best,i-st.back());\n    }\n  }\n  cout<<best<<\"\\n\";\n}\n",
+      "python": "s = input().strip()\nst = []              \nbest = 0\n\nfor i, ch in enumerate(s):\n    if ch == ')':    \n        st.append(i)\n    else:\n        st.pop()     \n        if len(st) == 0:\n            st.append(0)   \n        best = max(best, i - st[-1])\n\nprint(best)\n",
+      "c": "#include <stdio.h>\n#include <string.h>\nint main(){\n  char s[200005]; scanf(\"%s\",s);\n  int n=strlen(s);\n  int st[200005], top=-1;\n  st[++top]=0;                 \n  int best=0;\n  for(int i=0;i<n;i++){\n    if(s[i]=='(') st[++top]=i;\n    else{\n      top--;\n      if(top!=-1){\n        int len=i-st[top];\n        if(len>best) best=len;\n      }else{\n        st[++top]=0;           \n      }\n    }\n  }\n  printf(\"%d\\n\",best);\n}\n"
+    }
+  },
+  {
+    "title": "Longest Substring Without Repeating Characters",
+    "contest": "Round 1: Shattered Syntax (Debugging)",
+    "problem_type": "Debugging",
+    "problem_mode": "Standard Input/Output",
+    "total_marks": "20",
+    "constraints": "0 <= |s| <= 2e5; ASCII characters",
+    "description": "Given a string s, return the length of the longest substring without repeating characters.",
+    "input_format": "s",
+    "output_format": "Single integer length",
+    "folder_name": "M2_Longest_Substring_No_Repeat",
+    "test_cases": [
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "abcabcbb",
+        "output": "3"
+      },
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "bbbbb",
+        "output": "1"
+      },
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "pwwkew",
+        "output": "3"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "",
+        "output": "0"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "abcdef",
+        "output": "6"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "abba",
+        "output": "2"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "dvdf",
+        "output": "3"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "anviaj",
+        "output": "5"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "tmmzuxt",
+        "output": "5"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "aab",
+        "output": "2"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "ohvhjdml",
+        "output": "6"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "abcdeafghijakl",
+        "output": "10"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "output": "1"
+      }
+    ],
+    "solutions": {
+      "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n\n        if (!sc.hasNext()) {\n            System.out.println(0);\n            return;\n        }\n\n        String s = sc.next();\n\n        int[] last = new int[256];\n        Arrays.fill(last, -1);\n\n        int l = 0, best = 0;\n\n        for (int r = 0; r < s.length(); r++) {\n            char c = s.charAt(r);\n\n            if (last[c] >= l)\n                l = last[c] + 1;\n\n            last[c] = r;\n\n            best = Math.max(best, r - l + 1);\n        }\n\n        System.out.println(best);\n    }\n}\n",
+      "cpp": "#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    string s;\n    \n    if (!(cin >> s)) {\n        cout << 0 << endl;\n        return 0;\n    }\n\n    vector<int> last(256, -1);\n    int l = 0, best = 0;\n\n    for (int r = 0; r < s.length(); r++) {\n        unsigned char c = s[r];\n\n        if (last[c] >= l)\n            l = last[c] + 1;\n\n        last[c] = r;\n\n        best = max(best, r - l + 1);\n    }\n\n    cout << best << endl;\n    return 0;\n}\n",
+      "python": "s = input().strip()\n\nlast = {}\nl = 0\nbest = 0\n\nfor r, ch in enumerate(s):\n    if ch in last and last[ch] >= l:\n        l = last[ch] + 1\n    last[ch] = r\n    best = max(best, r - l + 1)\n\nprint(best)\n",
+      "c": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s[200005];\n\n    // Handle empty input safely\n    if (scanf(\"%s\", s) != 1) {\n        printf(\"0\\n\");\n        return 0;\n    }\n\n    int last[256];\n    for (int i = 0; i < 256; i++)\n        last[i] = -1;\n\n    int l = 0, best = 0;\n\n    for (int r = 0; s[r]; r++) {\n        unsigned char c = s[r];\n\n        if (last[c] >= l)      // FIXED\n            l = last[c] + 1;   // FIXED\n\n        last[c] = r;\n\n        int len = r - l + 1;   // FIXED\n        if (len > best)\n            best = len;\n    }\n\n    printf(\"%d\\n\", best);\n    return 0;\n}\n"
+    },
+    "starter_code": {
+      "java": "import java.io.*;import java.util.*;\npublic class Solution{\n  public static void main(String[] args)throws Exception{\n    String s=new BufferedReader(new InputStreamReader(System.in)).readLine();\n    int[] last=new int[256]; Arrays.fill(last,-1);\n    int l=0,best=0;\n    for(int r=0;r<s.length();r++){\n      int c=s.charAt(r);\n      if(last[c]>=l) l=last[c];      \n      last[c]=r;\n      best=Math.max(best,r-l);       \n    }\n    System.out.println(best);\n  }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n  string s; getline(cin,s);\n  vector<int> last(256,-1);\n  int l=0,best=0;\n  for(int r=0;r<(int)s.size();r++){\n    unsigned char c=s[r];\n    if(last[c]>=l) l=last[c];     \n    last[c]=r;\n    best=max(best,r-l);           \n  }\n  cout<<best<<\"\\n\";\n}\n",
+      "python": "s = input().strip()\n\nlast = {}\nl = 0\nbest = 0\n\nfor r, ch in enumerate(s):\n    if ch in last and last[ch] > l:  \n        l = last[ch]                \n    last[ch] = r\n    best = max(best, r - l)         \n\nprint(best)\n",
+      "c": "#include <stdio.h>\n#include <string.h>\nint main(){\n  char s[200005]; scanf(\"%s\",s);\n  int last[256]; for(int i=0;i<256;i++) last[i]=-1;\n  int l=0,best=0;\n  for(int r=0; s[r]; r++){\n    unsigned char c=s[r];\n    if(last[c]>l) l=last[c];            \n    last[c]=r;\n    int len=r-l; if(len>best) best=len; \n  }\n  printf(\"%d\\n\",best);\n}\n"
+    }
+  },
+  {
+    "title": "Coin Change (Minimum Coins)",
+    "contest": "Round 1: Shattered Syntax (Debugging)",
+    "problem_type": "Debugging",
+    "problem_mode": "Standard Input/Output",
+    "total_marks": "20",
+    "constraints": "1 <= n <= 50; 0 <= amount <= 1e5; 1 <= coin[i] <= 1e4",
+    "description": "Given coin denominations and a target amount, output the minimum number of coins needed. If impossible, output -1.",
+    "input_format": "n amount\nc1 c2 ... cn",
+    "output_format": "Minimum coins or -1",
+    "folder_name": "M3_Coin_Change_Min_Coins",
+    "test_cases": [
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "3 11\n1 2 5",
+        "output": "3"
+      },
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "2 3\n2 4",
+        "output": "-1"
+      },
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "1 0\n7",
+        "output": "0"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3 6\n1 3 4",
+        "output": "2"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "4 27\n2 5 10 1",
+        "output": "4"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "2 49\n7 14",
+        "output": "4"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "4 11\n9 6 5 1",
+        "output": "2"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "1 1\n2",
+        "output": "-1"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "1 10\n2",
+        "output": "5"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "2 21\n3 7",
+        "output": "3"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3 12\n4 6 8",
+        "output": "2"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3 999\n1 2 3",
+        "output": "333"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3 1\n5 7 8",
+        "output": "-1"
+      }
+    ],
+    "solutions": {
+      "java": "import java.util.*;\n\npublic class Main {\n    static final int INF = 1000000000;\n\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n\n        int n = sc.nextInt();\n        int amt = sc.nextInt();\n\n        int[] coins = new int[n];\n        for(int i = 0; i < n; i++)\n            coins[i] = sc.nextInt();\n\n        int[] dp = new int[amt + 1];\n        Arrays.fill(dp, INF);\n        dp[0] = 0;\n\n        for(int i = 0; i < n; i++) {\n            for(int a = coins[i]; a <= amt; a++) {\n                if(dp[a - coins[i]] != INF)\n                    dp[a] = Math.min(dp[a], dp[a - coins[i]] + 1);\n            }\n        }\n\n        System.out.println(dp[amt] >= INF ? -1 : dp[amt]);\n\n        sc.close();\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nconst int INF = 1e9;\n\nint main() {\n    int n, amt;\n    cin >> n >> amt;\n\n    vector<int> coins(n);\n    for(int i = 0; i < n; i++)\n        cin >> coins[i];\n\n    vector<int> dp(amt + 1, INF);\n    dp[0] = 0;\n\n    for(int i = 0; i < n; i++) {\n        for(int a = coins[i]; a <= amt; a++) {\n            if(dp[a - coins[i]] != INF)\n                dp[a] = min(dp[a], dp[a - coins[i]] + 1);\n        }\n    }\n\n    cout << (dp[amt] >= INF ? -1 : dp[amt]) << endl;\n\n    return 0;\n}\n",
+      "python": "n, amt = map(int, input().split())\ncoins = list(map(int, input().split()))\n\nINF = 10**9\ndp = [INF] * (amt + 1)\ndp[0] = 0   # 0 coins needed to make amount 0\n\nfor c in coins:\n    for a in range(c, amt + 1):\n        if dp[a - c] != INF:\n            dp[a] = min(dp[a], dp[a - c] + 1)\n\nprint(-1 if dp[amt] == INF else dp[amt])\n",
+      "c": "#include <stdio.h>\n#define INF 1000000000\n\nint min(int a, int b) { \n    return a < b ? a : b; \n}\n\nint main() {\n    int n, amt; \n    scanf(\"%d %d\", &n, &amt);\n\n    int c[55]; \n    for(int i = 0; i < n; i++) \n        scanf(\"%d\", &c[i]);\n\n    static int dp[100005];\n\n    // Initialize DP array\n    for(int i = 0; i <= amt; i++) \n        dp[i] = INF;\n\n    dp[0] = 0;   // Correct base case\n\n    // Unbounded coin change\n    for(int i = 0; i < n; i++){\n        for(int a = c[i]; a <= amt; a++){\n            if(dp[a - c[i]] != INF)  // optional safety check\n                dp[a] = min(dp[a], dp[a - c[i]] + 1);\n        }\n    }\n\n    printf(\"%d\\n\", dp[amt] >= INF ? -1 : dp[amt]);\n\n    return 0;\n}\n"
+    },
+    "starter_code": {
+      "java": "import java.io.*;import java.util.*;\npublic class Solution{\n  public static void main(String[] args)throws Exception{\n    FastScanner fs=new FastScanner(System.in);\n    int n=fs.nextInt(), amt=fs.nextInt();\n    int[] c=new int[n];\n    for(int i=0;i<n;i++) c[i]=fs.nextInt();\n    int INF=1_000_000_000;\n    int[] dp=new int[amt+1];\n    Arrays.fill(dp, INF);\n    dp[0]=1; \n    for(int coin: c){\n      for(int a=coin;a<=amt;a++){\n        dp[a]=Math.min(dp[a], dp[a-coin]); \n      }\n    }\n    System.out.println(dp[amt]>=INF?-1:dp[amt]);\n  }\n  static class FastScanner{\n    private final InputStream in; private final byte[] buf=new byte[1<<16];\n    private int ptr=0, len=0;\n    FastScanner(InputStream is){in=is;}\n    int read() throws IOException{ if(ptr>=len){ len=in.read(buf); ptr=0; if(len<=0) return -1;} return buf[ptr++];}\n    int nextInt() throws IOException{\n      int c; do{ c=read(); }while(c<=32);\n      int sgn=1; if(c=='-'){sgn=-1;c=read();}\n      int x=0; while(c>32){ x=x*10 + (c-'0'); c=read(); }\n      return x*sgn;\n    }\n  }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n  int n,amt; cin>>n>>amt;\n  vector<int> c(n); for(int i=0;i<n;i++) cin>>c[i];\n  const int INF=1e9;\n  vector<int> dp(amt+1,INF);\n  dp[0]=1; \n  for(int coin: c){\n    for(int a=coin;a<=amt;a++){\n      dp[a]=min(dp[a], dp[a-coin]);\n    }\n  }\n  cout<<(dp[amt]>=INF?-1:dp[amt])<<\"\\n\";\n}\n",
+      "python": "n, amt = map(int, input().split())\ncoins = list(map(int, input().split()))\n\nINF = 10**9\ndp = [INF] * (amt + 1)\ndp[0] = 1              \n\nfor c in coins:\n    for a in range(c, amt + 1):\n        dp[a] = min(dp[a], dp[a - c]) \n\nprint(-1 if dp[amt] == INF else dp[amt])\n",
+      "c": "#include <stdio.h>\n#define INF 1000000000\nint min(int a,int b){return a<b?a:b;}\nint main(){\n  int n,amt; scanf(\"%d %d\",&n,&amt);\n  int c[55]; for(int i=0;i<n;i++) scanf(\"%d\",&c[i]);\n  static int dp[100005];\n  for(int i=0;i<=amt;i++) dp[i]=INF;\n  dp[0]=1; \n  for(int i=0;i<n;i++){\n    for(int a=c[i]; a<=amt; a++){\n      dp[a]=min(dp[a], dp[a-c[i]]); \n    }\n  }\n  printf(\"%d\\n\", dp[amt]>=INF?-1:dp[amt]);\n}\n"
+    }
+  },
+  {
+    "title": "Merge Intervals",
+    "contest": "Round 1: Shattered Syntax (Debugging)",
+    "problem_type": "Debugging",
+    "problem_mode": "Standard Input/Output",
+    "total_marks": "20",
+    "constraints": "1 <= N <= 2e5; -1e9 <= start,end <= 1e9; start <= end",
+    "description": "Given N intervals [start,end], merge all overlapping intervals and print merged intervals sorted by start.",
+    "input_format": "N\nstart1 end1\n...",
+    "output_format": "Merged intervals, one per line: start end",
+    "folder_name": "M4_Merge_Intervals",
+    "test_cases": [
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "4\n1 3\n2 6\n8 10\n15 18",
+        "output": "1 6\n8 10\n15 18"
+      },
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "3\n1 4\n4 5\n6 7",
+        "output": "1 5\n6 7"
+      },
+      {
+        "type": "Sample",
+        "points": 0,
+        "input": "1\n-1 1",
+        "output": "-1 1"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3\n1 2\n3 4\n5 6",
+        "output": "1 2\n3 4\n5 6"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3\n1 10\n2 3\n4 8",
+        "output": "1 10"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3\n-5 -1\n-3 2\n10 10",
+        "output": "-5 2\n10 10"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3\n1 3\n3 3\n3 5",
+        "output": "1 5"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3\n5 7\n1 2\n2 4",
+        "output": "1 4\n5 7"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3\n1 1\n1 2\n2 2",
+        "output": "1 2"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "2\n0 100\n101 200",
+        "output": "0 100\n101 200"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "3\n-10 0\n0 0\n0 10",
+        "output": "-10 10"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "4\n1 4\n0 0\n5 5\n2 3",
+        "output": "0 0\n1 4\n5 5"
+      },
+      {
+        "type": "Hidden",
+        "points": "auto",
+        "input": "4\n1 2\n2 3\n3 4\n4 5",
+        "output": "1 5"
+      }
+    ],
+    "solutions": {
+      "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n\n        int n = sc.nextInt();\n        long[][] intervals = new long[n][2];\n\n        for (int i = 0; i < n; i++) {\n            intervals[i][0] = sc.nextLong();\n            intervals[i][1] = sc.nextLong();\n        }\n\n        // Sort by start\n        Arrays.sort(intervals, (a, b) -> Long.compare(a[0], b[0]));\n\n        long cs = intervals[0][0];\n        long ce = intervals[0][1];\n\n        for (int i = 1; i < n; i++) {\n            if (intervals[i][0] <= ce) {\n                ce = Math.max(ce, intervals[i][1]);\n            } else {\n                System.out.println(cs + \" \" + ce);\n                cs = intervals[i][0];\n                ce = intervals[i][1];\n            }\n        }\n\n        System.out.println(cs + \" \" + ce);\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n\n    vector<pair<long long, long long>> intervals(n);\n\n    for (int i = 0; i < n; i++) {\n        cin >> intervals[i].first >> intervals[i].second;\n    }\n\n    // Sort by start\n    sort(intervals.begin(), intervals.end());\n\n    long long cs = intervals[0].first;\n    long long ce = intervals[0].second;\n\n    for (int i = 1; i < n; i++) {\n        if (intervals[i].first <= ce) {\n            ce = max(ce, intervals[i].second);\n        } else {\n            cout << cs << \" \" << ce << \"\\n\";\n            cs = intervals[i].first;\n            ce = intervals[i].second;\n        }\n    }\n\n    cout << cs << \" \" << ce << \"\\n\";\n\n    return 0;\n}\n",
+      "python": "n = int(input())\nit = []\n\nfor _ in range(n):\n    a, b = map(int, input().split())\n    it.append((a, b))   # keep correct order\n\nit.sort()  # sort by start time\n\nres = []\n\nfor s, e in it:\n    if not res or s > res[-1][1]:\n        res.append([s, e])\n    else:\n        res[-1][1] = max(res[-1][1], e)  # extend interval\n\nfor s, e in res:\n    print(s, e)\n",
+      "c": "#include <stdio.h>\n#include <stdlib.h>\n\ntypedef struct {\n    long long s, e;\n} I;\n\nint cmp(const void* a, const void* b) {\n    I* x = (I*)a;\n    I* y = (I*)b;\n\n    if (x->s < y->s) return -1;\n    if (x->s > y->s) return 1;\n    return 0;\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n\n    I* it = malloc(sizeof(I) * n);\n\n    for (int i = 0; i < n; i++) {\n        scanf(\"%lld %lld\", &it[i].s, &it[i].e);\n    }\n\n    // Sort by start\n    qsort(it, n, sizeof(I), cmp);\n\n    long long cs = it[0].s;\n    long long ce = it[0].e;\n\n    for (int i = 1; i < n; i++) {\n        if (it[i].s <= ce) {\n            // Merge intervals \u2192 take maximum end\n            if (it[i].e > ce)\n                ce = it[i].e;\n        } else {\n            printf(\"%lld %lld\\n\", cs, ce);\n            cs = it[i].s;\n            ce = it[i].e;\n        }\n    }\n\n    printf(\"%lld %lld\\n\", cs, ce);\n\n    free(it);\n    return 0;\n}\n"
+    },
+    "starter_code": {
+      "java": "import java.io.*;import java.util.*;\npublic class Solution{\n  public static void main(String[] args)throws Exception{\n    BufferedReader br=new BufferedReader(new InputStreamReader(System.in));\n    int n=Integer.parseInt(br.readLine().trim());\n    long[][] it=new long[n][2];\n    for(int i=0;i<n;i++){\n      StringTokenizer st=new StringTokenizer(br.readLine());\n      it[i][0]=Long.parseLong(st.nextToken());\n      it[i][1]=Long.parseLong(st.nextToken());\n    }\n    Arrays.sort(it,(a,b)->Long.compare(a[1],b[1])); \n    long cs=it[0][0], ce=it[0][1];\n    for(int i=1;i<n;i++){\n      if(it[i][0]<=ce) ce=Math.min(ce,it[i][1]); \n      else{ System.out.println(cs+\" \"+ce); cs=it[i][0]; ce=it[i][1]; }\n    }\n    System.out.println(cs+\" \"+ce);\n  }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n  int n; cin>>n;\n  vector<pair<long long,long long>> it(n);\n  for(int i=0;i<n;i++) cin>>it[i].first>>it[i].second;\n  sort(it.begin(), it.end(), [](auto &a, auto &b){ return a.second<b.second; });\n  long long cs=it[0].first, ce=it[0].second;\n  for(int i=1;i<n;i++){\n    if(it[i].first<=ce) ce=min(ce,it[i].second); \n    else{ cout<<cs<<\" \"<<ce<<\"\\n\"; cs=it[i].first; ce=it[i].second; }\n  }\n  cout<<cs<<\" \"<<ce<<\"\\n\";\n}\n",
+      "python": "n = int(input())\nit = []\n\nfor _ in range(n):\n    a, b = map(int, input().split())\n    it.append((b, a))          \n\nit.sort()\n\nres = []\n\nfor s, e in it:\n    if not res or s > res[-1][1]:\n        res.append([s, e])\n    else:\n        res[-1][1] = min(res[-1][1], e)  \n\nfor s, e in res:\n    print(s, e)\n",
+      "c": "#include <stdio.h>\n#include <stdlib.h>\ntypedef struct{ long long s,e; } I;\nint cmp(const void* a,const void* b){\n  I* x=(I*)a; I* y=(I*)b;\n  return (x->e > y->e) - (x->e < y->e); \n}\nint main(){\n  int n; scanf(\"%d\",&n);\n  I* it=malloc(sizeof(I)*n);\n  for(int i=0;i<n;i++){ scanf(\"%lld %lld\",&it[i].s,&it[i].e); }\n  qsort(it,n,sizeof(I),cmp);\n  long long cs=it[0].s, ce=it[0].e;\n  for(int i=1;i<n;i++){\n    if(it[i].s<=ce){\n      if(it[i].e<ce) ce=it[i].e; \n    }else{\n      printf(\"%lld %lld\\n\",cs,ce);\n      cs=it[i].s; ce=it[i].e;\n    }\n  }\n  printf(\"%lld %lld\\n\",cs,ce);\n}\n"
+    }
+  }
+]

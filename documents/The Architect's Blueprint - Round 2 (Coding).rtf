@@ -1,0 +1,212 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0 Calibri;}{\f1 Consolas;}}\paperw12240\paperh15840\margl1440\margr1440\margt1440\margb1440
+\fs52\b The Architect's Blueprint - Round 2 (Coding)\b0\fs24\par
+\fs28\b Question Set\b0\fs24\par
+Generated: 2026-02-14 07:55\par
+Questions: 6    Total Marks: 130\par
+\par
+\fs32\b Contents\b0\fs24\par
+1. Butterfly Pattern Star (10 marks, Easy)\par
+2. Pascal Triangle (10 marks, Easy)\par
+3. Overlapping Intervals (20 marks, Medium)\par
+4. Two Sum (20 marks, Medium)\par
+5. Trapping Rain Water (40 marks, Hard)\par
+6. Safe Night Cab (30 marks)\par
+\page
+\fs36\b Q1. Butterfly Pattern Star\b0\fs24\par
+\b Difficulty:\b0 Easy\par
+\b Total Marks:\b0 10\par
+\b Problem Type:\b0 Debugging\par
+\b Problem Mode:\b0 Standard Input/Output\par
+\b Folder Name:\b0 E_Butterfly_Pattern_Star\par
+\b Test Cases:\b0 13 total (3 sample, 10 hidden)\par
+\par
+\b Constraints:\b0 1 <= n <= 50\par
+\b Description:\b0 Given an integer n, print a symmetric butterfly star pattern of height 2*n. For each row i in the upper half (1-indexed), print i stars, then 2*(n - i) spaces, then i stars. The lower half mirrors the upper half.\par
+\b Input Format:\b0 Single integer n\par
+\b Output Format:\b0 2*n lines forming the butterfly pattern.\par
+\par
+\fs28\b Sample Test Cases\b0\fs24\par
+\b Sample 1\b0\par
+Input:\par
+{\f1\fs20 3}\par
+Output:\par
+{\f1\fs20 *    *\line **  **\line ******\line ******\line **  **\line *    *}\par
+\par
+\b Sample 2\b0\par
+Input:\par
+{\f1\fs20 1}\par
+Output:\par
+{\f1\fs20 **\line **}\par
+\par
+\b Sample 3\b0\par
+Input:\par
+{\f1\fs20 4}\par
+Output:\par
+{\f1\fs20 *      *\line **    **\line ***  ***\line ********\line ********\line ***  ***\line **    **\line *      *}\par
+\par
+\par
+\page
+\fs36\b Q2. Pascal Triangle\b0\fs24\par
+\b Difficulty:\b0 Easy\par
+\b Total Marks:\b0 10\par
+\b Problem Type:\b0 Debugging\par
+\b Problem Mode:\b0 Standard Input/Output\par
+\b Folder Name:\b0 E_Pascal_Triangle\par
+\b Test Cases:\b0 13 total (3 sample, 10 hidden)\par
+\par
+\b Constraints:\b0 1 <= n <= 30\par
+\b Description:\b0 Given an integer n, generate the first n rows of Pascal's triangle. Each row's values are separated by a single space.\par
+\b Input Format:\b0 Single integer n\par
+\b Output Format:\b0 Print n lines; line i (1-indexed) contains the i-th row of Pascal's triangle with values space-separated.\par
+\par
+\fs28\b Sample Test Cases\b0\fs24\par
+\b Sample 1\b0\par
+Input:\par
+{\f1\fs20 4}\par
+Output:\par
+{\f1\fs20 1\line 1 1\line 1 2 1\line 1 3 3 1}\par
+\par
+\b Sample 2\b0\par
+Input:\par
+{\f1\fs20 1}\par
+Output:\par
+{\f1\fs20 1}\par
+\par
+\b Sample 3\b0\par
+Input:\par
+{\f1\fs20 5}\par
+Output:\par
+{\f1\fs20 1\line 1 1\line 1 2 1\line 1 3 3 1\line 1 4 6 4 1}\par
+\par
+\par
+\page
+\fs36\b Q3. Overlapping Intervals\b0\fs24\par
+\b Difficulty:\b0 Medium\par
+\b Total Marks:\b0 20\par
+\b Problem Type:\b0 Debugging\par
+\b Problem Mode:\b0 Standard Input/Output\par
+\b Folder Name:\b0 M_Overlapping_Intervals\par
+\b Test Cases:\b0 13 total (3 sample, 10 hidden)\par
+\par
+\b Constraints:\b0 1 <= N <= 1e5\line -1e9 <= L <= R <= 1e9\par
+\b Description:\b0 Given N closed intervals [L, R], merge all overlapping intervals and output the merged list sorted by start value.\par
+\b Input Format:\b0 First line: integer N\line Next N lines: two integers L R\par
+\b Output Format:\b0 Print each merged interval as 'L R' on its own line in ascending order of L.\par
+\par
+\fs28\b Sample Test Cases\b0\fs24\par
+\b Sample 1\b0\par
+Input:\par
+{\f1\fs20 4\line 1 3\line 2 4\line 6 8\line 9 10}\par
+Output:\par
+{\f1\fs20 1 4\line 6 8\line 9 10}\par
+\par
+\b Sample 2\b0\par
+Input:\par
+{\f1\fs20 3\line 1 5\line 2 3\line 4 6}\par
+Output:\par
+{\f1\fs20 1 6}\par
+\par
+\b Sample 3\b0\par
+Input:\par
+{\f1\fs20 3\line 1 4\line 2 5\line 7 9}\par
+Output:\par
+{\f1\fs20 1 5\line 7 9}\par
+\par
+\par
+\page
+\fs36\b Q4. Two Sum\b0\fs24\par
+\b Difficulty:\b0 Medium\par
+\b Total Marks:\b0 20\par
+\b Problem Type:\b0 Debugging\par
+\b Problem Mode:\b0 Standard Input/Output\par
+\b Folder Name:\b0 M_Two_Sum\par
+\b Test Cases:\b0 13 total (3 sample, 10 hidden)\par
+\par
+\b Constraints:\b0 2 <= n <= 1e5\line -1e9 <= nums[i], target <= 1e9\line Exactly one valid pair exists\par
+\b Description:\b0 Given an array of integers nums and an integer target, return the indices of the two numbers such that they add up to target. Return the answer as two 0-indexed integers i and j with i < j.\par
+\b Input Format:\b0 First line: integer n\line Second line: n space-separated integers nums[i]\line Third line: integer target\par
+\b Output Format:\b0 Two integers i and j separated by a space\par
+\par
+\fs28\b Sample Test Cases\b0\fs24\par
+\b Sample 1\b0\par
+Input:\par
+{\f1\fs20 4\line 2 7 11 15\line 9}\par
+Output:\par
+{\f1\fs20 0 1}\par
+\par
+\b Sample 2\b0\par
+Input:\par
+{\f1\fs20 5\line 3 2 4 8 1\line 6}\par
+Output:\par
+{\f1\fs20 1 2}\par
+\par
+\b Sample 3\b0\par
+Input:\par
+{\f1\fs20 4\line 0 4 3 0\line 0}\par
+Output:\par
+{\f1\fs20 0 3}\par
+\par
+\par
+\page
+\fs36\b Q5. Trapping Rain Water\b0\fs24\par
+\b Difficulty:\b0 Hard\par
+\b Total Marks:\b0 40\par
+\b Problem Type:\b0 Debugging\par
+\b Problem Mode:\b0 Standard Input/Output\par
+\b Folder Name:\b0 H_Trapping_Rain_Water\par
+\b Test Cases:\b0 13 total (3 sample, 10 hidden)\par
+\par
+\b Constraints:\b0 1 <= n <= 2e5\line 0 <= height[i] <= 1e9\par
+\b Description:\b0 Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.\par
+\b Input Format:\b0 First line: integer n\line Second line: n space-separated integers height[i]\par
+\b Output Format:\b0 Single integer: total trapped water.\par
+\par
+\fs28\b Sample Test Cases\b0\fs24\par
+\b Sample 1\b0\par
+Input:\par
+{\f1\fs20 6\line 0 1 0 2 1 0}\par
+Output:\par
+{\f1\fs20 1}\par
+\par
+\b Sample 2\b0\par
+Input:\par
+{\f1\fs20 12\line 0 1 0 2 1 0 1 3 2 1 2 1}\par
+Output:\par
+{\f1\fs20 6}\par
+\par
+\b Sample 3\b0\par
+Input:\par
+{\f1\fs20 4\line 3 0 0 2}\par
+Output:\par
+{\f1\fs20 4}\par
+\par
+\par
+\page
+\fs36\b Q6. Safe Night Cab\b0\fs24\par
+\b Difficulty:\b0 Unknown\par
+\b Total Marks:\b0 30\par
+\b Problem Type:\b0 Debugging\par
+\b Problem Mode:\b0 Standard Input/Output\par
+\b Folder Name:\b0 Safe_Night_Cab\par
+\b Test Cases:\b0 5 total (2 sample, 3 hidden)\par
+\par
+\b Constraints:\b0 1 <= N <= 2e5\line 0 <= P[i] <= D <= 1e9\line 0 <= R <= 1e9\par
+\b Description:\b0 The city is a straight road from position 0 to position D. There are N street lights. The i-th light is at position P[i] and illuminates the segment [P[i]-R, P[i]+R].\line The cab can travel only through illuminated segments and can start/stop only within illuminated areas. Determine if the cab can safely travel from 0 to D.\par
+\b Input Format:\b0 First line: N D R\line Second line: N space-separated integers P[i]\par
+\b Output Format:\b0 Print YES if travel is possible, otherwise NO.\par
+\par
+\fs28\b Sample Test Cases\b0\fs24\par
+\b Sample 1\b0\par
+Input:\par
+{\f1\fs20 3 10 3\line 2 5 9}\par
+Output:\par
+{\f1\fs20 YES}\par
+\par
+\b Sample 2\b0\par
+Input:\par
+{\f1\fs20 2 10 2\line 1 7}\par
+Output:\par
+{\f1\fs20 NO}\par
+\par
+\par
+}

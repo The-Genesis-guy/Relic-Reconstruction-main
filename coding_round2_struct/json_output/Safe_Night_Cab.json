@@ -1,0 +1,51 @@
+{
+  "title": "Safe Night Cab",
+  "contest": "The Architect's Blueprint - Round 2 (Debugging)",
+  "problem_type": "Debugging",
+  "problem_mode": "Standard Input/Output",
+  "total_marks": "30",
+  "constraints": "1 <= N <= 2e5\n0 <= P[i] <= D <= 1e9\n0 <= R <= 1e9",
+  "description": "The city is a straight road from position 0 to position D. There are N street lights. The i-th light is at position P[i] and illuminates the segment [P[i]-R, P[i]+R].\nThe cab can travel only through illuminated segments and can start/stop only within illuminated areas. Determine if the cab can safely travel from 0 to D.",
+  "input_format": "First line: N D R\nSecond line: N space-separated integers P[i]",
+  "output_format": "Print YES if travel is possible, otherwise NO.",
+  "folder_name": "Safe_Night_Cab",
+  "test_cases": [
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "3 10 3\n2 5 9",
+      "output": "YES"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "2 10 2\n1 7",
+      "output": "NO"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "4 20 5\n0 6 12 18",
+      "output": "YES"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "3 15 3\n4 10 14",
+      "output": "NO"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "5 25 4\n3 8 13 18 23",
+      "output": "YES"
+    }
+  ],
+  "starter_code": {
+    "python": "import sys\n\n\ndef main() -> None:\n    data = sys.stdin.read().strip().split()\n    if not data:\n        return\n\n    n = int(data[0])\n    d = int(data[1])\n    r = int(data[2])\n    positions = list(map(int, data[3:3 + n]))\n\n    # TODO: determine if travel from 0 to d is possible using illuminated segments\n    # Print \"YES\" or \"NO\".\n    # print(\"YES\")\n\n\nif __name__ == \"__main__\":\n    main()\n",
+    "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    long long d, r;\n    if (!(cin >> n >> d >> r)) return 0;\n\n    vector<long long> p(n);\n    for (int i = 0; i < n; i++) cin >> p[i];\n\n    // TODO: determine if travel from 0 to d is possible using illuminated segments\n    // Print \"YES\" or \"NO\".\n    // cout << \"YES\\n\";\n    return 0;\n}\n",
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n\n        int n = sc.nextInt();\n        long d = sc.nextLong();\n        long r = sc.nextLong();\n\n        long[] p = new long[n];\n        for (int i = 0; i < n; i++) p[i] = sc.nextLong();\n\n        // TODO: determine if travel from 0 to d is possible using illuminated segments\n        // Print \"YES\" or \"NO\".\n        // System.out.println(\"YES\");\n    }\n}\n",
+    "c": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int n;\n    long long d, r;\n    if (scanf(\"%d %lld %lld\", &n, &d, &r) != 3) return 0;\n\n    long long *p = (long long *)malloc((size_t)n * sizeof(long long));\n    if (!p) return 1;\n    for (int i = 0; i < n; i++) scanf(\"%lld\", &p[i]);\n\n    // TODO: determine if travel from 0 to d is possible using illuminated segments\n    // Print \"YES\" or \"NO\".\n    // printf(\"YES\\n\");\n\n    free(p);\n    return 0;\n}\n"
+  },
+  "solutions": {}
+}

@@ -1,0 +1,104 @@
+{
+  "title": "Longest Valid Parentheses",
+  "contest": "Round 1: Shattered Syntax (Debugging)",
+  "problem_type": "Debugging",
+  "problem_mode": "Standard Input/Output",
+  "total_marks": "20",
+  "constraints": "0 <= |s| <= 2e5; s contains only '(' and ')'",
+  "description": "Given a string of '(' and ')', return the length of the longest valid (well-formed) parentheses substring.",
+  "input_format": "s",
+  "output_format": "Single integer length",
+  "folder_name": "M1_Longest_Valid_Parentheses",
+  "test_cases": [
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": ")()())",
+      "output": "4"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "(()",
+      "output": "2"
+    },
+    {
+      "type": "Sample",
+      "points": 0,
+      "input": "()(()",
+      "output": "2"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "",
+      "output": "0"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "()",
+      "output": "2"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "((()))",
+      "output": "6"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "())(())",
+      "output": "4"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "(()())()",
+      "output": "8"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "(((((",
+      "output": "0"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "()()()()",
+      "output": "8"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "(()))(()())",
+      "output": "6"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "())())())()(()())",
+      "output": "8"
+    },
+    {
+      "type": "Hidden",
+      "points": "auto",
+      "input": "((()()()))(())",
+      "output": "14"
+    }
+  ],
+  "solutions": {
+    "java": "import java.util.*;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n\n        if (!sc.hasNext()) {   // handle empty input\n            System.out.println(0);\n            return;\n        }\n\n        String s = sc.next();\n        Stack<Integer> st = new Stack<>();\n\n        st.push(-1);   // base index\n        int best = 0;\n\n        for (int i = 0; i < s.length(); i++) {\n            if (s.charAt(i) == '(') {\n                st.push(i);\n            } else {\n                st.pop();\n                if (!st.isEmpty()) {\n                    best = Math.max(best, i - st.peek());\n                } else {\n                    st.push(i);\n                }\n            }\n        }\n\n        System.out.println(best);\n    }\n}\n",
+    "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main() {\n    string s;\n    \n    if (!(cin >> s)) {   // handle empty input\n        cout << 0 << endl;\n        return 0;\n    }\n\n    int n = s.length();\n    stack<int> st;\n    \n    st.push(-1);   // base index\n    int best = 0;\n\n    for (int i = 0; i < n; i++) {\n        if (s[i] == '(') {\n            st.push(i);\n        } else {\n            st.pop();\n            if (!st.empty()) {\n                best = max(best, i - st.top());\n            } else {\n                st.push(i);\n            }\n        }\n    }\n\n    cout << best << endl;\n    return 0;\n}\n",
+    "python": "import sys\n\ns = sys.stdin.readline().strip()\n\nif not s:\n    print(0)\nelse:\n    stack = [-1]   # base index\n    best = 0\n\n    for i in range(len(s)):\n        if s[i] == '(':\n            stack.append(i)\n        else:\n            stack.pop()\n            if stack:\n                best = max(best, i - stack[-1])\n            else:\n                stack.append(i)\n\n    print(best)\n",
+    "c": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s[200005];\n\n    // handle empty input safely\n    if (scanf(\"%s\", s) != 1) {\n        printf(\"0\\n\");\n        return 0;\n    }\n\n    int n = strlen(s);\n\n    int st[200005], top = -1;\n\n    st[++top] = -1;   // FIXED: base index should be -1\n\n    int best = 0;\n\n    for (int i = 0; i < n; i++) {\n        if (s[i] == '(') {\n            st[++top] = i;\n        } else {\n            top--;\n\n            if (top != -1) {\n                int len = i - st[top];\n                if (len > best)\n                    best = len;\n            } else {\n                st[++top] = i;   // FIXED: push current index\n            }\n        }\n    }\n\n    printf(\"%d\\n\", best);\n    return 0;\n}\n"
+  },
+  "starter_code": {
+    "java": "import java.io.*;import java.util.*;\npublic class Solution{\n  public static void main(String[] args)throws Exception{\n    String s=new BufferedReader(new InputStreamReader(System.in)).readLine();\n    int[] st=new int[s.length()+5];\n    int top=0; st[top]=0; \n    int best=0;\n    for(int i=0;i<s.length();i++){\n      char c=s.charAt(i);\n      if(c==')') st[++top]=i; \n      else{\n        top--;\n        if(top>=0) best=Math.max(best, i-st[top]);\n        else st[++top]=0;     \n      }\n    }\n    System.out.println(best);\n  }\n}\n",
+    "cpp": "#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n  string s; cin>>s;\n  vector<int> st; st.push_back(0); \n  int best=0;\n  for(int i=0;i<(int)s.size();i++){\n    if(s[i]==')') st.push_back(i);  \n    else{\n      st.pop_back();\n      if(st.empty()) st.push_back(i-1); \n      best=max(best,i-st.back());\n    }\n  }\n  cout<<best<<\"\\n\";\n}\n",
+    "python": "import sys\ns = sys.stdin.readline().strip()\nst = []              \nbest = 0\nfor i,ch in enumerate(s):\n    if ch == ')':    \n        st.append(i)\n    else:\n        st.pop()     \n        if len(st)==0:\n            st.append(0)   \n        best = max(best, i-st[-1])\nprint(best)\n",
+    "c": "#include <stdio.h>\n#include <string.h>\nint main(){\n  char s[200005]; scanf(\"%s\",s);\n  int n=strlen(s);\n  int st[200005], top=-1;\n  st[++top]=0;                 \n  int best=0;\n  for(int i=0;i<n;i++){\n    if(s[i]=='(') st[++top]=i;\n    else{\n      top--;\n      if(top!=-1){\n        int len=i-st[top];\n        if(len>best) best=len;\n      }else{\n        st[++top]=0;           \n      }\n    }\n  }\n  printf(\"%d\\n\",best);\n}\n"
+  }
+}
