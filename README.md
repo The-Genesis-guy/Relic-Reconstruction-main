@@ -14,17 +14,21 @@
 
 1. [What Is This?](#-what-is-this)
 2. [Key Features](#-key-features)
-3. [Project Structure](#-project-structure)
-4. [Tech Stack](#-tech-stack)
-5. [Quick Start](#-quick-start)
-6. [Detailed Setup Guide](#-detailed-setup-guide)
-7. [Admin Guide](#-admin-guide)
-8. [Student / Participant Guide](#-student--participant-guide)
-9. [Question Format](#-question-format)
-10. [Configuration Reference](#-configuration-reference)
-11. [Architecture Overview](#-architecture-overview)
-12. [Troubleshooting](#-troubleshooting)
-13. [Contributing](#-contributing)
+3. [Screenshots](#-screenshots)
+4. [Project Structure](#-project-structure)
+5. [Tech Stack](#-tech-stack)
+6. [Quick Start](#-quick-start)
+7. [Detailed Setup Guide](#-detailed-setup-guide)
+8. [Admin Guide](#-admin-guide)
+9. [Student / Participant Guide](#-student--participant-guide)
+10. [Question Format](#-question-format)
+11. [Configuration Reference](#-configuration-reference)
+12. [Architecture Overview](#-architecture-overview)
+13. [Hidden Technicalities](#-hidden-technicalities)
+14. [Known Bugs](#-known-bugs)
+15. [Unimplemented Features](#-unimplemented-features)
+16. [Troubleshooting](#-troubleshooting)
+17. [Contributing](#-contributing)
 
 ---
 
@@ -52,6 +56,42 @@ It was built and deployed for real inter-college coding competitions under the n
 | 📦 **Zero Internet Needed** | Fully offline, runs on LAN |
 | 📤 **Export Tools** | Export submissions as CSV, leaderboard as CSV, code as ZIP |
 | ⚡ **Priority Queue** | Last-minute submissions get priority |
+
+---
+
+## 📸 Screenshots
+
+### Admin Panel
+
+| Admin Overview | Admin Action Logs |
+|---|---|
+| ![Admin Overview](docs/screenshots/ss_01.png) | ![Admin Action Logs](docs/screenshots/ss_02.png) |
+
+| Contest Management — Create Round | Contest List with Status Badges |
+|---|---|
+| ![Contest Management](docs/screenshots/ss_03.png) | ![Contest List](docs/screenshots/ss_04.png) |
+
+| Problem Creator — Form | Problem Creator — Test Cases |
+|---|---|
+| ![Problem Creator Form](docs/screenshots/ss_05.png) | ![Test Case Upload](docs/screenshots/ss_06.png) |
+
+| All Problems List | User Management |
+|---|---|
+| ![All Problems](docs/screenshots/ss_07.png) | ![User Management](docs/screenshots/ss_08.png) |
+
+| Submissions Filter | Leaderboard & Scores |
+|---|---|
+| ![Submissions](docs/screenshots/ss_09.png) | ![Leaderboard](docs/screenshots/ss_10.png) |
+
+| Data & Tools (Export / Broadcast) |
+|---|
+| ![Data & Tools](docs/screenshots/ss_11.png) |
+
+### Student / Participant View
+
+| Problem Sidebar + Code Editor | Full Problem View with Sample Cases |
+|---|---|
+| ![Code Editor Sidebar](docs/screenshots/ss_13.png) | ![Problem View](docs/screenshots/ss_14.png) |
 
 ---
 
@@ -453,6 +493,97 @@ cat app/logs/server.log
 
 ---
 
+## 🔬 Hidden Technicalities
+
+Things that aren't obvious from the source code but matter deeply for how the system runs:
+
+### ⏱️ Server-Driven Time Synchronization
+The client **never trusts its own clock**. Every `timer_update` socket event carries the server's `server_time` (Unix timestamp in ms). The client calculates:
+```js
+serverOffset = serverTime - Date.now();
+```
+All countdowns then use `Date.now() + serverOffset` so even if a student's laptop clock is an hour off, their timer is accurate.
+
+### 🧵 Thread-Safe SQLite with WAL Mode
+SQLite is opened in **WAL (Write-Ahead Logging)** mode with a 64MB cache. This allows multiple threads to read simultaneously while the judge workers write. Without WAL, concurrent judge workers would trigger `database is locked` errors constantly.
+
+### 🏗️ Auto Port Escalation
+If port 8080 is busy, the server silently tries 8081, 8082... up to 8090. The actual port is printed to the terminal. This prevents startup crashes during live events where another process might be holding a port.
+
+### ⚖️ Priority Queue for Last-Minute Submissions
+Submissions use a priority queue, not a FIFO queue. A submission made in the **last 5 minutes** of a contest gets a higher priority score. This ensures students who submit just before the deadline aren't unfairly penalized by a backlog.
+
+### 🧑‍⚖️ 30-Worker Parallel Judge Pool
+Up to **30 separate subprocess threads** run concurrently. Each compiles and executes submitted code in an isolated subprocess with configurable time limits. The pool is pre-warmed at startup to avoid cold-start latency on the first submission.
+
+### 🐶 Watchdog for Stuck Submissions
+A background thread scans for `PENDING` submissions older than **3 minutes** every 30 seconds. These are automatically marked `ERROR` to prevent leaderboard stalling. This guards against judge crashes or zombie processes.
+
+### 🔐 SHA-256 Password Hashing (No Salt)
+Passwords are hashed with SHA-256. **Note:** there is no per-user salt. This is intentional for the offline, controlled-environment use case — simplicity outweighs the salt benefit when the DB is on an air-gapped machine. For public deployments, add bcrypt.
+
+### 📡 Proctoring Events via Socket.IO
+The platform passively tracks `fullscreen_exit` and `tab_switch` events from each student's browser session. These are logged in the **Proctoring Logs** view under the admin panel — no student-facing UI shows this is happening.
+
+### 🗂️ Dynamic Path Resolution
+All file paths (DB, logs, problem images) are resolved relative to `app.py`'s location at runtime using `os.path.dirname(os.path.abspath(__file__))`. This means the app can be launched from any directory without path errors.
+
+### 📦 Master Backup as ZIP
+The **Download Master Backup (ZIP)** export in Data & Tools bundles the entire SQLite database + all uploaded problem images into a single `.zip` in-memory, streamed as a download — no temp files written to disk.
+
+---
+
+## 🐛 Known Bugs
+
+| # | Bug | Status | Workaround |
+|---|---|---|---|
+| 1 | Contest status badge on dashboard may briefly show stale state on first connect before the first `timer_update` arrives | Minor | Refreshes within ~1 second automatically |
+| 2 | Java submissions can occasionally produce an extra blank line in stdout, causing `Wrong Answer` on exact-match problems | Known | Trim trailing whitespace in expected output |
+| 3 | `fullscreen_exit` proctor events fire once on initial page load in some browsers | Minor | First event per session is filtered in logs |
+| 4 | If the server is restarted mid-contest, the `serverOffset` on clients resets — countdowns briefly freeze until the next `timer_update` (≤1 second) | Minor | No action needed; auto-recovers |
+| 5 | On Windows, C++ submissions may fail if MinGW `g++` is not added to `PATH` | Setup | Add MinGW `bin/` to system PATH |
+| 6 | Problem images uploaded via the Problem Creator are stored with a UUID filename — there is no way to re-download or rename them from the admin UI | Minor | Check `app/static/problem_images/` directory |
+
+---
+
+## 🚧 Unimplemented Features
+
+These are features that were planned or partially scaffolded but not yet completed:
+
+| Feature | Notes |
+|---|---|
+| **Plagiarism Detection** | Architecture allows for AST-level diff between submissions, but no implementation exists yet |
+| **Per-Problem Time Limits via UI** | Time limits are configurable in `config.py` globally but cannot be set per-problem from the admin panel |
+| **Email Notifications** | No SMTP integration — the platform is fully offline by design |
+| **Student Registration Self-Serve** | Students cannot register themselves — only admins can create accounts (by design for contests) |
+| **Partial Scoring** | All test cases are pass/fail. Partial credit (scoring by # of passing test cases) is not implemented |
+| **Code Diff / Plagiarism View** | The submissions page shows code but has no side-by-side comparison between students |
+| **Mobile-Responsive Code Editor** | The in-contest code editor is not optimized for mobile screen sizes |
+| **Multi-Admin Support** | There is only one admin account. Role-based access control (e.g., problem setter vs. contest manager) is not implemented |
+| **Rejudge All** | Rejudging can be triggered per-problem from the admin panel, but there is no "Rejudge Everything" button |
+| **Dark/Light Mode Toggle** | The UI is dark-mode only |
+
+---
+
+## 🛠️ Troubleshooting
+
+| Problem | Solution |
+|---|---|
+| Port already in use | Server auto-tries 8080→8081→8082... Check terminal for actual port |
+| `gcc: command not found` | Install gcc: `sudo apt install build-essential` (Linux) or MinGW (Windows) |
+| Java submissions fail | Ensure `javac` is in PATH: `java -version` and `javac -version` |
+| Timer not updating | Ensure Socket.IO is connected (check browser console for WebSocket errors) |
+| DB errors on startup | Delete `app/data/contest.db` and re-run `python3 init_db.py` |
+| Submissions stuck as PENDING | Watchdog auto-resolves after 3 minutes; check logs for judge errors |
+| Can't access from other machines | Use `http://<your-ip>:8080` — server binds to `0.0.0.0` by default |
+
+**Check server logs:**
+```bash
+cat app/logs/server.log
+```
+
+---
+
 ## 🤝 Contributing
 
 1. Fork the repository
@@ -460,12 +591,6 @@ cat app/logs/server.log
 3. Commit your changes: `git commit -m "Add your feature"`
 4. Push to the branch: `git push origin feature/your-feature`
 5. Open a Pull Request
-
----
-
-## 📜 License
-
-MIT License — free to use, modify, and distribute.
 
 ---
 

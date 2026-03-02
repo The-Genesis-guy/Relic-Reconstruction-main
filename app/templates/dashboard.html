@@ -129,12 +129,13 @@
 
         <div class="problems-grid">
             {% for c in contests %}
-            <div class="problem-card fade-in" style="cursor: default;">
+            <div class="problem-card fade-in" id="contest-card-{{ c.id }}" style="cursor: default;">
                 <div class="problem-header">
                     <div>
                         <h3 class="problem-title">{{ c.title }}</h3>
                         <div class="problem-meta">
-                            <span class="badge badge-{{ c.status_class }}">{{ c.status }}</span>
+                            <span class="contest-status-badge badge badge-{{ c.status_class }}"
+                                data-contest-id="{{ c.id }}">{{ c.status }}</span>
                         </div>
                     </div>
                 </div>
@@ -146,20 +147,21 @@
                 <div class="contest-timer" data-contest-id="{{ c.id }}"
                     style="font-size: 1rem; font-weight: 700; margin-bottom: 1.5rem; font-family: monospace;">
                 </div>
-
-                {% if c.status == 'Upcoming' %}
-                <button class="btn btn-outline disabled"
-                    title="Contest has not started yet. Please wait for the start time."
-                    style="width: 100%; justify-content: center; opacity: 0.5; cursor: not-allowed;">
-                    Starts Soon
-                </button>
-                {% else %}
-                <a href="/contest/{{ c.id }}/spa" class="btn btn-primary"
-                    title="Click to {{ 'view results' if c.status == 'Ended' else 'enter contest and start solving problems' }}"
-                    style="width: 100%; justify-content: center; text-decoration: none;">
-                    {{ 'View Results' if c.status == 'Ended' else 'Enter Contest' }}
-                </a>
-                {% endif %}
+                <div class="contest-action" data-contest-id="{{ c.id }}">
+                    {% if c.status == 'Upcoming' %}
+                    <button class="btn btn-outline disabled"
+                        title="Contest has not started yet. Please wait for the start time."
+                        style="width: 100%; justify-content: center; opacity: 0.5; cursor: not-allowed;">
+                        Starts Soon
+                    </button>
+                    {% else %}
+                    <a href="/contest/{{ c.id }}/spa" class="btn btn-primary"
+                        title="Click to {{ 'view results' if c.status == 'Ended' else 'enter contest and start solving problems' }}"
+                        style="width: 100%; justify-content: center; text-decoration: none;">
+                        {{ 'View Results' if c.status == 'Ended' else 'Enter Contest' }}
+                    </a>
+                    {% endif %}
+                </div>
             </div>
             {% endfor %}
 
@@ -220,6 +222,37 @@
             socket.on('submission_update', (data) => {
                 console.log('Real-time submission update received:', data);
                 updateRecentSubmissions(data);
+            });
+
+            // Real-time contest status & button updates
+            socket.on('timer_update', (data) => {
+                if (!data.contests) return;
+                data.contests.forEach(c => {
+                    const badge = document.querySelector(`.contest-status-badge[data-contest-id="${c.id}"]`);
+                    const actionDiv = document.querySelector(`.contest-action[data-contest-id="${c.id}"]`);
+                    if (!badge || !actionDiv) return;
+
+                    // Map server status to display values
+                    const statusMap = {
+                        'upcoming': { text: 'Upcoming', cls: 'badge-info' },
+                        'running': { text: 'Running', cls: 'badge-success' },
+                        'ended': { text: 'Ended', cls: 'badge-secondary' }
+                    };
+                    const s = statusMap[c.status] || statusMap['ended'];
+
+                    // Update badge
+                    badge.textContent = s.text;
+                    badge.className = `contest-status-badge badge ${s.cls}`;
+
+                    // Update action button
+                    if (c.status === 'upcoming') {
+                        actionDiv.innerHTML = `<button class="btn btn-outline disabled" style="width: 100%; justify-content: center; opacity: 0.5; cursor: not-allowed;">Starts Soon</button>`;
+                    } else if (c.status === 'running') {
+                        actionDiv.innerHTML = `<a href="/contest/${c.id}/spa" class="btn btn-primary" style="width: 100%; justify-content: center; text-decoration: none;">Enter Contest</a>`;
+                    } else {
+                        actionDiv.innerHTML = `<a href="/contest/${c.id}/spa" class="btn btn-outline" style="width: 100%; justify-content: center; text-decoration: none;">View Results</a>`;
+                    }
+                });
             });
 
             function updateRecentSubmissions(sub) {
