@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contest - Relic Reconstruction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='problem.css') }}">
+    <script src="{{ url_for('static', filename='libs/socket.io.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/monaco-editor/min/vs/loader.js') }}"></script>
+    <script src="{{ url_for('static', filename='notifications.js') }}"></script>
+    <script src="{{ url_for('static', filename='proctor.js') }}"></script>
+    <style>
+        /* Revert to classic problem page styles */
+        .problem-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .problem-sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100vh;
+            background: #1a1a1a;
+            z-index: 1000;
+            transition: left 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .problem-sidebar.open {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 1rem;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .sidebar-close {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .sidebar-toggle {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem 0.5rem;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sidebar-problem-item {
+            display: block;
+            padding: 1rem;
+            color: #ccc;
+            text-decoration: none;
+            border-bottom: 1px solid #333;
+            transition: background 0.2s;
+        }
+
+        .sidebar-problem-item:hover {
+            background: #2a2a2a;
+        }
+
+        .sidebar-problem-item.active {
+            background: rgba(59, 130, 246, 0.2);
+            border-left: 3px solid var(--accent);
+        }
+
+        .status-icon.solved {
+            color: #4ade80;
+        }
+
+        .status-icon.attempted {
+            color: #facc15;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        pre {
+            background: #1a1a1a;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .problem-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <div class="navbar-brand">Relic Reconstruction</div>
+                <div class="navbar-links">
+                    <span id="contestTimer"
+                        style="font-family: monospace; font-weight: 700; color: var(--accent); margin-right: 1rem;">Loading...</span>
+                    <a href="/dashboard">Exit Contest</a>
+                    <a href="/help" target="_blank">❓ Help</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar (Collapsible) -->
+    <div id="problemSidebar" class="problem-sidebar">
+        <div class="sidebar-header">
+            <h3 style="margin: 0; font-size: 1rem; color: #fff;">Problems</h3>
+            <button onclick="toggleSidebar()" class="sidebar-close" title="Close sidebar">✕</button>
+        </div>
+        <div class="sidebar-content" id="sidebarContent">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+
+    <button id="sidebarToggle" onclick="toggleSidebar()" class="sidebar-toggle" title="Show problems">
+        <span>➔</span>
+    </button>
+
+    <!-- Main Content -->
+    <div class="container" style="padding: 2rem 0; min-height: 80vh;" id="mainContent">
+        <div style="text-align: center; color: #888; margin-top: 4rem;">
+            <h2>Loading Problem...</h2>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div
+            style="width: 50px; height: 50px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite;">
+        </div>
+    </div>
+
+    <style>
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+    <script>
+        // ============================================================================
+        // ✅ SPA STATE
+        // ============================================================================
+        const SPA_STATE = {
+            contestId: null,
+            contestStatus: 'running',
+            problems: [],
+            currentProblem: null,
+            monacoEditor: null,
+            socket: null,
+            activeSubmissionId: null
+        };
+
+        // ============================================================================
+        // ✅ INIT
+        // ============================================================================
+        window.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            // Support both /contest/<id>/spa and ?contest_id=<id>
+            const pathMatch = window.location.pathname.match(/\/contest\/(\d+)/);
+            SPA_STATE.contestId = urlParams.get('contest_id') || (pathMatch ? pathMatch[1] : null);
+
+            if (!SPA_STATE.contestId) {
+                if (window.showAlert) showAlert('No contest specified', 'error');
+                else alert('No contest specified');
+                window.location.href = '/dashboard';
+                return;
+            }
+
+            // Init Resizable Sidebar & Fullscreen Check
+            initSidebar();
+
+            // Load Data
+            await loadContestData();
+
+            // Init SocketIO
+            initSocket();
+
+            // Load first problem
+            if (SPA_STATE.problems.length > 0) {
+                loadProblem(SPA_STATE.problems[0].id);
+            }
+        });
+
+        // ============================================================================
+        // ✅ REAL-TIME UPDATES (WebSocket)
+        // ============================================================================
+        function initSocket() {
+            if (typeof io !== 'undefined') {
+                SPA_STATE.socket = window.socket || io();
+                window.socket = SPA_STATE.socket;
+
+                SPA_STATE.socket.on('connect', () => {
+                    console.log('WebSocket connected');
+                });
+
+                SPA_STATE.socket.on('submission_update', (res) => {
+                    console.log('Real-time update received:', res);
+
+                    // 1. Update Sidebar Status
+                    updateSidebarProblemStatus(res);
+
+                    // 2. Update Result View if it's the active submission
+                    if (SPA_STATE.activeSubmissionId && res.submission_id == SPA_STATE.activeSubmissionId) {
+                        if (SPA_STATE.currentProblem && res.problem_id == SPA_STATE.currentProblem.id) {
+                            displayResult(res);
+                        }
+                        SPA_STATE.activeSubmissionId = null;
+                    }
+                });
+
+            }
+        }
+
+        function updateSidebarProblemStatus(res) {
+            const problems = SPA_STATE.problems;
+            const prob = problems.find(p => p.id == res.problem_id);
+            if (prob) {
+                if (res.verdict === 'AC') prob.solved = true;
+                prob.attempted = true;
+                renderSidebar();
+            }
+        }
+
+
+        // ============================================================================
+        // ✅ DATA LOADING
+        // ============================================================================
+        async function loadContestData() {
+            showLoading(true);
+            try {
+                // Get contest status & problems
+                const [statusRes, problemsRes] = await Promise.all([
+                    fetch(`/api/contest_status/${SPA_STATE.contestId}`),
+                    fetch(`/api/student/contest/${SPA_STATE.contestId}/problems`)
+                ]);
+
+                const contest = await statusRes.json();
+                SPA_STATE.contestStatus = contest.status;
+                SPA_STATE.problems = await problemsRes.json();
+
+                // Render Sidebar
+                renderSidebar();
+            } catch (err) {
+                console.error(err);
+                if (window.showAlert) showAlert('Failed to load contest data', 'error');
+                else alert('Failed to load contest data');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function renderSidebar() {
+            const container = document.getElementById('sidebarContent');
+            container.innerHTML = SPA_STATE.problems.map(p => `
+                <a href="#" onclick="loadProblem(${p.id}); toggleSidebar(); return false;" 
+                   class="sidebar-problem-item ${SPA_STATE.currentProblem && SPA_STATE.currentProblem.id === p.id ? 'active' : ''}">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 600;">${p.title}</span>
+                        <span>${p.solved ? '<span class="status-icon solved">✓</span>' : (p.attempted ? '<span class="status-icon attempted">○</span>' : '○')}</span>
+                    </div>
+                    <div style="font-size: 0.8rem; color: #888; margin-top: 4px;">${p.problem_type}</div>
+                </a>
+            `).join('');
+        }
+
+        // ============================================================================
+        // ✅ PROBLEM RENDERING
+        // ============================================================================
+        async function loadProblem(problemId) {
+            showLoading(true);
+            try {
+                const res = await fetch(`/api/student/problem/${problemId}`);
+                const problem = await res.json();
+                SPA_STATE.currentProblem = problem;
+
+                // Update Sidebar Active State
+                renderSidebar(); // Simple re-render to update active class
+
+                // Render Main Content
+                const main = document.getElementById('mainContent');
+                main.innerHTML = `
+                    <div class="fade-in">
+                        <h1 style="font-size: 2.5rem; font-weight: 800; color: var(--accent); margin-bottom: 0.5rem;">
+                            ${problem.title}
+                        </h1>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
+                            <div style="display: flex; gap: 1rem;">
+                                <span class="badge badge-info">${problem.problem_type}</span>
+                                <span class="badge badge-success">${problem.problem_mode || 'stdin'}</span>
+                                ${problem.problem_mode === 'function' ? `<span class="badge badge-warning">function: ${problem.function_name}</span>` : ''}
+                                ${problem.show_scores ? `<span class="badge" style="background: rgba(255, 193, 7, 0.2); color: #ffc107; border: 1px solid rgba(255, 193, 7, 0.3);">
+                                    🏆 Max Points: ${problem.total_marks || 100}
+                                </span>` : ''}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="problem-layout">
+                        <!-- Left: Description -->
+                        <div class="problem-section fade-in">
+                            <h2 class="section-title">Problem Description</h2>
+                            <div class="problem-content">
+                                <p>${problem.description.replace(/\n/g, '<br>')}</p>
+
+                                <h3>Input Format</h3>
+                                <pre>${problem.input_format}</pre>
+
+                                <h3>Output Format</h3>
+                                <pre>${problem.output_format}</pre>
+
+                                ${problem.constraints ? `
+                                    <h3>Constraints</h3>
+                                    <pre>${problem.constraints}</pre>
+                                ` : ''}
+
+                                <h3>Sample Test Cases</h3>
+                                ${problem.sample_tests.map((test, idx) => `
+                                    <div style="margin-bottom: 1.5rem; padding: 1rem; background: #1a1a1a; border-radius: 4px; border-left: 3px solid var(--accent);">
+                                        <h4 style="margin-top: 0; color: var(--accent); font-size: 0.9rem;">Test Case ${idx + 1}</h4>
+                                        <div style="margin-bottom: 0.75rem;">
+                                            <strong style="color: #aaa;">Input:</strong>
+                                            <pre style="background: rgba(0,0,0,0.3); padding: 0.5rem; margin-top: 0.25rem;">${test.input}</pre>
+                                        </div>
+                                        <div>
+                                            <strong style="color: #aaa;">Expected Output:</strong>
+                                            <pre style="background: rgba(0,0,0,0.3); padding: 0.5rem; margin-top: 0.25rem;">${test.expected_output}</pre>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- Right: Editor -->
+                        <div class="code-section fade-in">
+                            <h2 class="section-title">Code Editor</h2>
+
+                            <!-- Status Bar -->
+                            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.875rem; font-weight: 600; border: 1px solid rgba(255,255,255,0.1);">
+                                <span style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <span>🎯</span>
+                                    <span>Problem: ${problem.title}</span>
+                                </span>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Language</label>
+                                <select id="languageSelect" class="form-select" onchange="switchLanguage()">
+                                    <option value="python">Python 3</option>
+                                    <option value="cpp">C++ 17</option>
+                                    <option value="java">Java</option>
+                                    <option value="c">C</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Your Code</label>
+                                <div id="editorContainer" style="height: 500px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;"></div>
+                            </div>
+
+                            <div class="action-buttons" style="display: flex; gap: 1rem; margin-top: 1rem;">
+                                <button onclick="runCode()" class="btn btn-outline" style="flex: 1;">
+                                    <span style="font-size: 1.1rem; margin-right: 0.25rem;">🏃</span> Run Code
+                                </button>
+                                <button onclick="submitCode()" class="btn btn-primary" style="flex: 1;">
+                                    <span style="font-size: 1.1rem; margin-right: 0.25rem;">📤</span> Submit
+                                </button>
+                            </div>
+
+                            <div id="resultContainer" style="margin-top: 1rem; display: none;"></div>
+                        </div>
+                    </div>
+                `;
+
+                // Init Monaco
+                initMonaco(problem);
+
+            } catch (err) {
+                console.error(err);
+                if (window.showAlert) showAlert('Failed to load problem', 'error');
+                else alert('Failed to load problem');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // ============================================================================
+        // ✅ MONACO EDITOR
+        // ============================================================================
+        function initMonaco(problem) {
+            require.config({ paths: { vs: "{{ url_for('static', filename='libs/monaco-editor/min/vs') }}" } });
+            require(['vs/editor/editor.main'], function () {
+                if (SPA_STATE.monacoEditor) {
+                    SPA_STATE.monacoEditor.dispose();
+                }
+
+                const container = document.getElementById('editorContainer');
+                const starterCode = getStarterCode(problem, 'python');
+
+                SPA_STATE.monacoEditor = monaco.editor.create(container, {
+                    value: starterCode,
+                    language: 'python',
+                    theme: 'vs-dark',
+                    automaticLayout: true,
+                    fontSize: 14,
+                    minimap: { enabled: false },
+                    scrollBeyondLastLine: false,
+                    scrollbar: { alwaysConsumeMouseWheel: false }
+                });
+            });
+        }
+
+        function getStarterCode(problem, lang) {
+            try {
+                const map = JSON.parse(problem.starter_code_map || '{}');
+                return map[lang] || map['default'] || '';
+            } catch { return ''; }
+        }
+
+        function switchLanguage() {
+            if (!SPA_STATE.monacoEditor) return;
+            const lang = document.getElementById('languageSelect').value;
+            const langMap = { python: 'python', cpp: 'cpp', java: 'java', c: 'c' };
+
+            monaco.editor.setModelLanguage(SPA_STATE.monacoEditor.getModel(), langMap[lang]);
+            const starterCode = getStarterCode(SPA_STATE.currentProblem, lang);
+            if (starterCode) SPA_STATE.monacoEditor.setValue(starterCode);
+        }
+
+        // ============================================================================
+        // ✅ EXECUTION
+        // ============================================================================
+        async function runCode() {
+            if (SPA_STATE.contestStatus === 'ended') {
+                if (window.showAlert) showAlert('Contest Ended. Code execution is disabled.', 'warning');
+                else alert('Contest Ended');
+                return;
+            }
+            if (!SPA_STATE.monacoEditor) {
+                if (window.showAlert) showAlert('Editor is still loading. Please wait and try again.', 'warning');
+                else alert('Editor is still loading. Please wait and try again.');
+                return;
+            }
+            const code = SPA_STATE.monacoEditor.getValue();
+            const lang = document.getElementById('languageSelect').value;
+
+            showLoading(true);
+            try {
+                const res = await fetch(`/run/${SPA_STATE.currentProblem.id}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code, language: lang })
+                });
+                const result = await res.json();
+                displayResult(result);
+            } catch (e) {
+                displayResult({ error: e.message });
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function submitCode() {
+            if (SPA_STATE.contestStatus === 'ended') {
+                if (window.showAlert) showAlert('Contest Ended. Submissions are closed.', 'warning');
+                else alert('Contest Ended');
+                return;
+            }
+            if (!SPA_STATE.monacoEditor) {
+                if (window.showAlert) showAlert('Editor is still loading. Please wait and try again.', 'warning');
+                else alert('Editor is still loading. Please wait and try again.');
+                return;
+            }
+            const code = SPA_STATE.monacoEditor.getValue();
+            const lang = document.getElementById('languageSelect').value;
+
+            showLoading(true);
+            try {
+                const res = await fetch(`/submit/${SPA_STATE.currentProblem.id}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code, language: lang })
+                });
+                const result = await res.json();
+
+                if (result.error) {
+                    displayResult({ error: result.error });
+                } else {
+                    SPA_STATE.activeSubmissionId = result.submission_id;
+                    displayResult(result);
+                    if (window.showAlert) showAlert('Submission Received! Judging in progress...', 'info');
+                    pollSubmission(result.submission_id);
+                }
+
+                // Refresh problem status in sidebar
+                loadContestData();
+            } catch (e) {
+                displayResult({ error: e.message });
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function pollSubmission(submissionId) {
+            console.log('Polling for submission:', submissionId);
+            try {
+                const response = await fetch(`/submission_status/${submissionId}`);
+                const res = await response.json();
+
+                if (res.verdict === 'PENDING') {
+                    setTimeout(() => pollSubmission(submissionId), 2000);
+                    return;
+                }
+
+                // Only display if this is still the active submission we care about
+                if (SPA_STATE.activeSubmissionId == submissionId) {
+                    displayResult(res);
+                    if (window.showAlert) {
+                        if (res.verdict === 'AC') {
+                            showAlert('🚀 SUBMISSION SUCCESSFUL!\nAll test cases passed.', 'success');
+                        } else {
+                            showAlert(`Judge Completed: ${res.verdict}`, 'info');
+                        }
+                    }
+                    SPA_STATE.activeSubmissionId = null;
+                }
+            } catch (error) {
+                console.error('Polling error:', error);
+            }
+        }
+
+        function displayResult(result) {
+            const container = document.getElementById('resultContainer');
+            container.style.display = 'block';
+
+            if (result.error) {
+                container.innerHTML = `
+                    <div style="background: rgba(239, 68, 68, 0.1); padding: 1rem; border-radius: 4px; border-left: 4px solid #ef4444;">
+                        <div style="font-weight: bold; color: #ef4444; font-size: 1.1rem; margin-bottom: 0.5rem;">Error</div>
+                        <div style="color: #ccc;">${result.error}</div>
+                    </div>
+                `;
+                container.scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+
+            const color = result.verdict === 'AC' ? '#4ade80' : (result.verdict === 'WA' ? '#ef4444' : '#facc15');
+            const verdictText = result.verdict === 'AC' ? 'Accepted' : (result.verdict || 'Processing...');
+
+            container.innerHTML = `
+                <div style="background: #1a1a1a; padding: 1rem; border-radius: 4px; border-left: 4px solid ${color};">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                        <div style="font-weight: bold; color: ${color}; font-size: 1.1rem;">
+                            ${verdictText}
+                        </div>
+                        ${result.total_passed !== undefined ? `<div style="font-weight: 600; color: #888;">${result.total_passed}/${result.total_tests} Tests Passed</div>` : ''}
+                    </div>
+                    <div style="color: #ccc; margin-bottom: 0.5rem;">${result.message || ''}</div>
+                    ${result.points !== undefined ? `<div style="color: var(--accent); font-weight: bold; margin-bottom: 0.5rem;">Score: ${result.points} / ${result.max_points || 0}</div>` : ''}
+                    ${result.output ? `<pre style="background: rgba(0,0,0,0.3); margin-top: 0.5rem; overflow-x: auto; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.05);">${result.output}</pre>` : ''}
+                </div>
+            `;
+            container.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ============================================================================
+        // ✅ UTILITIES
+        // ============================================================================
+        function toggleSidebar() {
+            document.getElementById('problemSidebar').classList.toggle('open');
+        }
+
+        function initSidebar() {
+            // Close when clicking outside
+            document.addEventListener('click', (e) => {
+                const sidebar = document.getElementById('problemSidebar');
+                const toggle = document.getElementById('sidebarToggle');
+                if (sidebar.classList.contains('open') &&
+                    !sidebar.contains(e.target) &&
+                    !toggle.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                }
+            });
+        }
+
+        function showLoading(show) {
+            document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
+        }
+
+
+        // Prevent Back Nav
+        history.pushState(null, null, location.href);
+        window.addEventListener('popstate', () => {
+            history.pushState(null, null, location.href);
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,164 @@
+/* Premium Login Aesthetic - Relic Reconstruction */
+
+body {
+    background: radial-gradient(circle at 10% 20%, rgba(202, 161, 93, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(47, 93, 87, 0.08) 0%, transparent 40%),
+        var(--bg-darker);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    margin: 0;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 440px;
+    padding: 3.5rem 3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative background elements */
+.login-container::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 150px;
+    height: 150px;
+    background: var(--gradient-primary);
+    opacity: 0.1;
+    filter: blur(40px);
+    border-radius: 50%;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.logo h1 {
+    font-family: var(--font-display);
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+}
+
+.logo p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.login-form {
+    margin-bottom: 2rem;
+}
+
+.form-label {
+    margin-bottom: 0.75rem;
+    color: var(--text-secondary);
+    font-size: 0.825rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.form-input {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(202, 161, 93, 0.2);
+    padding: 1rem 1.25rem;
+    height: auto;
+    font-size: 1rem;
+    color: var(--text-primary);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-input:focus {
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 0 0 4px rgba(202, 161, 93, 0.15);
+}
+
+.btn-block {
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+.btn-primary {
+    position: relative;
+    overflow: hidden;
+    height: 52px;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    border: none;
+}
+
+.btn-glow {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.2),
+            transparent);
+    transition: 0.5s;
+}
+
+.btn-primary:hover .btn-glow {
+    left: 100%;
+}
+
+.error-msg {
+    background: rgba(185, 74, 58, 0.1);
+    border: 1px solid rgba(185, 74, 58, 0.3);
+    color: #ff9e8f;
+    padding: 1rem;
+    border-radius: var(--radius);
+    margin-bottom: 2rem;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.info-box {
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 2rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.highlight {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.8s ease-out;
+}

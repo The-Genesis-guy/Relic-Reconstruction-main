@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard - Relic Reconstruction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='leaderboard.css') }}">
+    <script src="{{ url_for('static', filename='libs/socket.io.min.js') }}"></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <div class="navbar-brand">Relic Reconstruction</div>
+                <div class="navbar-links">
+                    <a href="/dashboard">Dashboard</a>
+                    <a href="/leaderboard">Leaderboard</a>
+                    <a href="/help" title="Help & Reference">❓ Help</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="padding: 2rem 0;">
+        {% if leaderboard_enabled is defined and not leaderboard_enabled %}
+        <div class="leaderboard-header fade-in">
+            <h1 class="leaderboard-title">Leaderboard</h1>
+            <p style="color: var(--text-muted); font-size: 1.125rem;">Leaderboard is currently hidden by admin.</p>
+        </div>
+        {% else %}
+        <div class="leaderboard-header fade-in">
+            <h1 class="leaderboard-title">Leaderboard</h1>
+            <p style="color: var(--text-muted); font-size: 1.125rem;">Top performers in the contest</p>
+        </div>
+
+        <div class="filter-section fade-in">
+            <select id="contestFilter" class="form-select" style="max-width: 260px;">
+                <option value="">All Contests</option>
+                {% for c in contests or [] %}
+                <option value="{{ c.id }}">{{ c.title }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="leaderboard-card fade-in">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width: 80px;">Rank</th>
+                        <th>Username</th>
+                        <th style="text-align: right;">Points</th>
+                        <th style="text-align: right;">Solved</th>
+                        <th style="text-align: right;">Time Taken</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboardBody">
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 3rem;">
+                            <div class="spinner"></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+
+    <div id="leaderboard-meta" data-enabled="{{ (leaderboard_enabled | default(true)) | tojson }}"
+        style="display: none;">
+    </div>
+
+    <script>
+        window.LEADERBOARD_ENABLED = document.getElementById('leaderboard-meta').dataset.enabled === 'true';
+    </script>
+    <script src="{{ url_for('static', filename='leaderboard.js') }}"></script>
+</body>
+
+</html>

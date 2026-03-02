@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Relic Reconstruction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <script src="{{ url_for('static', filename='libs/socket.io.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='libs/monaco-editor/min/vs/loader.js') }}"></script>
+    <script src="{{ url_for('static', filename='notifications.js') }}"></script>
+</head>
+
+<body class="admin-page">
+    <div class="dashboard-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-brand">Relic Reconstruction Admin</div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-item active" data-section="overview" onclick="showSection('overview')">
+                    <span>Overview</span>
+                </div>
+                <div class="nav-item" data-section="contests" onclick="showSection('contests')">
+                    <span>Contest Management</span>
+                </div>
+                <div class="nav-item" data-section="problems" onclick="showSection('problems')">
+                    <span>Problem Creator</span>
+                </div>
+                <div class="nav-item" data-section="users" onclick="showSection('users')">
+                    <span>User Management</span>
+                </div>
+                <div class="nav-item" data-section="submissions" onclick="showSection('submissions')">
+                    <span>Submissions</span>
+                </div>
+                <div class="nav-item" data-section="leaderboard" onclick="showSection('leaderboard')">
+                    <span>Leaderboard & Scores</span>
+                </div>
+                <div class="nav-item" data-section="export" onclick="showSection('export')">
+                    <span>Data & Tools</span>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="/help" class="nav-item" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+                    <span>❓ Help</span>
+                </a>
+                <a href="/logout" class="nav-item" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Overview Section -->
+            <section id="overview" class="content-section active">
+                <div class="section-header">
+                    <h1 class="section-title">Overview</h1>
+                    <p class="section-description">Real-time platform statistics and quick overview.</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalUsers">0</div>
+                        <div class="stat-label">Total Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalProblems">0</div>
+                        <div class="stat-label">Problems</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalSubmissions">0</div>
+                        <div class="stat-label">Submissions</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalContests">0</div>
+                        <div class="stat-label">Contests</div>
+                    </div>
+                </div>
+
+                <div id="liveMonitoring" class="admin-section" style="margin-bottom: 1.5rem;">
+                    <h3 class="section-title">Live System Metrics</h3>
+                    <div class="metrics"
+                        style="display: flex; gap: 2rem; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                        <div class="metric">Queue Size: <span id="queueSize"
+                                style="font-weight: bold; color: var(--accent);">0</span></div>
+                        <div class="metric">Pending Submissions: <span id="pendingCount"
+                                style="font-weight: bold; color: var(--warning);">0</span></div>
+                        <div class="metric">Active Workers: <span id="activeWorkers"
+                                style="font-weight: bold; color: var(--success);">0</span></div>
+                    </div>
+                </div>
+
+                <div id="systemStatus" class="admin-section" style="display: none; padding: 1.25rem;">
+                    <h3 class="section-title" style="margin-bottom: 0.5rem;">System Alert</h3>
+                    <p id="systemStatusText" class="section-description"></p>
+                </div>
+
+                <div class="admin-grid">
+                    <div class="admin-section">
+                        <h2 class="section-title">Live Submissions</h2>
+                        <div id="liveSubmissions" style="max-height: 400px; overflow-y: auto;">
+                            <!-- Live feed populated by JS -->
+                            <div class="spinner"></div>
+                        </div>
+                    </div>
+
+                    <div class="admin-section">
+                        <h2 class="section-title">Shortcuts</h2>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <button onclick="showSection('contests')" class="btn btn-outline"
+                                title="Create a new contest round" style="width:100%;">
+                                ➕ New Contest
+                            </button>
+                            <button onclick="showSection('problems')" class="btn btn-outline"
+                                title="Add a new problem to the platform" style="width:100%;">
+                                📝 Add Problem
+                            </button>
+                            <button onclick="forceRefresh()" class="btn btn-primary"
+                                title="Refresh all statistics and data" style="width:100%;">
+                                🔄 Refresh Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <h3 class="section-title">Debug Console</h3>
+                    <p class="section-description">Live UI logs for admin actions and API calls.</p>
+                    <div id="adminDebugLog" style="max-height: 240px; overflow: auto; padding-right: 0.5rem;"></div>
+                </div>
+
+                <div class="admin-section">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <h3 class="section-title" style="margin: 0;">Admin Action Logs</h3>
+                        <button onclick="loadAdminLogs()" class="btn btn-sm btn-outline"
+                            title="Refresh audit logs">🔄</button>
+                    </div>
+                    <p class="section-description">Audit trail of all administrative actions (last 20).</p>
+                    <div id="adminActionLogs"
+                        style="max-height: 400px; overflow-x: auto; overflow-y: auto; background: rgba(0,0,0,0.15); border-radius: 8px;">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <h3 class="section-title" style="margin: 0; color: #facc15;">☢️ Proctoring Logs</h3>
+                        <button onclick="loadProctorLogs()" class="btn btn-sm btn-outline"
+                            title="Refresh proctoring logs">🔄</button>
+                    </div>
+                    <p class="section-description">Detailed logs of student activities (fullscreen exits, tab switches).
+                    </p>
+                    <div id="adminProctorLogs"
+                        style="max-height: 400px; overflow-x: auto; overflow-y: auto; background: rgba(0,0,0,0.15); border-radius: 8px;">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contest Management Section -->
+            <section id="contests" class="content-section">
+                <div class="section-header">
+                    <h1 class="section-title">Contest Management</h1>
+                    <p class="section-description">Organize rounds and manage visibility for participants.</p>
+                </div>
+
+                <div class="admin-section">
+                    <h3 style="margin-bottom: 1.5rem;">Create New Round</h3>
+                    <form id="createContestForm">
+                        <div class="grid-2" style="margin-bottom: 1.5rem;">
+                            <div class="form-group">
+                                <label class="form-label">Contest Title</label>
+                                <input type="text" name="title" class="form-input"
+                                    placeholder="e.g., Round 1: Debugging" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Description</label>
+                                <textarea name="description" class="form-textarea" rows="3"
+                                    placeholder="Contest overview (multi-line; supports HTML like &lt;img src='...'>)"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Start Time</label>
+                                <input type="datetime-local" name="start_time" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">End Time</label>
+                                <input type="datetime-local" name="end_time" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label"
+                                    style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; margin-top: 2rem;">
+                                    <input type="checkbox" name="show_leaderboard" checked
+                                        style="width: 16px; height: 16px;">
+                                    <span>Show Rankings to Students</span>
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary"
+                            style="width: 100%; justify-content: center;">Create Contest</button>
+                    </form>
+                </div>
+
+                <div class="section-header">
+                    <h3 class="section-title">Active & Inactive Contests</h3>
+                </div>
+                <div id="contestsList">
+                    {% if contests_with_problems %}
+                    {% for item in contests_with_problems %}
+                    <details
+                        style="border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-lg); padding: 1rem; margin-bottom: 1rem; background: rgba(255,255,255,0.02);">
+                        <summary style="cursor: pointer; font-weight: 700; color: var(--text-primary);">
+                            {{ item.contest.title }} — {{ 'Active' if item.contest.is_active else 'Inactive' }}
+                        </summary>
+                        <div style="margin-top: 1rem;">
+                            {% if item.problems %}
+                            <table class="table" style="font-size: 0.875rem; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 40%;">Title</th>
+                                        <th>Status</th>
+                                        <th style="text-align: right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for p in item.problems %}
+                                    <tr>
+                                        <td>
+                                            <div style="font-weight: 600; color: var(--text-primary);">{{ p.title }}
+                                            </div>
+                                            <div style="font-size: 0.75rem; color: var(--text-muted);">{{ p.problem_type
+                                                }} • Round {{ p.round_number }}</div>
+                                        </td>
+                                        <td>
+                                            <span class="badge {{ 'badge-success' if p.enabled else 'badge-danger' }}"
+                                                style="font-size: 10px; padding: 2px 8px;">
+                                                {{ 'Live' if p.enabled else 'Hidden' }}
+                                            </span>
+                                        </td>
+                                        <td style="text-align: right;">
+                                            <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+                                                <button onclick="openEditModal('{{ p.id }}')"
+                                                    class="btn btn-sm btn-outline"
+                                                    style="padding: 4px 8px; font-size: 11px;">
+                                                    Edit
+                                                </button>
+                                                <button onclick="toggleProblem('{{ p.id }}', '{{ item.contest.id }}')"
+                                                    class="btn btn-sm btn-outline"
+                                                    style="padding: 4px 8px; font-size: 11px;">
+                                                    {{ 'Hide' if p.enabled else 'Show' }}
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% else %}
+                            <p style="color: var(--text-muted); font-size: 0.875rem;">No problems assigned to this
+                                contest yet.</p>
+                            {% endif %}
+                        </div>
+                    </details>
+                    {% endfor %}
+                    {% endif %}
+                    <div style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.5rem;">
+                        This list is server-rendered as a fallback. It will refresh automatically if JavaScript loads.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Problem Creation Section -->
+            <section id="problems" class="content-section">
+                <div class="section-header">
+                    <h1 class="section-title">Problem Creator</h1>
+                    <p class="section-description">Add new challenges to the contest platform.</p>
+                </div>
+
+                <div class="admin-section">
+                    <form id="createProblemForm">
+                        <div class="form-group">
+                            <label class="form-label">Problem Title <span style="color: var(--danger);">*</span></label>
+                            <input type="text" name="title" class="form-input" required
+                                placeholder="e.g., Two Sum Problem">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Assign to Contest</label>
+                            <select name="contest_id" id="problemContestSelect" class="form-select">
+                                <option value="">No Contest (Optional)</option>
+                            </select>
+                        </div>
+
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label class="form-label">Problem Type <span
+                                        style="color: var(--danger);">*</span></label>
+                                <select name="problem_type" class="form-select" id="problemTypeSelect" required>
+                                    <option value="coding">Coding</option>
+                                    <option value="debugging">Debugging</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Difficulty <span
+                                        style="color: var(--danger);">*</span></label>
+                                <select name="difficulty" class="form-select" required>
+                                    <option value="easy">Easy</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="hard">Hard</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label class="form-label">Problem Mode <span
+                                        style="color: var(--danger);">*</span></label>
+                                <select name="problem_mode" class="form-select" id="problemModeSelect"
+                                    title="Choose how students will submit code" required>
+                                    <option value="stdin">Standard Input/Output (Read from stdin, write to stdout)
+                                    </option>
+                                    <option value="function">Function Stub (LeetCode-style function)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Function Name <span
+                                        style="color: var(--danger);">*</span></label>
+                                <input type="text" name="function_name" class="form-input" value="solve" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Total Marks <span style="color: var(--danger);">*</span></label>
+                            <input type="number" name="total_marks" class="form-input" placeholder="e.g., 100"
+                                value="100" min="1" max="1000" required
+                                title="Total points for this problem. Points are distributed equally among hidden test cases.">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Constraints (Optional)</label>
+                            <textarea name="constraints" class="form-textarea" rows="2"
+                                placeholder="e.g., 1 ≤ N ≤ 10^5, 1 ≤ A[i] ≤ 10^9"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Description <span style="color: var(--danger);">*</span></label>
+                            <div style="margin-bottom: 0.5rem;">
+                                <button type="button" onclick="openImageUploadModal('create')"
+                                    class="btn btn-sm btn-outline" style="font-size: 0.75rem;">
+                                    📷 Insert Image
+                                </button>
+                            </div>
+                            <textarea name="description" id="createDescription" class="form-textarea" required
+                                placeholder="Describe the problem clearly..."></textarea>
+                            <p style="color: var(--text-muted); font-size: 0.7rem; margin-top: 0.5rem;">
+                                💡 Tip: You can use HTML tags. Images will be inserted as &lt;img&gt; tags.
+                            </p>
+                        </div>
+
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label class="form-label">Input Format (Optional)</label>
+                                <textarea name="input_format" class="form-textarea" rows="2"
+                                    placeholder="Describe the input format..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Output Format (Optional)</label>
+                                <textarea name="output_format" class="form-textarea" rows="2"
+                                    placeholder="Describe the expected output format..."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Sample Input (Optional)</label>
+                            <textarea name="sample_input" class="form-textarea" rows="3"
+                                placeholder="Enter sample input that students will see"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Sample Output (Optional)</label>
+                            <textarea name="sample_output" class="form-textarea" rows="3"
+                                placeholder="Enter expected output for the sample input"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label"
+                                style="display: flex; justify-content: space-between; align-items: center;">
+                                Starter Code
+                                <div id="starterLangSwitches" style="display: flex; gap: 0.5rem;">
+                                    <button type="button" onclick="switchStarterLang('python')"
+                                        class="btn btn-sm btn-outline active">Python</button>
+                                    <button type="button" onclick="switchStarterLang('cpp')"
+                                        class="btn btn-sm btn-outline">C++</button>
+                                    <button type="button" onclick="switchStarterLang('java')"
+                                        class="btn btn-sm btn-outline">Java</button>
+                                    <button type="button" onclick="switchStarterLang('c')"
+                                        class="btn btn-sm btn-outline">C</button>
+                                </div>
+                            </label>
+                            <div id="admin-starter-editor-container"
+                                style="height: 300px; border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius); overflow: hidden;">
+                            </div>
+                            <p style="color: var(--text-muted); font-size: 0.75rem; margin-top: 0.5rem;">
+                                Code entered here will be saved for the selected language.
+                                For function mode, include only the function body/stub.
+                            </p>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label"
+                                style="display: flex; justify-content: space-between; align-items: center;">
+                                Reference Solution (per language)
+                                <div id="solutionLangSwitches" style="display: flex; gap: 0.5rem;">
+                                    <button type="button" onclick="switchSolutionLang('python')"
+                                        class="btn btn-sm btn-outline active">Python</button>
+                                    <button type="button" onclick="switchSolutionLang('cpp')"
+                                        class="btn btn-sm btn-outline">C++</button>
+                                    <button type="button" onclick="switchSolutionLang('java')"
+                                        class="btn btn-sm btn-outline">Java</button>
+                                    <button type="button" onclick="switchSolutionLang('c')"
+                                        class="btn btn-sm btn-outline">C</button>
+                                </div>
+                            </label>
+                            <div id="admin-solution-editor-container"
+                                style="height: 240px; border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius); overflow: hidden;">
+                            </div>
+                            <p style="color: var(--text-muted); font-size: 0.75rem; margin-top: 0.5rem;">
+                                Save a correct solution for each language you support. These are used for admin testing
+                                and reference.
+                            </p>
+                        </div>
+
+                        <div class="form-group"
+                            style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                            <label class="form-label" style="font-size: 1rem; font-weight: 600; margin-bottom: 1rem;">
+                                📁 Test Cases <span style="color: var(--danger);">*</span>
+                            </label>
+                            <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.5rem;">
+                                <strong>Required:</strong> You must add test cases for the problem to be functional.
+                                Choose one of the options below.
+                            </p>
+
+                            <!-- Option 1: Upload File -->
+                            <div
+                                style="background: rgba(255,255,255,0.02); padding: 1.5rem; border-radius: var(--radius); border: 1px dashed rgba(255,255,255,0.1); margin-bottom: 1.5rem;">
+                                <h4 style="font-size: 0.875rem; margin-bottom: 0.5rem; font-weight: 600;">Option 1:
+                                    Upload Test Cases File
+                                </h4>
+                                <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1rem;">
+                                    Upload a text file with multiple test cases. 💡 Tip: The system automatically marks
+                                    the <strong>first 3 entries</strong> as "Sample Cases"!
+                                </p>
+                                <input type="file" id="createProblemTestFile" accept=".txt" class="form-input"
+                                    style="padding: 0.5rem;" onchange="handleTestFileChange()">
+                                <p id="fileUploadHint"
+                                    style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.5rem; display: none;">
+                                    ✓ File selected. Manual test cases will be ignored.
+                                </p>
+                                <details
+                                    style="margin-top: 0.75rem; padding: 0.75rem; background: rgba(0,0,0,0.2); border-radius: 4px;">
+                                    <summary
+                                        style="cursor: pointer; font-size: 0.75rem; color: var(--text-secondary); font-weight: 600;">
+                                        📄 File Format Example (Click to expand)
+                                    </summary>
+                                    <pre
+                                        style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.5rem; white-space: pre-wrap; line-height: 1.4;">
+# Test Case 1 (Sample) - 0 points
+INPUT:
+1 2
+OUTPUT:
+3
+
+# Test Case 2 (Hidden) - auto points
+INPUT:
+100 200
+OUTPUT:
+300
+
+Note: 
+- At least 1 sample test (visible to students)
+- Hidden tests share total marks equally
+                                    </pre>
+                                </details>
+                            </div>
+
+                            <!-- Option 2: Manual Entry -->
+                            <div
+                                style="background: rgba(255,255,255,0.02); padding: 1.5rem; border-radius: var(--radius); border: 1px dashed rgba(255,255,255,0.1);">
+                                <h4 style="font-size: 0.875rem; margin-bottom: 1rem; font-weight: 600;">Option 2: Add
+                                    Test Cases Manually
+                                </h4>
+                                <div id="manualTestCasesList" style="margin-bottom: 1rem;"></div>
+                                <div class="form-group">
+                                    <label class="form-label">Test Input</label>
+                                    <textarea id="createTestInput" class="form-input" placeholder="Enter test input"
+                                        rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Expected Output</label>
+                                    <textarea id="createTestOutput" class="form-input"
+                                        placeholder="Enter expected output" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Test Type</label>
+                                    <select id="createTestType" class="form-select">
+                                        <option value="0">Hidden Test (Counts for points)</option>
+                                        <option value="1">Sample Test (Visible to students, 0 points)</option>
+                                    </select>
+                                </div>
+                                <button type="button" onclick="addManualTestCase()" class="btn btn-success"
+                                    style="width: 100%; justify-content: center; margin-top: 0.5rem;">➕ Add Test
+                                    Case</button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary"
+                            title="Save this problem and make it available for contests"
+                            style="width: 100%; justify-content: center;">
+                            💾 Create Problem
+                        </button>
+                    </form>
+                </div>
+
+                <div class="admin-section" style="margin-top: 2rem;">
+                    <h3 style="margin-bottom: 1.5rem;">All Problems</h3>
+                    <div id="allProblemsList">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- User Management Section -->
+            <section id="users" class="content-section">
+                <div class="section-header">
+                    <h1 class="section-title">User Management</h1>
+                    <p class="section-description">Create and manage participant accounts.</p>
+                </div>
+
+                <div class="admin-section" style="max-width: 600px; margin: 0 auto;">
+                    <h3 style="margin-bottom: 1.5rem;">Add New Account</h3>
+                    <form id="createUserForm">
+                        <div class="form-group">
+                            <label class="form-label">Username</label>
+                            <input type="text" name="username" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" name="password" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Account Role</label>
+                            <select name="role" class="form-select" required>
+                                <option value="student">Student / Participant</option>
+                                <option value="admin">System Admin</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary"
+                            style="width: 100%; justify-content: center;">Create Account</button>
+                    </form>
+                </div>
+
+                <div class="admin-section" style="max-width: 600px; margin: 2rem auto 0;">
+                    <h3 style="margin-bottom: 1.5rem;">Bulk Create Users (CSV)</h3>
+                    <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1rem;">
+                        Format: <code>username,password,role</code> (one per line)<br>
+                        Example: <code>student1,pass123,student</code>
+                    </p>
+                    <form id="bulkCreateUserForm">
+                        <textarea name="users_text" class="form-textarea" rows="5"
+                            placeholder="user1,pass1,student&#10;user2,pass2,student" required></textarea>
+                        <button type="submit" class="btn btn-outline"
+                            style="width: 100%; justify-content: center; margin-top: 1rem;">Bulk Import</button>
+                    </form>
+                </div>
+
+                <div class="admin-section"
+                    style="max-width: 600px; margin: 2rem auto 0; border: 2px solid rgba(255, 193, 7, 0.3); background: rgba(255, 193, 7, 0.05);">
+                    <h3 style="margin-bottom: 1.5rem; color: #ffc107;">⚠️ Bulk Password Reset</h3>
+                    <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1rem;">
+                        Reset passwords for all users at once. This is useful before contests to ensure all participants
+                        have the same password.
+                    </p>
+                    <form id="bulkResetPasswordForm">
+                        <div class="form-group">
+                            <label class="form-label">New Password (for all users)</label>
+                            <input type="text" name="new_password" class="form-input" placeholder="e.g., contest2026"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Reset For</label>
+                            <select name="role" class="form-select" required>
+                                <option value="student">Students Only (Recommended)</option>
+                                <option value="all">All Non-Admin Users</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn"
+                            style="width: 100%; justify-content: center; background: #ffc107; color: #000;">
+                            Reset All Passwords
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Users List Table -->
+                <div class="admin-section" style="margin-top: 2rem;">
+                    <h3 style="margin-bottom: 1.5rem;">All Users</h3>
+                    <div id="usersList">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Submissions Section -->
+            <section id="submissions" class="content-section">
+                <div class="section-header">
+                    <h1 class="section-title">Submissions</h1>
+                    <p class="section-description">Filter submissions by user, problem, verdict, or contest.</p>
+                </div>
+
+                <div class="admin-section">
+                    <form id="submissionFilterForm" class="grid-2">
+                        <div class="form-group">
+                            <label class="form-label">Username</label>
+                            <input type="text" id="filterUsername" class="form-input" placeholder="e.g., student1">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Problem Title</label>
+                            <input type="text" id="filterProblem" class="form-input"
+                                placeholder="e.g., Sum of Two Numbers">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Verdict</label>
+                            <select id="filterVerdict" class="form-select">
+                                <option value="">Any</option>
+                                <option value="AC">AC</option>
+                                <option value="WA">WA</option>
+                                <option value="CE">CE</option>
+                                <option value="RE">RE</option>
+                                <option value="TLE">TLE</option>
+                                <option value="PENDING">PENDING</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Contest</label>
+                            <select id="filterContest" class="form-select">
+                                <option value="">Any</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Limit</label>
+                            <select id="filterLimit" class="form-select">
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="200">200</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="display:flex; align-items:flex-end; gap:0.5rem;">
+                            <button type="submit" class="btn btn-primary">Apply Filters</button>
+                            <button type="button" id="clearFilters" class="btn btn-outline">Clear</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="admin-section">
+                    <div id="filteredSubmissions">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Leaderboard & Scores Section -->
+            <section id="leaderboard" class="content-section">
+                <div class="section-header">
+                    <h1 class="section-title">Leaderboard & User Scores</h1>
+                    <p class="section-description">View detailed leaderboard and individual user scorecards.</p>
+                </div>
+
+                <div class="admin-section">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h3 class="section-title" style="margin: 0;">Detailed Leaderboard</h3>
+                        <button onclick="loadDetailedLeaderboard()" class="btn btn-primary">
+                            🔄 Refresh Leaderboard
+                        </button>
+                    </div>
+                    <div id="detailedLeaderboardContainer">
+                        <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+                            <p>Click "Refresh Leaderboard" to load data</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-section" style="margin-top: 2rem;">
+                    <h3 class="section-title">Contest-Specific Leaderboards</h3>
+                    <p class="section-description">View leaderboard for individual contests.</p>
+                    <div style="margin-top: 1.5rem;">
+                        <label for="contestSelectLeaderboard"
+                            style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">
+                            Select Contest:
+                        </label>
+                        <div style="display: flex; gap: 1rem;">
+                            <select id="contestSelectLeaderboard" class="form-control" style="flex: 1;">
+                                <option value="">-- Select a Contest --</option>
+                            </select>
+                            <button
+                                onclick="loadContestLeaderboard(document.getElementById('contestSelectLeaderboard').value)"
+                                class="btn btn-primary">
+                                View Contest Leaderboard
+                            </button>
+                        </div>
+                    </div>
+                    <div id="contestLeaderboardContainer" style="margin-top: 2rem;">
+                        <!-- Contest leaderboard will be loaded here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Export & Tools Section -->
+            <section id="export" class="content-section">
+                <div class="section-header">
+                    <h1 class="section-title">Data & Tools</h1>
+                    <p class="section-description">Export reports and perform administrative maintenance.</p>
+                </div>
+
+                <div class="admin-grid">
+                    <div class="admin-section">
+                        <h3 class="section-title">Report Exports</h3>
+                        <p class="section-description">Download contest data in various formats.</p>
+                        <div style="display: grid; gap: 1rem; margin-top: 1.5rem;">
+                            <a href="/admin/export_leaderboard" class="btn btn-outline"
+                                style="justify-content: center;">Download Leaderboard (CSV)</a>
+                            <a href="/admin/export_submissions" class="btn btn-outline"
+                                style="justify-content: center;">Download Submissions (CSV)</a>
+                            <a href="/admin/export_all" class="btn btn-outline"
+                                style="justify-content: center;">Download Master Backup (ZIP)</a>
+                        </div>
+                    </div>
+
+                    <div class="admin-section">
+                        <h3 class="section-title">Broadcast Announcement</h3>
+                        <p class="section-description">Send a message to all connected participants.</p>
+                        <form id="broadcastForm" style="margin-top: 1.5rem;">
+                            <div class="form-group">
+                                <textarea name="message" class="form-textarea" rows="2"
+                                    placeholder="e.g., Problem 2 has been updated. Please refresh." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary"
+                                style="width: 100%; justify-content: center;">Send Broadcast</button>
+                        </form>
+                    </div>
+
+                    <div class="admin-section">
+                        <h3 class="section-title">Site Settings</h3>
+                        <p class="section-description">Control visibility for students.</p>
+                        <form id="contestSettingsForm" style="margin-top: 1rem;">
+                            <label
+                                style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary);">
+                                <input type="checkbox" name="leaderboard_enabled" {% if leaderboard_enabled %}checked{%
+                                    endif %}>
+                                Show Leaderboard to Students
+                            </label>
+                            <label
+                                style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                                <input type="checkbox" name="show_scores_to_students" {% if show_scores_to_students
+                                    %}checked{% endif %}>
+                                Show Scores to Students
+                            </label>
+                            <label
+                                style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                                <input type="checkbox" name="show_difficulty_to_students" {% if
+                                    show_difficulty_to_students %}checked{% endif %}>
+                                Show Difficulty Levels to Students
+                            </label>
+                            <button type="submit" class="btn btn-outline"
+                                style="margin-top: 1rem; width: 100%; justify-content: center;">
+                                Save Settings
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="admin-section">
+                        <h3 class="section-title">Admin Tools (Danger Zone)</h3>
+                        <p class="section-description">Irreversible administrative actions.</p>
+                        <div style="display: grid; gap: 1rem; margin-top: 1.5rem;">
+                            <button onclick="resetContest()" class="btn btn-outline"
+                                style="width:100%; justify-content: center; color: var(--danger); border-color: var(--danger);">Reset
+                                Contest (Clear Submissions)</button>
+                            <button onclick="clearStudents()" class="btn btn-outline"
+                                style="width:100%; justify-content: center; color: var(--danger); border-color: var(--danger);">Clear
+                                All Students</button>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            </section>
+        </main>
+    </div>
+
+    <!-- Edit Contest Modal -->
+    <div id="editContestModal" class="modal"
+        style="display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8); backdrop-filter: blur(8px);">
+        <div class="glass-card"
+            style="margin: 5% auto; padding: 2rem; width: 80%; max-width: 600px; border: 1px solid rgba(255,255,255,0.1); position: relative;">
+            <button onclick="document.getElementById('editContestModal').style.display='none'"
+                class="modal-close-btn">&times;</button>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2 class="section-title">Edit Contest</h2>
+            </div>
+            <form id="editContestForm">
+                <input type="hidden" id="editContestId">
+                <div class="grid-2" style="margin-bottom: 1.5rem;">
+                    <div class="form-group">
+                        <label class="form-label">Contest Title</label>
+                        <input type="text" id="editContestTitle" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <input type="text" id="editContestDescription" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Start Time</label>
+                        <input type="datetime-local" id="editContestStart" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">End Time</label>
+                        <input type="datetime-local" id="editContestEnd" class="form-input" required>
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label class="form-label"
+                            style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" id="editContestActive" style="width: 16px; height: 16px;">
+                            <span>Is Active?</span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label"
+                            style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" id="editContestShowLeaderboard" style="width: 16px; height: 16px;">
+                            <span>Show Leaderboard?</span>
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Save
+                    Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Problem Modal -->
+    <div id="editProblemModal" class="modal"
+        style="display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8); backdrop-filter: blur(8px);">
+        <div class="glass-card"
+            style="margin: 5% auto; padding: 2rem; width: 80%; max-width: 900px; border: 1px solid rgba(255,255,255,0.1); position: relative;">
+            <button onclick="closeEditModal()" class="modal-close-btn">&times;</button>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2 class="section-title" id="editModalTitle">Edit Problem</h2>
+            </div>
+            <form id="editProblemForm">
+                <input type="hidden" id="editProblemId">
+                <div class="form-group">
+                    <label class="form-label">Problem Title <span style="color: var(--danger);">*</span></label>
+                    <input type="text" id="editTitle" class="form-input" required placeholder="e.g., Two Sum Problem">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Contest</label>
+                    <select id="editProblemContest" class="form-select">
+                        <option value="">No Contest</option>
+                    </select>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label class="form-label">Problem Type <span style="color: var(--danger);">*</span></label>
+                        <select id="editProblemType" class="form-select" required>
+                            <option value="coding">Coding</option>
+                            <option value="debugging">Debugging</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Difficulty <span style="color: var(--danger);">*</span></label>
+                        <select id="editDifficulty" class="form-select" required>
+                            <option value="easy">Easy</option>
+                            <option value="medium">Medium</option>
+                            <option value="hard">Hard</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label class="form-label">Problem Mode <span style="color: var(--danger);">*</span></label>
+                        <select id="editProblemMode" class="form-select" required>
+                            <option value="stdin">Standard Input/Output</option>
+                            <option value="function">Function Stub (LeetCode-style)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Function Name <span style="color: var(--danger);">*</span></label>
+                        <input type="text" id="editFunctionName" class="form-input" value="solve" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Total Marks <span style="color: var(--danger);">*</span></label>
+                    <input type="number" id="editTotalMarks" class="form-input" placeholder="e.g., 100" min="1"
+                        max="1000" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Constraints (Optional)</label>
+                    <textarea id="editConstraints" class="form-textarea" rows="2"
+                        placeholder="e.g., 1 ≤ N ≤ 10^5, 1 ≤ A[i] ≤ 10^9"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description <span style="color: var(--danger);">*</span></label>
+                    <div style="margin-bottom: 0.5rem;">
+                        <button type="button" onclick="openImageUploadModal('edit')" class="btn btn-sm btn-outline"
+                            style="font-size: 0.75rem;">
+                            📷 Insert Image
+                        </button>
+                    </div>
+                    <textarea id="editDescription" class="form-textarea" required
+                        placeholder="Describe the problem clearly..."></textarea>
+                    <p style="color: var(--text-muted); font-size: 0.7rem; margin-top: 0.5rem;">
+                        💡 Tip: You can use HTML tags. Images will be inserted as &lt;img&gt; tags.
+                    </p>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label class="form-label">Input Format (Optional)</label>
+                        <textarea id="editInputFormat" class="form-textarea" rows="2"
+                            placeholder="Describe the input format..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Output Format (Optional)</label>
+                        <textarea id="editOutputFormat" class="form-textarea" rows="2"
+                            placeholder="Describe the expected output format..."></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Sample Input (Optional)</label>
+                    <textarea id="editSampleInput" class="form-textarea" rows="3"
+                        placeholder="Enter sample input that students will see"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Sample Output (Optional)</label>
+                    <textarea id="editSampleOutput" class="form-textarea" rows="3"
+                        placeholder="Enter expected output for the sample input"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label"
+                        style="display: flex; justify-content: space-between; align-items: center;">
+                        Starter Code
+                        <div id="editStarterLangSwitches" style="display: flex; gap: 0.5rem;">
+                            <button type="button" onclick="switchEditStarterLang('python')"
+                                class="btn btn-sm btn-outline active">Python</button>
+                            <button type="button" onclick="switchEditStarterLang('cpp')"
+                                class="btn btn-sm btn-outline">C++</button>
+                            <button type="button" onclick="switchEditStarterLang('java')"
+                                class="btn btn-sm btn-outline">Java</button>
+                            <button type="button" onclick="switchEditStarterLang('c')"
+                                class="btn btn-sm btn-outline">C</button>
+                        </div>
+                    </label>
+                    <div id="admin-edit-starter-editor-container"
+                        style="height: 300px; border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius); overflow: hidden;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label"
+                        style="display: flex; justify-content: space-between; align-items: center;">
+                        Reference Solution (for testing)
+                        <div id="editSolutionLangSwitches" style="display: flex; gap: 0.5rem;">
+                            <button type="button" onclick="switchEditSolutionLang('python')"
+                                class="btn btn-sm btn-outline active">Python</button>
+                            <button type="button" onclick="switchEditSolutionLang('cpp')"
+                                class="btn btn-sm btn-outline">C++</button>
+                            <button type="button" onclick="switchEditSolutionLang('java')"
+                                class="btn btn-sm btn-outline">Java</button>
+                            <button type="button" onclick="switchEditSolutionLang('c')"
+                                class="btn btn-sm btn-outline">C</button>
+                        </div>
+                    </label>
+                    <div id="admin-edit-solution-editor-container"
+                        style="height: 300px; border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius); overflow: hidden;">
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.75rem; margin-top: 0.5rem;">
+                        Enter correct solutions for each language. These will be used for testing.
+                    </p>
+                </div>
+                <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                    <button type="button" onclick="testProblem()" class="btn btn-outline"
+                        style="flex: 1; justify-content: center;">
+                        🧪 Test All Languages
+                    </button>
+                    <button type="submit" class="btn btn-primary" style="flex: 1; justify-content: center;">
+                        💾 Save Changes
+                    </button>
+                </div>
+                <div id="testResultsContainer"
+                    style="display: none; margin-top: 1rem; padding: 1rem; background: rgba(0,0,0,0.3); border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.1);">
+                    <h4 style="margin-top: 0; color: var(--text-primary); font-size: 0.9rem;">Test Results</h4>
+                    <div id="testResults"></div>
+                </div>
+            </form>
+
+            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 2rem 0;">
+
+            <div id="testCasesSection">
+                <h3 style="color: var(--text-primary); margin-bottom: 1rem;">Hidden Test Cases</h3>
+                <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+                    Add test cases that will be used to evaluate student submissions. Points will be distributed equally
+                    among all test cases.
+                </p>
+
+                <div
+                    style="background: rgba(255,255,255,0.02); padding: 1.5rem; border-radius: var(--radius); border: 1px dashed rgba(255,255,255,0.1); margin-bottom: 1.5rem;">
+                    <h4 style="font-size: 0.875rem; margin-bottom: 0.5rem; font-weight: 600;">Upload Test Cases File
+                    </h4>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1rem;">
+                        Upload a text file with multiple test cases. See format below.
+                    </p>
+                    <form id="uploadTestCasesForm" style="display: flex; gap: 0.5rem; align-items: center;">
+                        <input type="file" name="file" accept=".txt" class="form-input"
+                            style="padding: 0.5rem; flex: 1;">
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                    </form>
+                    <details
+                        style="margin-top: 1rem; padding: 0.75rem; background: rgba(0,0,0,0.2); border-radius: 4px;">
+                        <summary
+                            style="cursor: pointer; font-size: 0.75rem; color: var(--text-secondary); font-weight: 600;">
+                            📄 File Format Example (Click to expand)
+                        </summary>
+                        <pre
+                            style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.5rem; white-space: pre-wrap; line-height: 1.4;">
+# Test Case 1 (Sample) - 0 points
+INPUT:
+1 2
+OUTPUT:
+3
+
+# Test Case 2 (Sample) - 0 points
+INPUT:
+5 10
+OUTPUT:
+15
+
+# Test Case 3 (Hidden) - will get auto points
+INPUT:
+100 200
+OUTPUT:
+300
+
+# Test Case 4 (Hidden) - will get auto points
+INPUT:
+999 1
+OUTPUT:
+1000
+
+Note: Sample tests get 0 points. Hidden tests get equal share of total marks.
+                        </pre>
+                    </details>
+                </div>
+
+                <div id="testCasesList" style="margin-bottom: 1.5rem;"></div>
+
+                <div
+                    style="background: rgba(255,255,255,0.02); padding: 1.5rem; border-radius: var(--radius); border: 1px dashed rgba(255,255,255,0.1);">
+                    <h4 style="font-size: 0.875rem; margin-bottom: 1rem; font-weight: 600;">Or Add Test Case Manually
+                    </h4>
+                    <div class="form-group">
+                        <label class="form-label">Test Input</label>
+                        <textarea id="newTestInput" class="form-input" placeholder="Enter test input"
+                            rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Expected Output</label>
+                        <textarea id="newTestOutput" class="form-input" placeholder="Enter expected output"
+                            rows="3"></textarea>
+                    </div>
+                    <button onclick="addTestCase()" class="btn btn-success"
+                        style="width: 100%; justify-content: center; margin-top: 0.5rem;">Add Test Case</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Upload Modal -->
+    <div id="imageUploadModal" class="modal"
+        style="display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8); backdrop-filter: blur(8px);">
+        <div class="glass-card"
+            style="margin: 10% auto; padding: 2rem; width: 90%; max-width: 600px; border: 1px solid rgba(255,255,255,0.1); position: relative;">
+            <button onclick="closeImageUploadModal()" class="modal-close-btn">&times;</button>
+            <h2 class="section-title" style="margin-bottom: 1.5rem;">Upload Image</h2>
+
+            <div class="form-group">
+                <label class="form-label">Select Image File</label>
+                <input type="file" id="imageFileInput"
+                    accept="image/png,image/jpeg,image/jpg,image/gif,image/svg+xml,image/webp" class="form-input"
+                    style="padding: 0.5rem;">
+                <p style="color: var(--text-muted); font-size: 0.75rem; margin-top: 0.5rem;">
+                    Supported formats: PNG, JPG, JPEG, GIF, SVG, WEBP
+                </p>
+            </div>
+
+            <div id="imagePreviewContainer" style="display: none; margin: 1rem 0;">
+                <label class="form-label">Preview</label>
+                <div
+                    style="border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius); padding: 1rem; background: rgba(0,0,0,0.2); text-align: center;">
+                    <img id="imagePreview" style="max-width: 100%; max-height: 300px; border-radius: 4px;">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Image Width (Optional)</label>
+                <input type="number" id="imageWidth" class="form-input" placeholder="e.g., 400" min="50" max="1000">
+                <p style="color: var(--text-muted); font-size: 0.75rem; margin-top: 0.5rem;">
+                    Leave empty for original size. Recommended: 400-600px
+                </p>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Alt Text (Optional)</label>
+                <input type="text" id="imageAlt" class="form-input" placeholder="Describe the image">
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                <button onclick="uploadAndInsertImage()" class="btn btn-primary"
+                    style="flex: 1; justify-content: center;">
+                    Upload & Insert
+                </button>
+                <button onclick="closeImageUploadModal()" class="btn btn-outline"
+                    style="flex: 1; justify-content: center;">
+                    Cancel
+                </button>
+            </div>
+
+            <div id="uploadProgress" style="display: none; margin-top: 1rem;">
+                <div style="background: rgba(255,255,255,0.1); border-radius: 4px; height: 4px; overflow: hidden;">
+                    <div id="uploadProgressBar"
+                        style="background: var(--primary); height: 100%; width: 0%; transition: width 0.3s;"></div>
+                </div>
+                <p id="uploadStatus"
+                    style="color: var(--text-muted); font-size: 0.75rem; margin-top: 0.5rem; text-align: center;"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/contest_management.js"></script>
+    <script src="/static/admin.js"></script>
+</body>
+
+</html>
